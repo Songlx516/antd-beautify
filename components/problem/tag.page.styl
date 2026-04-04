@@ -1,0 +1,227 @@
+.problem__tags
+  margin: 0 !important
+  padding: 0 !important
+  list-style: none !important
+  font-size: 0
+  word-break: keep-all
+  display: flex
+  flex-wrap: wrap
+
+.problem__tag
+  display: inline-block
+  vertical-align: top
+  margin: rem(0 4px 4px 0) !important
+  padding: 0 !important
+
+.problem__tag-item
+  padding: 0 10px !important
+  margin-left: rem(3px)
+  margin-bottom: rem(5px)
+  line-height: 30px !important
+  display: inline-flex
+  flex-direction: row
+  align-items: center
+  border: none
+  border-radius: 15px
+  box-shadow: none
+  font-size: 14px
+  line-height: 18px
+  max-width: 100%
+  min-height: 30px
+  min-width: 30px
+  padding: 6px 12px
+  position: relative
+  background-color: rgba(143, 153, 168, 0.15)
+  color: #1c2127
+  &:hover
+    text-decoration: none
+  > span
+    display: flex
+    align-items: center
+  > *
+    flex-grow: 0
+    flex-shrink: 0
+    margin-right: 8px
+  &:before,
+  > *
+    margin-right: 4px
+  > :last-child
+    margin-right: 0
+  &:focus
+    outline: rgba(33, 93, 176, 0.752) solid 2px
+    outline-offset: 0
+    -moz-outline-radius: 6px
+  &.interactive
+    cursor: pointer
+    &:hover
+      background: rgba(143, 153, 168, 0.3)
+      color: #111418
+
+.problem__tag-link
+  display: inline-block
+  padding: 4px 12px
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+  max-width: rem(250px)
+  line-height: 20px
+  height: 28px
+  background: #f0f0f0
+  color: #333 !important
+  border-radius: 14px
+  font-size: 12px
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)
+
+  &:hover
+    background: #1890ff
+    color: #fff !important
+    text-decoration: none
+
+.col--problem-name
+  .problem__tags
+    float: right
+
+  .problem__tag
+    margin: rem(0 4px 0 0) !important
+
+/* 标签颜色美化 - 使用属性选择器 */
+.problem__tag-link[data-tag="电子学会5级"],
+.problem__tag-link[data-tag*="电子学会"]
+  background: #e6f7ff
+  color: #1890ff !important
+  border: 1px solid #91d5ff
+
+.problem__tag-link[data-tag="电子学会4级"]
+  background: #e6f7ff
+  color: #1890ff !important
+  border: 1px solid #91d5ff
+
+.problem__tag-link[data-tag="贪心"]
+  background: #f6ffed
+  color: #52c41a !important
+  border: 1px solid #b7eb8f
+
+.problem__tag-link[data-tag="动态规划"]
+  background: #fffbe6
+  color: #faad14 !important
+  border: 1px solid #ffe58f
+
+.problem__tag-link[data-tag="树结构"]
+  background: #fff2f0
+  color: #ff4d4f !important
+  border: 1px solid #ffccc7
+
+.problem__tag-link[data-tag="图结构"]
+  background: #f9f0ff
+  color: #722ed1 !important
+  border: 1px solid #d3adf7
+
+.problem__tag-link[data-tag="字符串"]
+  background: #e6f7ff
+  color: #1890ff !important
+  border: 1px solid #91d5ff
+
+.problem__tag-link[data-tag="数学"]
+  background: #f6ffed
+  color: #52c41a !important
+  border: 1px solid #b7eb8f
+
+.problem__tag-link[data-tag="数据结构"]
+  background: #fffbe6
+  color: #faad14 !important
+  border: 1px solid #ffe58f
+
+.problem__tag-link[data-tag="深度优先搜索"]
+  background: #fff2f0
+  color: #ff4d4f !important
+  border: 1px solid #ffccc7
+
+.problem__tag-link[data-tag="广度优先搜索"]
+  background: #f9f0ff
+  color: #722ed1 !important
+  border: 1px solid #d3adf7
+
+.problem__tag-link[data-tag="BFS"]
+  background: #f9f0ff
+  color: #722ed1 !important
+  border: 1px solid #d3adf7
+
+.problem__tag-link[data-tag="DFS"]
+  background: #fff2f0
+  color: #ff4d4f !important
+  border: 1px solid #ffccc7
+
+.problem__tag-link[data-tag="队列"]
+  background: #e6f7ff
+  color: #1890ff !important
+  border: 1px solid #91d5ff
+
+.problem__tag-link[data-tag="栈"]
+  background: #f6ffed
+  color: #52c41a !important
+  border: 1px solid #b7eb8f
+
+.problem__tag-link[data-tag="模拟"]
+  background: #fffbe6
+  color: #faad14 !important
+  border: 1px solid #ffe58f
+
+.problem__tag-link[data-tag="递推"]
+  background: #fff2f0
+  color: #ff4d4f !important
+  border: 1px solid #ffccc7
+
+.problem__tag-link[data-tag="二进制"]
+  background: #f9f0ff
+  color: #722ed1 !important
+  border: 1px solid #d3adf7
+
+.problem__tag-link[data-tag="简单循环"]
+  background: #e6f7ff
+  color: #1890ff !important
+  border: 1px solid #91d5ff
+
+.problem__tag-link[data-tag="哈希表"]
+  background: #f6ffed
+  color: #52c41a !important
+  border: 1px solid #b7eb8f
+
+.problem__tag-link[data-tag="组合数学"]
+  background: #fffbe6
+  color: #faad14 !important
+  border: 1px solid #ffe58f
+
+.problem__tag-link[data-tag="模运算"]
+  background: #fff2f0
+  color: #ff4d4f !important
+  border: 1px solid #ffccc7
+
+.problem__tag-link[data-tag="斜率优化"]
+  background: #f9f0ff
+  color: #722ed1 !important
+  border: 1px solid #d3adf7
+
+.problem__tag-link[data-tag="其他"]
+  background: #f0f0f0
+  color: #666 !important
+  border: 1px solid #d9d9d9
+
+.problem__tag-link[data-tag="二维数组"]
+  background: #e6f7ff
+  color: #1890ff !important
+  border: 1px solid #91d5ff
+
+.problem__tag-link[data-tag="位运算"]
+  background: #f9f0ff
+  color: #722ed1 !important
+  border: 1px solid #d3adf7
+
+.problem__tag-link[data-tag="递归"]
+  background: #fff2f0
+  color: #ff4d4f !important
+  border: 1px solid #ffccc7
+
+.problem__tag-link[data-tag="函数问题"]
+  background: #fffbe6
+  color: #faad14 !important
+  border: 1px solid #ffe58f

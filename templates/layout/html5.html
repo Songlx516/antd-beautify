@@ -1,0 +1,309 @@
+{% import "components/form.html" as form with context %}
+{% import "components/sidemenu.html" as sidemenu with context %}
+{% import "components/paginator.html" as paginator with context %}
+{% import "components/nothing.html" as nothing with context %}
+{% import "components/noscript_note.html" as noscript_note with context %}
+{% import "components/user.html" as user with context %}
+<!DOCTYPE html>
+<html data-page="{{ page_name }}" data-layout="{{ layout_name }}" class="layout--{{ layout_name }} page--{{ page_name }} theme--{{ (handler.user|default({})).theme|default('default') }} nojs" lang="{{ UserContext.viewLang }}" data-app="Hydro">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ UiContext.cdn_prefix }}apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="{{ UiContext.cdn_prefix }}favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ UiContext.cdn_prefix }}android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="{{ UiContext.cdn_prefix }}favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="{{ UiContext.cdn_prefix }}favicon-16x16.png" sizes="16x16">
+  {% if handler.context.request.url %}<link rel="canonical" href="{{ model.system.get('server.url') }}{{ handler.context.request.url.substring(1) }}">{% endif %}
+  <meta name="theme-color" content="#1890ff">
+  {% block ogp %}
+  <meta property="og:site_name" content="{{ (handler.domain|default({ui:[]})).ui.name|default(model.system.get('server.name')) }}" />
+  <meta property="og:title" content="{{ handler.renderTitle(page_name) }}" />
+  <meta property="og:url" content="{{ model.system.get('server.url') }}{{ handler.request.path.slice(1) }}" />
+  <meta property="og:image" content="{{ UiContext.cdn_prefix }}favicon-96x96.png" />
+  {% endblock %}
+  <title>{{ handler.renderTitle(page_name) }}</title>
+  <style>
+    body {
+      --font-family: "{{ UserContext.fontFamily }}", "Open Sans", "Seravek", "Segoe UI", "Verdana", "PingFang SC", "Hiragino Sans GB", "Lantinghei SC", "Microsoft Yahei", "WenQuanYi Micro Hei", "sans";
+      --code-font-family: "{{ UserContext.codeFontFamily }}", "monaco", "Source Code Pro", "Consolas", "Lucida Console", "monospace";
+      --font-ligatures: {{ "normal" if UserContext.codeFontLigatures else "none" }} !important;
+    }
+    
+    .section{border-radius:10px}
+
+    /* 问题标签样式 - Ant Design 风格 */
+    .problem__tags {
+      margin: 0 !important;
+      padding: 0 !important;
+      list-style: none !important;
+      font-size: 0;
+      word-break: keep-all;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .problem__tag {
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 4px 4px 0 !important;
+      padding: 0 !important;
+    }
+
+    .problem__tag-link {
+      display: inline-block;
+      padding: 4px 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 250px;
+      line-height: 20px;
+      height: 28px;
+      background: #f0f0f0;
+      color: #333 !important;
+      border-radius: 14px;
+      font-size: 12px;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      border: 1px solid transparent;
+    }
+
+    .problem__tag-link:hover {
+      background: #1890ff;
+      color: #fff !important;
+      text-decoration: none;
+    }
+
+    .col--problem-name .problem__tags {
+      float: right;
+    }
+
+    .col--problem-name .problem__tag {
+      margin: 0 4px 0 0 !important;
+    }
+
+    /* 标签颜色美化 - 按类型分类 */
+    
+    /* 蓝色系 - 动态规划 */
+    .problem__tag-link[data-tag*="动态规划"],
+    .problem__tag-link[data-tag="LCS"],
+    .problem__tag-link[data-tag="LIS"],
+    .problem__tag-link[data-tag*="背包"],
+    .problem__tag-link[data-tag="单调性DP"],
+    .problem__tag-link[data-tag="环形DP"],
+    .problem__tag-link[data-tag="树形DP"],
+    .problem__tag-link[data-tag="状态压缩DP"] {
+      background: #e6f7ff;
+      color: #1890ff !important;
+      border: 1px solid #91d5ff;
+    }
+
+    /* 绿色系 - 贪心 */
+    .problem__tag-link[data-tag="贪心"] {
+      background: #f6ffed;
+      color: #52c41a !important;
+      border: 1px solid #b7eb8f;
+    }
+
+    /* 红色系 - 树结构 */
+    .problem__tag-link[data-tag*="树结构"],
+    .problem__tag-link[data-tag*="树"],
+    .problem__tag-link[data-tag="最近公共祖先"],
+    .problem__tag-link[data-tag*="生成树"],
+    .problem__tag-link[data-tag="次小生成树"],
+    .problem__tag-link[data-tag="DFS序列"],
+    .problem__tag-link[data-tag*="树上倍增"],
+    .problem__tag-link[data-tag*="树的分治"],
+    .problem__tag-link[data-tag*="树链剖分"],
+    .problem__tag-link[data-tag="Link-Cut-Tree"] {
+      background: #fff2f0;
+      color: #ff4d4f !important;
+      border: 1px solid #ffccc7;
+    }
+
+    /* 紫色系 - 图结构 */
+    .problem__tag-link[data-tag*="图结构"],
+    .problem__tag-link[data-tag*="图"],
+    .problem__tag-link[data-tag="Floyd"],
+    .problem__tag-link[data-tag="Dijkstra"],
+    .problem__tag-link[data-tag="SPFA"],
+    .problem__tag-link[data-tag*="负权边"],
+    .problem__tag-link[data-tag*="平面图"],
+    .problem__tag-link[data-tag*="二分图"],
+    .problem__tag-link[data-tag*="二分图匹配"],
+    .problem__tag-link[data-tag*="最短路"],
+    .problem__tag-link[data-tag*="差分约束"],
+    .problem__tag-link[data-tag*="拓扑排序"] {
+      background: #f9f0ff;
+      color: #722ed1 !important;
+      border: 1px solid #d3adf7;
+    }
+
+    /* 青色 - 数据结构 */
+    .problem__tag-link[data-tag*="数据结构"],
+    .problem__tag-link[data-tag="栈"],
+    .problem__tag-link[data-tag="队列"],
+    .problem__tag-link[data-tag*="链表"],
+    .problem__tag-link[data-tag*="单调队列"],
+    .problem__tag-link[data-tag*="并查集"],
+    .problem__tag-link[data-tag="堆"],
+    .problem__tag-link[data-tag*="平衡树"],
+    .problem__tag-link[data-tag*="线段树"],
+    .problem__tag-link[data-tag*="树状数组"],
+    .problem__tag-link[data-tag*="树套树"],
+    .problem__tag-link[data-tag*="四分树"],
+    .problem__tag-link[data-tag*="划分树"],
+    .problem__tag-link[data-tag*="归并树"],
+    .problem__tag-link[data-tag*="替罪羊树"],
+    .problem__tag-link[data-tag*="左偏树"],
+    .problem__tag-link[data-tag*="k-d树"],
+    .problem__tag-link[data-tag*="块状链表"],
+    .problem__tag-link[data-tag*="Hashing"],
+    .problem__tag-link[data-tag*="函数式编程"] {
+      background: #e6fffb;
+      color: #13c2c2 !important;
+      border: 1px solid #87e8de;
+    }
+
+    /* 橙色系 - 递推 */
+    .problem__tag-link[data-tag*="递推"] {
+      background: #fff7e6;
+      color: #fa8c16 !important;
+      border: 1px solid #ffd591;
+    }
+
+    /* 棕色系 - 递归 */
+    .problem__tag-link[data-tag*="递归"] {
+      background: #fff1e6;
+      color: #d46b08 !important;
+      border: 1px solid #ffd591;
+    }
+
+    /* 黄色系 - 容器 */
+    .problem__tag-link[data-tag*="容器"],
+    .problem__tag-link[data-tag="map"],
+    .problem__tag-link[data-tag="vector"],
+    .problem__tag-link[data-tag="stack"],
+    .problem__tag-link[data-tag="deque"],
+    .problem__tag-link[data-tag="list"] {
+      background: #fffbe6;
+      color: #faad14 !important;
+      border: 1px solid #ffe58f;
+    }
+
+    /* 灰色系 - 其他 */
+    .problem__tag-link[data-tag="其他"],
+    .problem__tag-link[data-tag*="二分查找"],
+    .problem__tag-link[data-tag*="三分查找"],
+    .problem__tag-link[data-tag*="双指针扫描"],
+    .problem__tag-link[data-tag*="分治"],
+    .problem__tag-link[data-tag*="分块"],
+    .problem__tag-link[data-tag="RMQ"],
+    .problem__tag-link[data-tag*="快速幂"],
+    .problem__tag-link[data-tag*="排序"],
+    .problem__tag-link[data-tag*="构造"],
+    .problem__tag-link[data-tag*="打表"],
+    .problem__tag-link[data-tag*="位运算"],
+    .problem__tag-link[data-tag*="深度优先搜索"],
+    .problem__tag-link[data-tag*="广度优先搜索"],
+    .problem__tag-link[data-tag*="排列组合"],
+    .problem__tag-link[data-tag*="迭代加深搜索"],
+    .problem__tag-link[data-tag*="进制转换"],
+    .problem__tag-link[data-tag="NPC"] {
+      background: #f5f5f5;
+      color: #666 !important;
+      border: 1px solid #d9d9d9;
+    }
+
+    /* 粉色系 - 数组 */
+    .problem__tag-link[data-tag*="一维数组"],
+    .problem__tag-link[data-tag*="二维数组"] {
+      background: #fff0f6;
+      color: #eb2f96 !important;
+      border: 1px solid #ffa9c4;
+    }
+
+    /* 青色系 - 字符串 */
+    .problem__tag-link[data-tag*="字符串"],
+    .problem__tag-link[data-tag*="字符型"] {
+      background: #e6fffb;
+      color: #13c2c2 !important;
+      border: 1px solid #87e8de;
+    }
+
+    /* 绿色系 - 函数问题 */
+    .problem__tag-link[data-tag*="函数问题"],
+    .problem__tag-link[data-tag*="分支问题"] {
+      background: #f6ffed;
+      color: #52c41a !important;
+      border: 1px solid #b7eb8f;
+    }
+
+    /* 蓝色系 - 循环 */
+    .problem__tag-link[data-tag*="简单循环"],
+    .problem__tag-link[data-tag*="嵌套循环"] {
+      background: #e6f7ff;
+      color: #1890ff !important;
+      border: 1px solid #91d5ff;
+    }
+
+    /* 紫色系 - 结构体 */
+    .problem__tag-link[data-tag*="结构体"] {
+      background: #f9f0ff;
+      color: #722ed1 !important;
+      border: 1px solid #d3adf7;
+    }
+
+    /* 青色系 - 哈希表 */
+    .problem__tag-link[data-tag*="哈希表"] {
+      background: #e6fffb;
+      color: #13c2c2 !important;
+      border: 1px solid #87e8de;
+    }
+
+    /* 蓝色系 - 电子学会 */
+    .problem__tag-link[data-tag*="电子学会"] {
+      background: #e6f7ff;
+      color: #1890ff !important;
+      border: 1px solid #91d5ff;
+    }
+
+    {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
+      #panel { display: flex; flex-direction: column; }
+    {% endif %}
+  </style>
+  {% if process.env.DEV %}
+    <script src="/default.theme.js?version={{ global.Hydro.version['ui-default'] }}"></script>
+    <link rel="stylesheet" media="all" href="/theme.css?version={{ global.Hydro.version['ui-default'] }}">
+  {% else %}
+    <link rel="stylesheet" media="all" href="{{ UiContext.cdn_prefix }}theme-{{ global.Hydro.version['ui-default'] }}.css">
+  {% endif %}
+  {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
+    <script>
+      var _htmlNode = document.documentElement;
+      _htmlNode.className = _htmlNode.className.replace(' nojs', ' hasjs');
+      var UiContext = '{{ UiContext|json|jsesc|safe }}';
+      var UserContext = '{{ UserContext|json|jsesc|safe }}';
+    </script>
+  {% endif %}  
+  {% set UiContext = Object.create(UiContext) %}
+  {% set UserContext = Object.create(UserContext) %}
+</head>
+<body>
+  {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
+    <script type="text/javascript" src="/resource/{{ UiContext.constantVersion }}/entry.js"></script>
+    <script type="text/javascript" src="{{ UiContext.cdn_prefix }}resource/{{ global.Hydro.version['ui-default'] }}/lang-{{ _('__id') }}.js"></script>
+    <script type="text/javascript" src="{{ UiContext.cdn_prefix }}hydro-{{ global.Hydro.version['ui-default'] }}.js"></script>
+  {% endif %}
+  {% block body %}{% endblock %}
+  {% block script %}{% endblock %}
+  {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
+    <script>
+      var UiContextNew = '{{ UiContext|json|jsesc|safe }}';
+      var UserContextNew = '{{ UserContext|json|jsesc|safe }}';
+    </script>
+  {% endif %}
+</body>
+</html>
