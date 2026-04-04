@@ -1,6 +1,6 @@
 # antd-beautify 插件
 
-HydroOJ 的 Ant Design 风格美化插件，提供了现代化的界面样式和标签颜色分类。
+HydroOJ 的 Ant Design 风格美化插件，提供了现代化的界面样式、标签颜色分类和主题切换功能。
 
 ## 功能特性
 
@@ -19,6 +19,16 @@ HydroOJ 的 Ant Design 风格美化插件，提供了现代化的界面样式和
 - 美化 scratchpad 工具栏
 - 将设置按钮从左侧标签列表移动到顶部工具栏
 - 工具栏按钮的 Ant Design 风格美化
+
+### 4. 主题切换功能（整合自 hydro-ui-enhancer）
+- **浅色/深色主题切换**：在页脚提供主题切换菜单
+- **标准/兼容模式切换**：支持在标准模式和兼容模式之间切换
+- **多语言支持**：支持界面语言切换
+
+### 5. 自定义页脚（整合自 hydro-ui-enhancer）
+- 自定义页脚布局
+- 显示系统信息和性能数据
+- 支持额外的 HTML 内容注入
 
 ## 标签颜色分类
 
@@ -68,13 +78,16 @@ antd-beautify/
 │   ├── components/
 │   │   └── problem.html        # 美化的问题组件
 │   └── partials/
-│       └── problem_list.html    # 美化的问题列表模板
+│       ├── problem_list.html    # 美化的问题列表模板
+│       └── footer.html          # 自定义页脚（整合自 hydro-ui-enhancer）
 ├── components/
 │   └── scratchpad/              # 美化的 scratchpad 组件
 │       ├── ScratchpadToolbarContainer.jsx
 │       ├── ToolbarComponent.jsx
 │       ├── Toolbar.page.styl
 │       └── index.tsx
+├── locales/
+│   └── zh.yaml                  # 中文本地化文件（整合自 hydro-ui-enhancer）
 ├── package.json                 # 插件配置文件
 └── README.md                    # 插件说明文档
 ```
@@ -84,6 +97,8 @@ antd-beautify/
 - **CSS 样式**：使用 Ant Design 风格的 CSS 变量和样式定义
 - **标签颜色**：通过 data-tag 属性和 CSS 选择器实现按类型分类的颜色
 - **模板覆盖**：使用 HydroOJ 的插件系统覆盖默认模板
+- **主题切换**：通过 HydroOJ 内置的主题切换 API 实现
+- **本地化**：支持多语言翻译文件
 - **热重载**：支持 HydroOJ 的热重载功能，修改后无需重启服务
 
 ## 兼容性
@@ -91,6 +106,11 @@ antd-beautify/
 - 兼容 HydroOJ 最新版本
 - 支持主流浏览器：Chrome、Firefox、Safari、Edge
 - 响应式设计，适配不同屏幕尺寸
+
+## 整合说明
+
+本插件整合了以下插件的功能：
+- **hydro-ui-enhancer**：主题切换、自定义页脚、本地化支持
 
 ## 贡献
 
