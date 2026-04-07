@@ -1,14 +1,14 @@
 # antd-beautify 插件
 
-HydroOJ 的 Ant Design 风格美化插件，提供了现代化的界面样式、标签颜色分类和主题切换功能。
+HydroOJ 的 Ant Design 风格美化插件，提供现代化的界面样式、标签颜色分类、主题切换和自定义页脚功能。
 
 ## 功能特性
 
 ### 1. 界面美化
-- 采用 Ant Design 风格的设计元素
-- 圆角卡片设计
-- 按钮、输入框等组件的美化
-- 平滑的过渡动画效果
+- **Ant Design 风格**：采用 Ant Design 的设计元素和配色方案
+- **圆角设计**：卡片、按钮等元素使用圆角设计，提升视觉体验
+- **平滑过渡**：添加了平滑的过渡动画效果
+- **统一样式**：按钮、输入框、表单等组件的统一美化
 
 ### 2. 标签系统优化
 - **标签默认展开**：访问题库页面时标签自动显示，无需点击展开
@@ -16,19 +16,19 @@ HydroOJ 的 Ant Design 风格美化插件，提供了现代化的界面样式、
 - **标签悬停效果**：鼠标悬停时标签变为蓝色，提升交互体验
 
 ### 3. 代码编辑器优化
-- 美化 scratchpad 工具栏
-- 将设置按钮从左侧标签列表移动到顶部工具栏
-- 工具栏按钮的 Ant Design 风格美化
+- **工具栏美化**：美化 scratchpad 工具栏，采用 Ant Design 风格
+- **设置按钮调整**：将设置按钮从左侧标签列表移动到顶部工具栏
+- **工具栏布局**：优化工具栏的布局和样式
 
-### 4. 主题切换功能（整合自 hydro-ui-enhancer）
-- **浅色/深色主题切换**：在页脚提供主题切换菜单
-- **标准/兼容模式切换**：支持在标准模式和兼容模式之间切换
+### 4. 主题切换功能
+- **浅色/深色主题**：在页脚提供主题切换菜单
+- **标准/兼容模式**：支持在标准模式和兼容模式之间切换
 - **多语言支持**：支持界面语言切换
 
-### 5. 自定义页脚（整合自 hydro-ui-enhancer）
-- 自定义页脚布局
-- 显示系统信息和性能数据
-- 支持额外的 HTML 内容注入
+### 5. 自定义页脚
+- **增强页脚布局**：优化页脚的布局和样式
+- **系统信息显示**：显示系统信息和性能数据
+- **额外内容支持**：支持额外的 HTML 内容注入
 
 ## 标签颜色分类
 
@@ -51,6 +51,51 @@ HydroOJ 的 Ant Design 风格美化插件，提供了现代化的界面样式、
 | 哈希表 | 青色 | 哈希表 |
 | 电子学会 | 蓝色 | 电子学会等级 |
 
+## 技术实现
+
+### 核心文件
+
+1. **模板文件**
+   - `templates/layout/html5.html` - 主布局模板，包含 Ant Design 样式和脚本
+   - `templates/components/problem.html` - 问题组件模板，添加了标签的 data-tag 属性
+   - `templates/partials/problem_list.html` - 问题列表模板，修改为默认展开标签
+   - `templates/partials/footer.html` - 自定义页脚，包含主题切换功能
+
+2. **组件文件**
+   - `components/scratchpad/ScratchpadToolbarContainer.jsx` - 工具栏容器组件
+   - `components/scratchpad/ToolbarComponent.jsx` - 工具栏组件
+   - `components/scratchpad/Toolbar.page.styl` - 工具栏样式
+   - `components/scratchpad/index.tsx` - 工具栏入口文件，移除了左侧设置按钮
+   - `components/problem/tag.page.styl` - 标签样式
+
+3. **本地化文件**
+   - `locales/zh.yaml` - 中文翻译文件，包含插件相关的翻译
+
+4. **配置文件**
+   - `package.json` - 插件配置文件
+   - `README.md` - 插件说明文档
+
+### 实现方式
+
+1. **界面美化**
+   - 在 `html5.html` 中引入 Ant Design 的 CSS 和 JS 文件
+   - 添加 Ant Design 风格的 CSS 样式定义
+   - 使用 CSS 变量和过渡效果
+
+2. **标签系统优化**
+   - 在 `problem.html` 中为标签添加 `data-tag` 属性
+   - 在 `html5.html` 中添加按标签内容分类的颜色样式
+   - 在 `problem_list.html` 中移除 `hide-problem-tag` 类，使标签默认展开
+
+3. **代码编辑器优化**
+   - 修改 `ScratchpadToolbarContainer.jsx`，在工具栏末尾添加设置按钮
+   - 修改 `index.tsx`，从左侧标签列表中移除设置按钮
+   - 添加 `Toolbar.page.styl`，美化工具栏样式
+
+4. **主题切换和页脚**
+   - 添加 `footer.html`，包含主题切换菜单
+   - 添加 `zh.yaml`，提供中文翻译
+
 ## 安装方法
 
 1. **添加插件到 HydroOJ 系统**：
@@ -72,34 +117,27 @@ HydroOJ 的 Ant Design 风格美化插件，提供了现代化的界面样式、
 
 ```
 antd-beautify/
-├── templates/
-│   ├── layout/
-│   │   └── html5.html          # 美化的布局模板
-│   ├── components/
-│   │   └── problem.html        # 美化的问题组件
-│   └── partials/
-│       ├── problem_list.html    # 美化的问题列表模板
-│       └── footer.html          # 自定义页脚（整合自 hydro-ui-enhancer）
 ├── components/
-│   └── scratchpad/              # 美化的 scratchpad 组件
+│   ├── problem/
+│   │   └── tag.page.styl      # 标签样式
+│   └── scratchpad/            # 代码编辑器工具栏
 │       ├── ScratchpadToolbarContainer.jsx
 │       ├── ToolbarComponent.jsx
 │       ├── Toolbar.page.styl
 │       └── index.tsx
 ├── locales/
-│   └── zh.yaml                  # 中文本地化文件（整合自 hydro-ui-enhancer）
-├── package.json                 # 插件配置文件
-└── README.md                    # 插件说明文档
+│   └── zh.yaml                # 中文本地化文件
+├── templates/
+│   ├── components/
+│   │   └── problem.html       # 问题组件模板
+│   ├── layout/
+│   │   └── html5.html         # 主布局模板
+│   └── partials/
+│       ├── footer.html        # 自定义页脚
+│       └── problem_list.html  # 问题列表模板
+├── package.json               # 插件配置文件
+└── README.md                  # 插件说明文档
 ```
-
-## 技术实现
-
-- **CSS 样式**：使用 Ant Design 风格的 CSS 变量和样式定义
-- **标签颜色**：通过 data-tag 属性和 CSS 选择器实现按类型分类的颜色
-- **模板覆盖**：使用 HydroOJ 的插件系统覆盖默认模板
-- **主题切换**：通过 HydroOJ 内置的主题切换 API 实现
-- **本地化**：支持多语言翻译文件
-- **热重载**：支持 HydroOJ 的热重载功能，修改后无需重启服务
 
 ## 兼容性
 
@@ -109,8 +147,9 @@ antd-beautify/
 
 ## 整合说明
 
-本插件整合了以下插件的功能：
-- **hydro-ui-enhancer**：主题切换、自定义页脚、本地化支持
+本插件整合了以下功能：
+- **原始功能**：Ant Design 风格界面美化、标签系统优化、代码编辑器美化
+- **整合功能**：主题切换、自定义页脚、本地化支持（来自 hydro-ui-enhancer）
 
 ## 贡献
 
