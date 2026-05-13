@@ -13,6 +13,11 @@ __langname: 简体中文
 'Switch Theme': '切换主题'
 'Current Theme': '当前主题'
 
+# Scratchpad 设置
+'Font size': '字体大小'
+'Tab size': 'Tab大小'
+'Open theme select': '打开主题选择'
+
 # 标签分类
 '动态规划': '动态规划'
 '贪心': '贪心'

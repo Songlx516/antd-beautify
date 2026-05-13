@@ -23,6 +23,8 @@ const mapStateToProps = (state) => ({
   activePage: state.ui.activePage,
 });
 
+const UiContext = window.UiContext;
+
 const mapDispatchToProps = (dispatch) => ({
   togglePanel(uiElement) {
     dispatch({

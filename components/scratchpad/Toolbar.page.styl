@@ -35,7 +35,6 @@
   align-items: center
   justify-content: center
   
-  // Hack for Firefox bug #984869
   &>div
     display: flex
     flex-direction: row
@@ -66,3 +65,9 @@
   width: 1px
   height: 1rem
   background: #e8e8e8
+
+.scratchpad__toolbar__pretest.enabled:hover .icon
+  color: red
+
+.scratchpad__toolbar__submit.enabled:hover .icon
+  color: green

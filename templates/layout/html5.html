@@ -32,8 +32,629 @@
       --code-font-family: "{{ UserContext.codeFontFamily }}", "monaco", "Source Code Pro", "Consolas", "Lucida Console", "monospace";
       --font-ligatures: {{ "normal" if UserContext.codeFontLigatures else "none" }} !important;
     }
+
+    /* --- 现代化美化 - 卡片阴影与悬停 --- */
+    .section {
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .section:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
+    }
+
+    /* --- 按钮现代化美化 --- */
+    /* ============================================
+       蓝白风格按钮样式 - 覆盖旧配色
+       仅针对提交类型的按钮
+       ============================================ */
+
+    /* 仅针对明确标记为 primary 的按钮 */
+    button.btn-primary:not(.star):not([data-star]):not([data-star-action]),
+    .btn.btn-primary:not(.star):not([data-star]):not([data-star-action]),
+    [type="submit"].btn-primary:not(.star):not([data-star]):not([data-star-action]),
+    .button.button--primary:not(.star):not([data-star]):not([data-star-action]),
+    a.button.button--primary:not(.star):not([data-star]):not([data-star-action]) {
+      background: #1890ff !important;
+      border-color: #1890ff !important;
+      color: #ffffff !important;
+    }
+
+    /* 针对提交按钮 */
+    button[type="submit"]:not(.star),
+    input[type="submit"]:not(.star),
+    .submit button:not(.star) {
+      background: #1890ff !important;
+      border-color: #1890ff !important;
+      color: #ffffff !important;
+    }
+
+    button[type="submit"]:hover:not(:disabled):not(.star),
+    input[type="submit"]:hover:not(:disabled):not(.star),
+    .submit button:hover:not(:disabled):not(.star) {
+      background: #40a9ff !important;
+      border-color: #40a9ff !important;
+    }
+
+    /* 针对工具栏中的主要按钮（过滤、递交等）- 排除收藏按钮 */
+    .section__tools button:not(.star):not([data-star]):not([data-star-action]),
+    .section__tools a.button:not(.star):not([data-star]):not([data-star-action]),
+    .toolbar button:not(.star):not([data-star]):not([data-star-action]),
+    .toolbar a.button:not(.star):not([data-star]):not([data-star-action]) {
+      background: #1890ff !important;
+      border-color: #1890ff !important;
+      color: #ffffff !important;
+    }
+
+    .section__tools button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
+    .section__tools a.button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
+    .toolbar button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
+    .toolbar a.button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled) {
+      background: #40a9ff !important;
+      border-color: #40a9ff !important;
+    }
+
+    /* 通用按钮圆角和阴影 */
+    button:not(.nav__item):not(.tabs__tab):not(.menu__link):not(.problem__tag-link):not(.star):not([data-star]):not([data-star-action]),
+    input[type="button"]:not(.nav__item),
+    input[type="submit"]:not(.nav__item),
+    input[type="reset"]:not(.nav__item) {
+      border-radius: 6px !important;
+      transition: all 0.2s ease !important;
+    }
+
+    /* 统一所有按钮配色为蓝白风格 */
+    button.primary:not(.star):not([data-star]):not([data-star-action]),
+    input[type="submit"].primary:not(.star):not([data-star]):not([data-star-action]),
+    .button--primary:not(.star):not([data-star]):not([data-star-action]),
+    .btn-primary:not(.star):not([data-star]):not([data-star-action]),
+    .btn.primary:not(.star):not([data-star]):not([data-star-action]),
+    input[type="button"].primary:not(.star):not([data-star]):not([data-star-action]),
+    button[type="submit"]:not(.star):not([data-star]):not([data-star-action]),
+    input[type="submit"]:not(.star):not([data-star]):not([data-star-action]) {
+      background: #1890ff !important;
+      border-color: #1890ff !important;
+      color: #ffffff !important;
+    }
+
+    button.primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    input[type="submit"].primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .button--primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .btn-primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .btn.primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    input[type="button"].primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    button[type="submit"]:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    input[type="submit"]:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]) {
+      background: #40a9ff !important;
+      border-color: #40a9ff !important;
+    }
+
+    /* 确保标签链接保留边框样式 */
+    .problem__tag-link {
+      border-radius: inherit !important;
+    }
     
-    .section{border-radius:10px}
+    /* 浅色模式标签边框 */
+    html:not(.theme--dark) .problem__tag-link {
+      border: 1px solid currentColor !important;
+    }
+
+    /* 恢复收藏按钮和星星图标的原始样式 */
+    .star,
+    [data-star],
+    [data-star-action],
+    .star *,
+    [data-star] *,
+    [data-star-action] * {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* 恢复评测记录列表页面按钮样式 */
+    .col--problem-name button:not(.problem__tag-link),
+    .col--problem-name a:not(.problem__tag-link),
+    .col--problem-name button.link,
+    .col--problem-name button.link:hover,
+    .col--problem-name button.link:active,
+    .col--problem-name button.link:focus {
+      background: transparent !important;
+      border: none !important;
+      color: inherit !important;
+      box-shadow: none !important;
+    }
+
+    /* ============================================
+       登录界面白色边框修复
+       ============================================ */
+    .login-form,
+    .login-form .section,
+    .page--login .section,
+    .page--register .section,
+    .page--reset .section {
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .login-form input,
+    .login-form textarea,
+    .page--login input,
+    .page--register input,
+    .page--reset input,
+    .page--auth input,
+    .inverse .material .textbox,
+    .inverse .textbox,
+    .page--auth .textbox,
+    .auth-form .textbox,
+    .auth-form input {
+      border: none !important;
+      background: rgba(255,255,255,0.8) !important;
+      box-shadow: none !important;
+    }
+
+    /* 移除外部容器边框（红框），保留输入框边框（绿框） */
+    html body .inverse *:not(input):not(textarea):not(.textbox):not(button):not(select),
+    html body.page--auth *:not(input):not(textarea):not(.textbox):not(button):not(select) {
+      border: none !important;
+      border-width: 0 !important;
+      border-style: none !important;
+      box-shadow: none !important;
+    }
+
+    /* --- 导航栏美化 - 亮色模式 --- */
+    .theme--default .nav,
+    .nav:not(.dark) {
+      background: linear-gradient(135deg, #fff 0%, #f5f7fa 100%) !important;
+      border-bottom: 1px solid #e8e8e8 !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04) !important;
+    }
+    .theme--default .nav__item,
+    .nav__item:not(.dark) {
+      border-radius: 6px !important;
+      transition: all 0.2s ease !important;
+      margin: 0 2px;
+    }
+    .theme--default .nav__item:hover,
+    .nav__item:not(.dark):hover {
+      background: rgba(24,144,255,0.1) !important;
+    }
+    .theme--default .nav__item.nav--active,
+    .nav__item.nav--active:not(.dark) {
+      background: #1890ff !important;
+      color: white !important;
+      box-shadow: 0 2px 8px rgba(24,144,255,0.35);
+    }
+
+    /* --- 导航栏美化 - 暗色模式 --- */
+    .theme--dark .nav {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+      border-bottom: 1px solid #2b2b2b !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+    }
+    .theme--dark .nav__item {
+      border-radius: 6px !important;
+      transition: all 0.2s ease !important;
+      margin: 0 2px;
+      color: #e0e0e0 !important;
+    }
+    .theme--dark .nav__item:hover {
+      background: rgba(138, 180, 248, 0.15) !important;
+      color: #8ab4f8 !important;
+    }
+    .theme--dark .nav__item.nav--active {
+      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+      color: #e0e0e0 !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      border: 1px solid #0f3460 !important;
+    }
+
+    /* --- 输入框美化 --- */
+    input, select, textarea, .textbox, .select,
+    input[type="text"], input[type="password"], input[type="email"],
+    input[type="number"], input[type="search"], input[type="tel"],
+    input[type="url"] {
+      border-radius: 4px !important;
+      border: 1px solid #d9d9d9 !important;
+      transition: all 0.2s ease !important;
+    }
+    input:focus, select:focus, textarea:focus, .textbox:focus,
+    .select:focus, [type="text"]:focus, [type="password"]:focus,
+    [type="email"]:focus, [type="number"]:focus {
+      border-color: #40a9ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.1) !important;
+      outline: none;
+    }
+
+    /* --- 表格美化 --- */
+    .data-table, table, .table {
+      border-radius: 6px !important;
+      overflow: hidden !important;
+      border-collapse: separate !important;
+      border-spacing: 0 !important;
+    }
+    .data-table th, table th, .table th {
+      background: linear-gradient(180deg, #fafafa, #f5f5f5) !important;
+      border-bottom: 2px solid #e8e8e8 !important;
+      font-weight: 600 !important;
+    }
+    .data-table tr:hover, table tr:hover, .table tr:hover {
+      background: rgba(24,144,255,0.04) !important;
+    }
+    .data-table td, table td, .table td {
+      border-bottom: 1px solid #f0f0f0 !important;
+    }
+
+    /* --- 首页表格深色模式 --- */
+    .theme--dark.page--homepage .section .data-table thead th,
+    .theme--dark.page--homepage .section table thead th {
+      background: linear-gradient(180deg, #1a1a2e, #16213e) !important;
+      border-bottom: 2px solid #0f3460 !important;
+      color: #e0e0e0 !important;
+    }
+
+    /* --- 首页排名表格修复 - 确保单元格正确显示 --- */
+    .page--homepage .section .data-table .col--bio {
+      display: table-cell !important;
+    }
+    
+    .page--homepage .section .data-table td.col--bio {
+      height: auto !important;
+    }
+
+    /* --- 深色模式表格表头 - 通用样式 --- */
+    .theme--dark .section .data-table thead th,
+    .theme--dark .section table thead th {
+      background: linear-gradient(180deg, #1a1a2e, #16213e) !important;
+      border-bottom: 2px solid #0f3460 !important;
+      color: #e0e0e0 !important;
+    }
+
+    /* --- 排名页面表格修复 --- */
+    .page--ranking .section .data-table .col--bio {
+      display: table-cell !important;
+    }
+    
+    .page--ranking .section .data-table td.col--bio {
+      height: auto !important;
+    }
+
+    /* --- 代码框美化 - 浅色模式 --- */
+    .theme--default .sample pre,
+    .sample pre:not(.theme--dark *) {
+      background: #f6f8fa !important;
+      border: 1px solid #e1e4e8 !important;
+      border-radius: 6px !important;
+      padding: 12px 16px !important;
+    }
+    
+    .theme--default .sample code,
+    .sample code:not(.theme--dark *) {
+      background: transparent !important;
+      color: #24292e !important;
+      font-family: "Consolas", "Monaco", "Source Code Pro", "Monospace" !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+    }
+
+    /* --- 代码框美化 - 深色模式 --- */
+    .theme--dark .sample pre {
+      background: #1e1e2e !important;
+      border: 1px solid #3b3b4f !important;
+      border-radius: 6px !important;
+      padding: 12px 16px !important;
+    }
+    
+    .theme--dark .sample code {
+      background: transparent !important;
+      color: #e4e4e7 !important;
+      font-family: "Consolas", "Monaco", "Source Code Pro", "Monospace" !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+    }
+
+    /* --- 全局过渡动画 --- */
+    * {
+      transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    /* ============================================
+       问题标签样式 - 深色模式与浅色模式一致
+       ============================================ */
+    html.theme--dark .problem__tag-link {
+      display: inline-block;
+      padding: 4px 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 250px;
+      line-height: 20px;
+      height: 28px;
+      background: #f0f0f0 !important;
+      color: #333 !important;
+      border-radius: 14px !important;
+      font-size: 12px;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      border: 1px solid currentColor !important;
+    }
+
+    html.theme--dark .problem__tag-link:hover {
+      background: #1890ff !important;
+      color: #fff !important;
+      border-color: #1890ff !important;
+      text-decoration: none;
+    }
+    
+    html.theme--dark .problem__tag-link:active,
+    html.theme--dark .problem__tag-link:focus {
+      background: #096dd9 !important;
+      color: #fff !important;
+      border-color: #096dd9 !important;
+      outline: none;
+    }
+
+    html.theme--dark .problem__tag-link span,
+    html.theme--dark .problem__tag-link a,
+    html.theme--dark .problem__tag-link * {
+      color: inherit !important;
+      text-shadow: none !important;
+      font-weight: inherit !important;
+    }
+
+    /* 深色模式 - 动态规划（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="动态规划"],
+    html.theme--dark .problem__tag-link[data-tag="LCS"],
+    html.theme--dark .problem__tag-link[data-tag="LIS"],
+    html.theme--dark .problem__tag-link[data-tag*="背包"],
+    html.theme--dark .problem__tag-link[data-tag="DP"],
+    html.theme--dark .problem__tag-link[data-tag="单调性DP"],
+    html.theme--dark .problem__tag-link[data-tag="环形DP"],
+    html.theme--dark .problem__tag-link[data-tag="树形DP"],
+    html.theme--dark .problem__tag-link[data-tag="状态压缩DP"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 贪心（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag="贪心"],
+    html.theme--dark .problem__tag-link[data-tag*="构造"],
+    html.theme--dark .problem__tag-link[data-tag*="打表"] {
+      background: #f6ffed !important;
+      color: #52c41a !important;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 树结构（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="树结构"],
+    html.theme--dark .problem__tag-link[data-tag*="树"],
+    html.theme--dark .problem__tag-link[data-tag="最近公共祖先"],
+    html.theme--dark .problem__tag-link[data-tag*="生成树"],
+    html.theme--dark .problem__tag-link[data-tag="次小生成树"],
+    html.theme--dark .problem__tag-link[data-tag="DFS序列"],
+    html.theme--dark .problem__tag-link[data-tag*="树上倍增"],
+    html.theme--dark .problem__tag-link[data-tag*="树的分治"],
+    html.theme--dark .problem__tag-link[data-tag*="树链剖分"],
+    html.theme--dark .problem__tag-link[data-tag="Link-Cut-Tree"] {
+      background: #fff2f0 !important;
+      color: #ff4d4f !important;
+      border: 1px solid #ff4d4f !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 图结构（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="图结构"],
+    html.theme--dark .problem__tag-link[data-tag*="图"],
+    html.theme--dark .problem__tag-link[data-tag="Floyd"],
+    html.theme--dark .problem__tag-link[data-tag="Dijkstra"],
+    html.theme--dark .problem__tag-link[data-tag="SPFA"],
+    html.theme--dark .problem__tag-link[data-tag*="负权边"],
+    html.theme--dark .problem__tag-link[data-tag*="平面图"],
+    html.theme--dark .problem__tag-link[data-tag*="二分图"],
+    html.theme--dark .problem__tag-link[data-tag*="二分图匹配"],
+    html.theme--dark .problem__tag-link[data-tag*="最短路"],
+    html.theme--dark .problem__tag-link[data-tag*="差分约束"],
+    html.theme--dark .problem__tag-link[data-tag*="拓扑排序"] {
+      background: #f9f0ff !important;
+      color: #722ed1 !important;
+      border: 1px solid #722ed1 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 数据结构（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="数据结构"],
+    html.theme--dark .problem__tag-link[data-tag="栈"],
+    html.theme--dark .problem__tag-link[data-tag="队列"],
+    html.theme--dark .problem__tag-link[data-tag*="链表"],
+    html.theme--dark .problem__tag-link[data-tag*="单调队列"],
+    html.theme--dark .problem__tag-link[data-tag*="并查集"],
+    html.theme--dark .problem__tag-link[data-tag="堆"],
+    html.theme--dark .problem__tag-link[data-tag*="平衡树"],
+    html.theme--dark .problem__tag-link[data-tag*="线段树"],
+    html.theme--dark .problem__tag-link[data-tag*="树状数组"],
+    html.theme--dark .problem__tag-link[data-tag*="树套树"],
+    html.theme--dark .problem__tag-link[data-tag*="四分树"],
+    html.theme--dark .problem__tag-link[data-tag*="划分树"],
+    html.theme--dark .problem__tag-link[data-tag*="归并树"],
+    html.theme--dark .problem__tag-link[data-tag*="替罪羊树"],
+    html.theme--dark .problem__tag-link[data-tag*="左偏树"],
+    html.theme--dark .problem__tag-link[data-tag*="k-d树"],
+    html.theme--dark .problem__tag-link[data-tag*="块状链表"],
+    html.theme--dark .problem__tag-link[data-tag*="Hashing"] {
+      background: #e6fffb !important;
+      color: #13c2c2 !important;
+      border: 1px solid #13c2c2 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 容器（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="容器"],
+    html.theme--dark .problem__tag-link[data-tag="map"],
+    html.theme--dark .problem__tag-link[data-tag="stack"],
+    html.theme--dark .problem__tag-link[data-tag="deque"],
+    html.theme--dark .problem__tag-link[data-tag="list"],
+    html.theme--dark .problem__tag-link[data-tag="queue"],
+    html.theme--dark .problem__tag-link[data-tag*="哈希表"] {
+      background: #fffbe6 !important;
+      color: #faad14 !important;
+      border: 1px solid #faad14 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 搜索算法（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="深度优先搜索"],
+    html.theme--dark .problem__tag-link[data-tag*="广度优先搜索"],
+    html.theme--dark .problem__tag-link[data-tag*="迭代加深搜索"] {
+      background: #fff7e6 !important;
+      color: #fa8c16 !important;
+      border: 1px solid #fa8c16 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 分治与查询技术（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="分治"],
+    html.theme--dark .problem__tag-link[data-tag="RMQ"],
+    html.theme--dark .problem__tag-link[data-tag*="分块"] {
+      background: #f0f5ff !important;
+      color: #108ee9 !important;
+      border: 1px solid #108ee9 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 数学与数论（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="快速幂"],
+    html.theme--dark .problem__tag-link[data-tag*="排列组合"],
+    html.theme--dark .problem__tag-link[data-tag*="位运算"],
+    html.theme--dark .problem__tag-link[data-tag*="进制转换"],
+    html.theme--dark .problem__tag-link[data-tag*="数学"] {
+      background: #f9f0ff !important;
+      color: #9c27b0 !important;
+      border: 1px solid #9c27b0 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 基础算法技巧（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="二分查找"],
+    html.theme--dark .problem__tag-link[data-tag*="三分查找"],
+    html.theme--dark .problem__tag-link[data-tag*="双指针扫描"],
+    html.theme--dark .problem__tag-link[data-tag*="排序"] {
+      background: #f5f5f5 !important;
+      color: #666 !important;
+      border: 1px solid #666 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 递推（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="递推"] {
+      background: #fff7e6 !important;
+      color: #fa8c16 !important;
+      border: 1px solid #fa8c16 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 递归（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="递归"] {
+      background: #fff1e6 !important;
+      color: #d46b08 !important;
+      border: 1px solid #d46b08 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 数组（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="一维数组"],
+    html.theme--dark .problem__tag-link[data-tag*="二维数组"] {
+      background: #fff0f6 !important;
+      color: #eb2f96 !important;
+      border: 1px solid #eb2f96 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 字符串（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="字符串"],
+    html.theme--dark .problem__tag-link[data-tag*="字符型"] {
+      background: #e6fffb !important;
+      color: #13c2c2 !important;
+      border: 1px solid #13c2c2 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 函数与分支（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="函数问题"],
+    html.theme--dark .problem__tag-link[data-tag*="分支问题"] {
+      background: #f6ffed !important;
+      color: #52c41a !important;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 结构体（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="结构体"] {
+      background: #f9f0ff !important;
+      color: #722ed1 !important;
+      border: 1px solid #722ed1 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 循环（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="简单循环"],
+    html.theme--dark .problem__tag-link[data-tag*="嵌套循环"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 输入输出语句（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="输入输出语句"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 竞赛标签（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag="CSP-J"],
+    html.theme--dark .problem__tag-link[data-tag="CSP-S"],
+    html.theme--dark .problem__tag-link[data-tag="NOIP"] {
+      background: #fff2f0 !important;
+      color: #ff4d4f !important;
+      border: 1px solid #ff4d4f !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - GESP（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag="GESP"] {
+      background: #f6ffed !important;
+      color: #52c41a !important;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 客观题（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="客观题"] {
+      background: #f5f5f5 !important;
+      color: #666 !important;
+      border: 1px solid #666 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - USACO（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="USACO"] {
+      background: #fff0f6 !important;
+      color: #eb2f96 !important;
+      border: 1px solid #eb2f96 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 蓝桥杯（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="蓝桥杯"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
 
     /* 问题标签样式 - Ant Design 风格 */
     .problem__tags {
@@ -53,7 +674,8 @@
       padding: 0 !important;
     }
 
-    .problem__tag-link {
+    /* 浅色模式 - 标签基础样式 */
+    html:not(.theme--dark) .problem__tag-link {
       display: inline-block;
       padding: 4px 12px;
       overflow: hidden;
@@ -64,16 +686,25 @@
       height: 28px;
       background: #f0f0f0;
       color: #333 !important;
-      border-radius: 14px;
+      border-radius: 14px !important;
       font-size: 12px;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-      border: 1px solid transparent;
+      border: 1px solid currentColor !important;
     }
 
-    .problem__tag-link:hover {
-      background: #1890ff;
+    html:not(.theme--dark) .problem__tag-link:hover {
+      background: #1890ff !important;
       color: #fff !important;
+      border-color: #1890ff !important;
       text-decoration: none;
+    }
+    
+    html:not(.theme--dark) .problem__tag-link:active,
+    html:not(.theme--dark) .problem__tag-link:focus {
+      background: #096dd9 !important;
+      color: #fff !important;
+      border-color: #096dd9 !important;
+      outline: none;
     }
 
     .col--problem-name .problem__tags {
@@ -84,196 +715,1653 @@
       margin: 0 4px 0 0 !important;
     }
 
-    /* 标签颜色美化 - 按类型分类 */
-    
+    /* 浅色模式 - 标签颜色美化 */
+
     /* 蓝色系 - 动态规划 */
-    .problem__tag-link[data-tag*="动态规划"],
-    .problem__tag-link[data-tag="LCS"],
-    .problem__tag-link[data-tag="LIS"],
-    .problem__tag-link[data-tag*="背包"],
-    .problem__tag-link[data-tag="单调性DP"],
-    .problem__tag-link[data-tag="环形DP"],
-    .problem__tag-link[data-tag="树形DP"],
-    .problem__tag-link[data-tag="状态压缩DP"] {
-      background: #e6f7ff;
+    html:not(.theme--dark) .problem__tag-link[data-tag*="动态规划"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="LCS"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="LIS"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="背包"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="DP"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="单调性DP"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="环形DP"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="树形DP"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="状态压缩DP"] {
+      background: #e6f7ff !important;
       color: #1890ff !important;
-      border: 1px solid #91d5ff;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
     }
 
     /* 绿色系 - 贪心 */
-    .problem__tag-link[data-tag="贪心"] {
-      background: #f6ffed;
+    html:not(.theme--dark) .problem__tag-link[data-tag="贪心"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="构造"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="打表"] {
+      background: #f6ffed !important;
       color: #52c41a !important;
-      border: 1px solid #b7eb8f;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
     }
 
     /* 红色系 - 树结构 */
-    .problem__tag-link[data-tag*="树结构"],
-    .problem__tag-link[data-tag*="树"],
-    .problem__tag-link[data-tag="最近公共祖先"],
-    .problem__tag-link[data-tag*="生成树"],
-    .problem__tag-link[data-tag="次小生成树"],
-    .problem__tag-link[data-tag="DFS序列"],
-    .problem__tag-link[data-tag*="树上倍增"],
-    .problem__tag-link[data-tag*="树的分治"],
-    .problem__tag-link[data-tag*="树链剖分"],
-    .problem__tag-link[data-tag="Link-Cut-Tree"] {
-      background: #fff2f0;
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树结构"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="最近公共祖先"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="生成树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="次小生成树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="DFS序列"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树上倍增"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树的分治"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树链剖分"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="Link-Cut-Tree"] {
+      background: #fff2f0 !important;
       color: #ff4d4f !important;
-      border: 1px solid #ffccc7;
+      border: 1px solid #ff4d4f !important;
+      border-radius: 14px !important;
     }
 
     /* 紫色系 - 图结构 */
-    .problem__tag-link[data-tag*="图结构"],
-    .problem__tag-link[data-tag*="图"],
-    .problem__tag-link[data-tag="Floyd"],
-    .problem__tag-link[data-tag="Dijkstra"],
-    .problem__tag-link[data-tag="SPFA"],
-    .problem__tag-link[data-tag*="负权边"],
-    .problem__tag-link[data-tag*="平面图"],
-    .problem__tag-link[data-tag*="二分图"],
-    .problem__tag-link[data-tag*="二分图匹配"],
-    .problem__tag-link[data-tag*="最短路"],
-    .problem__tag-link[data-tag*="差分约束"],
-    .problem__tag-link[data-tag*="拓扑排序"] {
-      background: #f9f0ff;
+    html:not(.theme--dark) .problem__tag-link[data-tag*="图结构"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="图"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="Floyd"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="Dijkstra"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="SPFA"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="负权边"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="平面图"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="二分图"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="二分图匹配"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="最短路"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="差分约束"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="拓扑排序"] {
+      background: #f9f0ff !important;
       color: #722ed1 !important;
-      border: 1px solid #d3adf7;
+      border: 1px solid #722ed1 !important;
+      border-radius: 14px !important;
     }
 
     /* 青色 - 数据结构 */
-    .problem__tag-link[data-tag*="数据结构"],
-    .problem__tag-link[data-tag="栈"],
-    .problem__tag-link[data-tag="队列"],
-    .problem__tag-link[data-tag*="链表"],
-    .problem__tag-link[data-tag*="单调队列"],
-    .problem__tag-link[data-tag*="并查集"],
-    .problem__tag-link[data-tag="堆"],
-    .problem__tag-link[data-tag*="平衡树"],
-    .problem__tag-link[data-tag*="线段树"],
-    .problem__tag-link[data-tag*="树状数组"],
-    .problem__tag-link[data-tag*="树套树"],
-    .problem__tag-link[data-tag*="四分树"],
-    .problem__tag-link[data-tag*="划分树"],
-    .problem__tag-link[data-tag*="归并树"],
-    .problem__tag-link[data-tag*="替罪羊树"],
-    .problem__tag-link[data-tag*="左偏树"],
-    .problem__tag-link[data-tag*="k-d树"],
-    .problem__tag-link[data-tag*="块状链表"],
-    .problem__tag-link[data-tag*="Hashing"],
-    .problem__tag-link[data-tag*="函数式编程"] {
-      background: #e6fffb;
+    html:not(.theme--dark) .problem__tag-link[data-tag*="数据结构"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="栈"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="队列"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="链表"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="单调队列"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="并查集"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="堆"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="平衡树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="线段树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树状数组"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树套树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="四分树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="划分树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="归并树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="替罪羊树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="左偏树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="k-d树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="块状链表"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="Hashing"] {
+      background: #e6fffb !important;
       color: #13c2c2 !important;
-      border: 1px solid #87e8de;
-    }
-
-    /* 橙色系 - 递推 */
-    .problem__tag-link[data-tag*="递推"] {
-      background: #fff7e6;
-      color: #fa8c16 !important;
-      border: 1px solid #ffd591;
-    }
-
-    /* 棕色系 - 递归 */
-    .problem__tag-link[data-tag*="递归"] {
-      background: #fff1e6;
-      color: #d46b08 !important;
-      border: 1px solid #ffd591;
+      border: 1px solid #13c2c2 !important;
+      border-radius: 14px !important;
     }
 
     /* 黄色系 - 容器 */
-    .problem__tag-link[data-tag*="容器"],
-    .problem__tag-link[data-tag="map"],
-    .problem__tag-link[data-tag="vector"],
-    .problem__tag-link[data-tag="stack"],
-    .problem__tag-link[data-tag="deque"],
-    .problem__tag-link[data-tag="list"] {
-      background: #fffbe6;
+    html:not(.theme--dark) .problem__tag-link[data-tag*="容器"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="map"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="stack"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="deque"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="list"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="queue"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="哈希表"] {
+      background: #fffbe6 !important;
       color: #faad14 !important;
-      border: 1px solid #ffe58f;
+      border: 1px solid #faad14 !important;
+      border-radius: 14px !important;
     }
 
-    /* 灰色系 - 其他 */
-    .problem__tag-link[data-tag="其他"],
-    .problem__tag-link[data-tag*="二分查找"],
-    .problem__tag-link[data-tag*="三分查找"],
-    .problem__tag-link[data-tag*="双指针扫描"],
-    .problem__tag-link[data-tag*="分治"],
-    .problem__tag-link[data-tag*="分块"],
-    .problem__tag-link[data-tag="RMQ"],
-    .problem__tag-link[data-tag*="快速幂"],
-    .problem__tag-link[data-tag*="排序"],
-    .problem__tag-link[data-tag*="构造"],
-    .problem__tag-link[data-tag*="打表"],
-    .problem__tag-link[data-tag*="位运算"],
-    .problem__tag-link[data-tag*="深度优先搜索"],
-    .problem__tag-link[data-tag*="广度优先搜索"],
-    .problem__tag-link[data-tag*="排列组合"],
-    .problem__tag-link[data-tag*="迭代加深搜索"],
-    .problem__tag-link[data-tag*="进制转换"],
-    .problem__tag-link[data-tag="NPC"] {
-      background: #f5f5f5;
+    /* 橙色系 - 搜索算法 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="深度优先搜索"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="广度优先搜索"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="迭代加深搜索"] {
+      background: #fff7e6 !important;
+      color: #fa8c16 !important;
+      border: 1px solid #fa8c16 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深蓝色系 - 分治与查询技术 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="分治"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="RMQ"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="分块"] {
+      background: #f0f5ff !important;
+      color: #108ee9 !important;
+      border: 1px solid #108ee9 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 紫色系 - 数学与数论 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="快速幂"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="排列组合"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="位运算"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="进制转换"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="数学"] {
+      background: #f9f0ff !important;
+      color: #9c27b0 !important;
+      border: 1px solid #9c27b0 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 灰色系 - 基础算法技巧 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="二分查找"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="三分查找"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="双指针扫描"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="排序"] {
+      background: #f5f5f5 !important;
       color: #666 !important;
-      border: 1px solid #d9d9d9;
+      border: 1px solid #666 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 橙色系 - 递推 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="递推"] {
+      background: #fff7e6 !important;
+      color: #fa8c16 !important;
+      border: 1px solid #fa8c16 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 棕色系 - 递归 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="递归"] {
+      background: #fff1e6 !important;
+      color: #d46b08 !important;
+      border: 1px solid #d46b08 !important;
+      border-radius: 14px !important;
     }
 
     /* 粉色系 - 数组 */
-    .problem__tag-link[data-tag*="一维数组"],
-    .problem__tag-link[data-tag*="二维数组"] {
-      background: #fff0f6;
+    html:not(.theme--dark) .problem__tag-link[data-tag*="一维数组"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="二维数组"] {
+      background: #fff0f6 !important;
       color: #eb2f96 !important;
-      border: 1px solid #ffa9c4;
+      border: 1px solid #eb2f96 !important;
+      border-radius: 14px !important;
     }
 
-    /* 青色系 - 字符串 */
-    .problem__tag-link[data-tag*="字符串"],
-    .problem__tag-link[data-tag*="字符型"] {
-      background: #e6fffb;
+    /* 青色系 - 字符串与字符型 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="字符串"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="字符型"] {
+      background: #e6fffb !important;
       color: #13c2c2 !important;
-      border: 1px solid #87e8de;
+      border: 1px solid #13c2c2 !important;
+      border-radius: 14px !important;
     }
 
-    /* 绿色系 - 函数问题 */
-    .problem__tag-link[data-tag*="函数问题"],
-    .problem__tag-link[data-tag*="分支问题"] {
-      background: #f6ffed;
+    /* 绿色系 - 函数与分支 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="函数问题"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="分支问题"] {
+      background: #f6ffed !important;
       color: #52c41a !important;
-      border: 1px solid #b7eb8f;
-    }
-
-    /* 蓝色系 - 循环 */
-    .problem__tag-link[data-tag*="简单循环"],
-    .problem__tag-link[data-tag*="嵌套循环"] {
-      background: #e6f7ff;
-      color: #1890ff !important;
-      border: 1px solid #91d5ff;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
     }
 
     /* 紫色系 - 结构体 */
-    .problem__tag-link[data-tag*="结构体"] {
-      background: #f9f0ff;
+    html:not(.theme--dark) .problem__tag-link[data-tag*="结构体"] {
+      background: #f9f0ff !important;
       color: #722ed1 !important;
-      border: 1px solid #d3adf7;
+      border: 1px solid #722ed1 !important;
+      border-radius: 14px !important;
     }
 
-    /* 青色系 - 哈希表 */
-    .problem__tag-link[data-tag*="哈希表"] {
-      background: #e6fffb;
-      color: #13c2c2 !important;
-      border: 1px solid #87e8de;
-    }
-
-    /* 蓝色系 - 电子学会 */
-    .problem__tag-link[data-tag*="电子学会"] {
-      background: #e6f7ff;
+    /* 蓝色系 - 循环 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="简单循环"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="嵌套循环"] {
+      background: #e6f7ff !important;
       color: #1890ff !important;
-      border: 1px solid #91d5ff;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 蓝色系 - 输入输出语句 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="输入输出语句"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 红色系 - 竞赛标签 */
+    html:not(.theme--dark) .problem__tag-link[data-tag="CSP-J"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="CSP-S"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="NOIP"] {
+      background: #fff2f0 !important;
+      color: #ff4d4f !important;
+      border: 1px solid #ff4d4f !important;
+      border-radius: 14px !important;
+    }
+
+    /* 绿色系 - GESP */
+    html:not(.theme--dark) .problem__tag-link[data-tag="GESP"] {
+      background: #f6ffed !important;
+      color: #52c41a !important;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
+    }
+
+    /* 灰色系 - 客观题 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="客观题"] {
+      background: #f5f5f5 !important;
+      color: #666 !important;
+      border: 1px solid #666 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 粉色系 - USACO */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="USACO"] {
+      background: #fff0f6 !important;
+      color: #eb2f96 !important;
+      border: 1px solid #eb2f96 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 蓝色系 - 蓝桥杯 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="蓝桥杯"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* === 题库分类对话框标签样式 === */
+    
+    /* 浅色模式 - 分类标签 */
+    html:not(.theme--dark) .widget--category-filter__tag {
+      display: inline-block !important;
+      padding: 4px 12px !important;
+      margin: 4px !important;
+      border-radius: 14px !important;
+      font-size: 12px !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      border: none !important;
+      background: #f5f5f5 !important;
+      color: #595959 !important;
+    }
+    
+    html:not(.theme--dark) .widget--category-filter__tag:hover {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: none !important;
+    }
+    
+    html:not(.theme--dark) .widget--category-filter__tag.selected {
+      background: #1890ff !important;
+      color: #fff !important;
+      border: none !important;
+    }
+    
+    /* 深色模式 - 分类标签 */
+    html.theme--dark .widget--category-filter__tag {
+      display: inline-block !important;
+      padding: 4px 12px !important;
+      margin: 4px !important;
+      border-radius: 14px !important;
+      font-size: 12px !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      border: none !important;
+      background: #353535 !important;
+      color: #bfbfbf !important;
+    }
+    
+    html.theme--dark .widget--category-filter__tag:hover {
+      background: rgba(24,144,255,0.15) !important;
+      color: #1890ff !important;
+      border: none !important;
+    }
+    
+    html.theme--dark .widget--category-filter__tag.selected {
+      background: #1890ff !important;
+      color: #fff !important;
+      border: none !important;
     }
 
     {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
       #panel { display: flex; flex-direction: column; }
     {% endif %}
-  </style>
+
+    /* === 代码框工具栏按钮美化 - 移到标题右侧 + 现代配色 === */
+    body.section.sample,
+    body .problem-statement .sample,
+    body .richmedia .sample {
+      position: relative;
+    }
+    
+    /* 题库页面 - 默认位置 */
+    .page--problem_detail .section.sample > .toolbar,
+    .page--problem_detail .problem-statement .sample > .toolbar,
+    .page--problem_detail .richmedia .sample > .toolbar,
+    .page--problem_detail .section.sample > pre > .toolbar,
+    .page--problem_detail .problem-statement .sample > pre > .toolbar,
+    .page--problem_detail .richmedia .sample > pre > .toolbar,
+    .page--problem_detail .sample > .toolbar,
+    .page--problem_detail .sample > pre > .toolbar {
+      position: absolute !important;
+      right: 15px !important;
+      top: 40px !important;
+      background: transparent !important;
+      padding: 0 !important;
+      gap: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      opacity: 1 !important;
+      z-index: 9999 !important;
+      width: auto !important;
+      margin: 0 !important;
+      float: none !important;
+    }
+    
+    /* 作业页面 - 向下调整一点 */
+    .page--homework_detail_problem .section.sample > .toolbar,
+    .page--homework_detail_problem .problem-statement .sample > .toolbar,
+    .page--homework_detail_problem .richmedia .sample > .toolbar,
+    .page--homework_detail_problem .section.sample > pre > .toolbar,
+    .page--homework_detail_problem .problem-statement .sample > pre > .toolbar,
+    .page--homework_detail_problem .richmedia .sample > pre > .toolbar,
+    .page--homework_detail_problem .sample > .toolbar,
+    .page--homework_detail_problem .sample > pre > .toolbar {
+      position: absolute !important;
+      right: 15px !important;
+      top: 20px !important;
+      background: transparent !important;
+      padding: 0 !important;
+      gap: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      opacity: 1 !important;
+      z-index: 9999 !important;
+      width: auto !important;
+      margin: 0 !important;
+      float: none !important;
+    }
+    
+    /* 比赛页面 - 与题库页面一致 */
+    .page--contest_detail_problem .section.sample > .toolbar,
+    .page--contest_detail_problem .problem-statement .sample > .toolbar,
+    .page--contest_detail_problem .richmedia .sample > .toolbar,
+    .page--contest_detail_problem .section.sample > pre > .toolbar,
+    .page--contest_detail_problem .problem-statement .sample > pre > .toolbar,
+    .page--contest_detail_problem .richmedia .sample > pre > .toolbar,
+    .page--contest_detail_problem .sample > .toolbar,
+    .page--contest_detail_problem .sample > pre > .toolbar {
+      position: absolute !important;
+      right: 15px !important;
+      top: 20px !important;
+      background: transparent !important;
+      padding: 0 !important;
+      gap: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      opacity: 1 !important;
+      z-index: 9999 !important;
+      width: auto !important;
+      margin: 0 !important;
+      float: none !important;
+    }
+    
+    /* 通用样式 - 其他页面 */
+    body .section.sample > .toolbar,
+    body .problem-statement .sample > .toolbar,
+    body .richmedia .sample > .toolbar,
+    body .section.sample > pre > .toolbar,
+    body .problem-statement .sample > pre > .toolbar,
+    body .richmedia .sample > pre > .toolbar,
+    html body .sample > .toolbar,
+    html body .sample > pre > .toolbar,
+    body .sample > .toolbar,
+    body .sample > pre > .toolbar {
+      position: absolute !important;
+      right: 15px !important;
+      top: 25px !important;
+      background: transparent !important;
+      padding: 0 !important;
+      gap: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      opacity: 1 !important;
+      z-index: 9999 !important;
+      width: auto !important;
+      margin: 0 !important;
+      float: none !important;
+    }
+    :root .toolbar .toolbar-item a,
+    :root .toolbar .toolbar-item.scratchpad-fill-button a,
+    :root body .toolbar-item a,
+    :root body .toolbar-item.scratchpad-fill-button a {
+      font-size: 12px !important;
+      padding: 4px 14px !important;
+      color: #1890ff !important;
+      background: transparent !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 4px !important;
+      transition: all 0.2s ease !important;
+      white-space: nowrap !important;
+      box-shadow: none !important;
+      min-height: 26px !important;
+      min-width: 64px !important;
+      line-height: 1.5 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 0 !important;
+      font-family: inherit !important;
+      font-weight: normal !important;
+      text-decoration: none !important;
+    }
+    :root .toolbar .toolbar-item a:hover,
+    :root .toolbar .toolbar-item.scratchpad-fill-button a:hover,
+    :root body .toolbar-item a:hover,
+    :root body .toolbar-item.scratchpad-fill-button a:hover {
+      color: #ffffff !important;
+      background: #1890ff !important;
+      border-color: #1890ff !important;
+      box-shadow: 0 2px 8px rgba(24,144,255,0.3) !important;
+      transform: translateY(-1px) !important;
+    }
+    :root .toolbar .toolbar-item a:active,
+    :root .toolbar .toolbar-item.scratchpad-fill-button a:active,
+    :root body .toolbar-item a:active,
+    :root body .toolbar-item.scratchpad-fill-button a:active {
+      transform: translateY(0) !important;
+      box-shadow: none !important;
+    }
+
+    /* === 章节切换按钮样式 (A、B按钮) === */
+    .section__tools.contest-problems,
+    html body .section__tools.contest-problems {
+      display: flex !important;
+      gap: 12px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      align-items: center !important;
+      width: auto !important;
+      grid-template-columns: none !important;
+      justify-content: flex-end !important;
+    }
+    
+    .section__tools.contest-problems a,
+    html body .section__tools.contest-problems a {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 10px !important;
+      background: #f5f5f5 !important;
+      border: 2px solid #d9d9d9 !important;
+      color: #666 !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      box-shadow: none !important;
+      position: static !important;
+      opacity: 1 !important;
+    }
+    
+    .section__tools.contest-problems a:before,
+    .section__tools.contest-problems a:after,
+    html body .section__tools.contest-problems a:before,
+    html body .section__tools.contest-problems a:after {
+      content: none !important;
+      display: none !important;
+    }
+    
+    .section__tools.contest-problems a:hover {
+      border-color: #1890ff !important;
+      color: #1890ff !important;
+      background: #e6f7ff !important;
+    }
+    
+    .section__tools.contest-problems a.active {
+      background: #1890ff !important;
+      border-color: #1890ff !important;
+      color: #fff !important;
+    }
+    
+    .section__tools.contest-problems a.pass {
+      border-color: #52c41a !important;
+      color: #52c41a !important;
+      background: #f6ffed !important;
+    }
+    
+    .section__tools.contest-problems a.pass.active {
+      background: #52c41a !important;
+      border-color: #52c41a !important;
+      color: #ffffff !important;
+      fill: #ffffff !important;
+    }
+    
+    .section__tools.contest-problems a.pass.active .id {
+      color: #ffffff !important;
+      display: block !important;
+    }
+    
+    .section__tools.contest-problems a.fail {
+      border-color: #ff4d4f !important;
+      color: #ff4d4f !important;
+      background: #fff2f0 !important;
+    }
+    
+    .section__tools.contest-problems a.fail.active {
+      background: #ff4d4f !important;
+      border-color: #ff4d4f !important;
+      color: #fff !important;
+    }
+    
+    .section__tools.contest-problems a.fail.active .id {
+      color: #ffffff !important;
+      display: block !important;
+    }
+    
+    .section__tools.contest-problems a .id {
+      margin-right: 0 !important;
+      line-height: 1 !important;
+      display: block !important;
+    }
+    
+    .section__tools.contest-problems a .icon {
+      display: none !important;
+    }
+
+    /* === scratchpad tablist styles === */
+
+    /* 标签列表容器 */
+    .scratchpad__tablist {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      padding: 12px !important;
+      background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%) !important;
+      border-radius: 12px !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+      user-select: none !important;
+    }
+
+    /* 标签按钮 */
+    .scratchpad__tablist div {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 44px !important;
+      height: 44px !important;
+      font-size: 24px !important;
+      border-radius: 10px !important;
+      color: #8c8c8c !important;
+      fill: #8c8c8c !important;
+      cursor: pointer !important;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+      background: transparent !important;
+      border: 2px solid transparent !important;
+      margin: 0 !important;
+      border-left: none !important;
+    }
+
+    /* 标签按钮悬停 */
+    .scratchpad__tablist div:hover {
+      color: #1890ff !important;
+      fill: #1890ff !important;
+      background: #e6f7ff !important;
+      transform: translateX(4px) !important;
+      box-shadow: 0 4px 12px rgba(24,144,255,0.2) !important;
+    }
+
+    /* 标签按钮激活状态 */
+    .scratchpad__tablist div.scratchpad__tab-active {
+      color: #1890ff !important;
+      fill: #1890ff !important;
+      background: linear-gradient(135deg, #e6f7ff 0%, #b3d8ff 100%) !important;
+      border-color: #91d5ff !important;
+      box-shadow: 0 4px 16px rgba(24,144,255,0.25) !important;
+      transform: translateX(4px) !important;
+      border-left: none !important;
+    }
+
+    /* === scratchpad panel title styles === */
+
+    /* 面板标题 - 浅色模式 */
+    .scratchpad__panel-title {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      line-height: 34px !important;
+      padding: 0 15px !important;
+      font-size: 14px !important;
+      color: #ffffff !important;
+      font-weight: 500 !important;
+      border-radius: 8px 8px 0 0 !important;
+      box-shadow: 0 2px 8px rgba(24,144,255,0.2) !important;
+    }
+
+    /* 面板标题 - 深色模式 */
+    .theme--dark .scratchpad__panel-title {
+      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+      border-bottom: 1px solid #2b2b2b !important;
+      color: #e0e0e0 !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    }
+
+    /* === scratchpad problem styles === */
+
+    /* 问题内容区域 */
+    .scratchpad__problem {
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      overflow: auto !important;
+      padding: 20px !important;
+      background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%) !important;
+      border-radius: 12px !important;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05) !important;
+    }
+
+    /* 问题内容区域内的卡片 */
+    .scratchpad__problem .card {
+      background: #ffffff !important;
+      border-radius: 12px !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+      border: none !important;
+      overflow: hidden !important;
+    }
+
+    /* 问题标题 */
+    .scratchpad__problem h1,
+    .scratchpad__problem h2,
+    .scratchpad__problem h3 {
+      font-weight: 600 !important;
+      color: #1f1f1f !important;
+      margin-bottom: 16px !important;
+    }
+
+    /* 问题描述文字 */
+    .scratchpad__problem p,
+    .scratchpad__problem li {
+      color: #595959 !important;
+      line-height: 1.8 !important;
+      font-size: 14px !important;
+    }
+
+    /* 代码块 */
+    .scratchpad__problem pre,
+    .scratchpad__problem code {
+      background: #fafafa !important;
+      border-radius: 8px !important;
+      padding: 12px 16px !important;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+      font-size: 13px !important;
+    }
+
+    /* 表格样式 */
+    .scratchpad__problem table {
+      border-collapse: separate !important;
+      border-spacing: 0 !important;
+      width: 100% !important;
+    }
+
+    .scratchpad__problem th,
+    .scratchpad__problem td {
+      padding: 12px 16px !important;
+      text-align: left !important;
+      border-bottom: 1px solid #f0f0f0 !important;
+    }
+
+    .scratchpad__problem th {
+      background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%) !important;
+      font-weight: 600 !important;
+      color: #333 !important;
+    }
+
+    .scratchpad__problem tr:hover {
+      background: #fafafa !important;
+    }
+
+    /* === Markdown/CommonMark 现代化样式 === */
+
+    /* 基础排版 */
+    .page--problem_detail .typo,
+    .page--contest_detail_problem .typo,
+    .page--homework_detail_problem .typo {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif !important;
+      font-size: 15px !important;
+      line-height: 1.8 !important;
+      color: #333 !important;
+    }
+
+    /* 标题样式 */
+    .page--problem_detail .typo h1,
+    .page--problem_detail .typo h2,
+    .page--problem_detail .typo h3,
+    .page--problem_detail .typo h4 {
+      font-weight: 600 !important;
+      margin-top: 1.5em !important;
+      margin-bottom: 0.8em !important;
+      color: #1f1f1f !important;
+      border-bottom: none !important;
+      padding-bottom: 0 !important;
+    }
+
+    .page--problem_detail .typo h1 { font-size: 1.8em !important; }
+    .page--problem_detail .typo h2 { font-size: 1.5em !important; }
+    .page--problem_detail .typo h3 { font-size: 1.3em !important; }
+    .page--problem_detail .typo h4 { font-size: 1.1em !important; }
+
+    /* 段落样式 */
+    .page--problem_detail .typo p {
+      margin-bottom: 1em !important;
+      text-align: justify !important;
+      text-indent: 0 !important;
+    }
+
+    /* 列表样式 */
+    .page--problem_detail .typo ul,
+    .page--problem_detail .typo ol {
+      margin-left: 1.8em !important;
+      margin-bottom: 1em !important;
+    }
+
+    .page--problem_detail .typo ul {
+      list-style: disc !important;
+    }
+
+    .page--problem_detail .typo ol {
+      list-style: decimal !important;
+    }
+
+    .page--problem_detail .typo li {
+      margin-bottom: 0.5em !important;
+      line-height: 1.8 !important;
+    }
+
+    /* 代码块样式 */
+    .page--problem_detail .typo pre {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 10px !important;
+      padding: 16px 20px !important;
+      margin: 1.5em 0 !important;
+      overflow-x: auto !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+    }
+
+    .page--problem_detail .typo code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+      font-size: 14px !important;
+      background: #f1f5f9 !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+      color: #e74c3c !important;
+    }
+
+    .page--problem_detail .typo pre code {
+      background: transparent !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      color: #334155 !important;
+    }
+
+    /* 表格样式 */
+    .page--problem_detail .typo table {
+      width: 100% !important;
+      border-collapse: separate !important;
+      border-spacing: 0 !important;
+      margin: 1.5em 0 !important;
+      border-radius: 10px !important;
+      overflow: hidden !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+    }
+
+    .page--problem_detail .typo th,
+    .page--problem_detail .typo td {
+      padding: 12px 16px !important;
+      text-align: left !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      border-left: none !important;
+      border-right: none !important;
+      color: #475569 !important;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .typo table,
+    html:not(.theme--dark) .problem__body .typo table,
+    html:not(.theme--dark) .typo table {
+      background: #ffffff !important;
+      border-collapse: collapse !important;
+      border-radius: 8px !important;
+      overflow: hidden !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .typo th,
+    html:not(.theme--dark) .page--problem_detail .typo td,
+    html:not(.theme--dark) .problem__body .typo th,
+    html:not(.theme--dark) .problem__body .typo td,
+    html:not(.theme--dark) .typo th,
+    html:not(.theme--dark) .typo td {
+      border: 1px solid #e2e8f0 !important;
+      color: #475569 !important;
+      padding: 10px 16px !important;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .typo th,
+    html:not(.theme--dark) .problem__body .typo th,
+    html:not(.theme--dark) .typo th {
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .typo tr:not(:hover) td,
+    html:not(.theme--dark) .problem__body .typo tr:not(:hover) td,
+    html:not(.theme--dark) .typo tr:not(:hover) td {
+      background: transparent !important;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .typo tr:hover td,
+    html:not(.theme--dark) .problem__body .typo tr:hover td,
+    html:not(.theme--dark) .typo tr:hover td {
+      background: #f1f5f9 !important;
+    }
+
+    /* 引用块样式 */
+    .page--problem_detail .typo blockquote,
+    .typo blockquote {
+      border-left: 4px solid #1890ff !important;
+      background: linear-gradient(90deg, #e6f7ff 0%, #fff 100%) !important;
+      padding: 16px 20px !important;
+      margin: 1.5em 0 !important;
+      border-radius: 0 8px 8px 0 !important;
+      color: #475569 !important;
+      font-style: normal !important;
+    }
+
+    /* NOTE 提示框样式 */
+    .typo blockquote.note,
+    .typo blockquote.warning,
+    [style*="background-color:#fff3cd"],
+    [style*="background-color: #fff3cd"] {
+      background: linear-gradient(90deg, #fef3c7 0%, #fef9c3 100%) !important;
+      border-left: 4px solid #f59e0b !important;
+      padding: 12px 16px !important;
+      margin: 1em 0 !important;
+      border-radius: 0 8px 8px 0 !important;
+      color: #451a03 !important;
+    }
+
+    html.theme--dark .typo blockquote.note,
+    html.theme--dark .typo blockquote.warning,
+    html.theme--dark [style*="background-color:#fff3cd"],
+    html.theme--dark [style*="background-color: #fff3cd"],
+    html.theme--dark body .typo blockquote.note,
+    html.theme--dark body .typo blockquote.warning,
+    html.theme--dark body [style*="background-color:#fff3cd"],
+    html.theme--dark body [style*="background-color: #fff3cd"],
+    .theme--dark .typo blockquote.note,
+    .theme--dark .typo blockquote.warning,
+    .theme--dark [style*="background-color:#fff3cd"],
+    .theme--dark [style*="background-color: #fff3cd"] {
+      background: rgba(251, 191, 36, 0.15) !important;
+      background-color: rgba(251, 191, 36, 0.15) !important;
+      border-left: 4px solid #f59e0b !important;
+      color: #fcd34d !important;
+      border-radius: 0 8px 8px 0 !important;
+      padding: 12px 16px !important;
+    }
+
+    /* 最强优先级 - 覆盖内联样式 */
+    :root.theme--dark [style*="background-color"],
+    :root.theme--dark [style*="background"] {
+      background: inherit !important;
+      background-color: inherit !important;
+    }
+
+    :root.theme--dark .typo blockquote {
+      background: rgba(251, 191, 36, 0.15) !important;
+      background-color: rgba(251, 191, 36, 0.15) !important;
+      border-left: 4px solid #f59e0b !important;
+      color: #fcd34d !important;
+      border-radius: 0 8px 8px 0 !important;
+      padding: 12px 16px !important;
+    }
+
+    /* 链接样式 */
+    .page--problem_detail .typo a {
+      color: #1890ff !important;
+      text-decoration: none !important;
+      border-bottom: 1px solid transparent !important;
+      transition: all 0.3s !important;
+    }
+
+    .page--problem_detail .typo a:hover {
+      color: #40a9ff !important;
+      border-bottom-color: #40a9ff !important;
+    }
+
+    /* 水平线样式 */
+    .page--problem_detail .typo hr {
+      border: none !important;
+      height: 2px !important;
+      background: linear-gradient(90deg, transparent, #e2e8f0, transparent) !important;
+      margin: 2em 0 !important;
+    }
+
+    /* 强调样式 */
+    .page--problem_detail .typo strong,
+    .page--problem_detail .typo b {
+      color: #1f1f1f !important;
+      font-weight: 600 !important;
+    }
+
+    .page--problem_detail .typo em,
+    .page--problem_detail .typo i {
+      color: #64748b !important;
+      font-style: italic !important;
+    }
+
+    /* 深色模式 Markdown 样式 - 高优先级 */
+    html.theme--dark body .page--problem_detail .typo,
+    html.theme--dark body .page--contest_detail_problem .typo,
+    html.theme--dark body .page--homework_detail_problem .typo,
+    html.theme--dark .problem__body .typo,
+    html.theme--dark .typo {
+      color: #e5e7eb !important;
+      background: transparent !important;
+    }
+
+    html.theme--dark .page--problem_detail .section,
+    html.theme--dark .page--contest_detail_problem .section,
+    html.theme--dark .page--homework_detail_problem .section {
+      background: #1f1f1f !important;
+    }
+
+    html.theme--dark .page--problem_detail .section__body,
+    html.theme--dark .page--contest_detail_problem .section__body,
+    html.theme--dark .page--homework_detail_problem .section__body {
+      background: #1f1f1f !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo h1,
+    html.theme--dark body .page--problem_detail .typo h2,
+    html.theme--dark body .page--problem_detail .typo h3,
+    html.theme--dark body .page--problem_detail .typo h4,
+    html.theme--dark .problem__body .typo h1,
+    html.theme--dark .problem__body .typo h2,
+    html.theme--dark .problem__body .typo h3,
+    html.theme--dark .problem__body .typo h4,
+    html.theme--dark .typo h1,
+    html.theme--dark .typo h2,
+    html.theme--dark .typo h3,
+    html.theme--dark .typo h4 {
+      color: #ffffff !important;
+      font-weight: 600 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo h5,
+    html.theme--dark body .page--problem_detail .typo h6,
+    html.theme--dark .problem__body .typo h5,
+    html.theme--dark .problem__body .typo h6,
+    html.theme--dark .typo h5,
+    html.theme--dark .typo h6 {
+      color: #e5e7eb !important;
+      font-weight: 500 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo pre,
+    html.theme--dark .problem__body .typo pre,
+    html.theme--dark .typo pre {
+      background: linear-gradient(135deg, #1e1e1e 0%, #1a1a1a 100%) !important;
+      border-color: #374151 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo code,
+    html.theme--dark .problem__body .typo code,
+    html.theme--dark .typo code {
+      background: #1e1e1e !important;
+      color: #f87171 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo pre code,
+    html.theme--dark .problem__body .typo pre code,
+    html.theme--dark .typo pre code {
+      color: #d1d5db !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo .sample pre,
+    html.theme--dark .page--problem_detail .typo .sample code {
+      background: #1a1a1a !important;
+      color: #e5e7eb !important;
+      border-color: #374151 !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo pre code {
+      color: #e5e7eb !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo table,
+    html.theme--dark .problem__body .typo table,
+    html.theme--dark .typo table {
+      background: #1a1a1a !important;
+      border-collapse: collapse !important;
+      border-radius: 8px !important;
+      overflow: hidden !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3) !important;
+      border: 1px solid #374151 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo th,
+    html.theme--dark body .page--problem_detail .typo td,
+    html.theme--dark .problem__body .typo th,
+    html.theme--dark .problem__body .typo td,
+    html.theme--dark .typo th,
+    html.theme--dark .typo td {
+      border: 1px solid #374151 !important;
+      color: #d1d5db !important;
+      padding: 10px 16px !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo th,
+    html.theme--dark .problem__body .typo th,
+    html.theme--dark .typo th {
+      background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%) !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      text-align: left !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo tr:not(:hover) td,
+    html.theme--dark .problem__body .typo tr:not(:hover) td,
+    html.theme--dark .typo tr:not(:hover) td {
+      background: transparent !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo tr:hover td,
+    html.theme--dark .problem__body .typo tr:hover td,
+    html.theme--dark .typo tr:hover td {
+      background: #2d3748 !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo blockquote {
+      border-left-color: #40a9ff !important;
+      background: linear-gradient(90deg, rgba(24,144,255,0.1) 0%, #1f1f1f 100%) !important;
+      color: #d1d5db !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo a {
+      color: #40a9ff !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo a:hover {
+      color: #60b6ff !important;
+      border-bottom-color: #60b6ff !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo hr {
+      background: linear-gradient(90deg, transparent, #374151, transparent) !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo strong,
+    html.theme--dark body .page--problem_detail .typo b,
+    html.theme--dark .problem__body .typo strong,
+    html.theme--dark .problem__body .typo b,
+    html.theme--dark .typo strong,
+    html.theme--dark .typo b {
+      color: #ffffff !important;
+      font-weight: 700 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo em,
+    html.theme--dark body .page--problem_detail .typo i,
+    html.theme--dark .problem__body .typo em,
+    html.theme--dark .problem__body .typo i,
+    html.theme--dark .typo em,
+    html.theme--dark .typo i {
+      color: #d1d5db !important;
+      font-style: italic !important;
+    }
+
+    /* === scratchpad dark mode styles === */
+
+    /* 深色模式 - 标签列表容器 */
+    html.theme--dark .scratchpad__tablist {
+      background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%) !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    }
+
+    /* 深色模式 - 标签按钮 */
+    html.theme--dark .scratchpad__tablist div {
+      color: #8c8c8c !important;
+      fill: #8c8c8c !important;
+    }
+
+    /* 深色模式 - 标签按钮悬停 */
+    html.theme--dark .scratchpad__tablist div:hover {
+      color: #40a9ff !important;
+      fill: #40a9ff !important;
+      background: rgba(24,144,255,0.15) !important;
+    }
+
+    /* 深色模式 - 标签按钮激活状态 */
+    html.theme--dark .scratchpad__tablist div.scratchpad__tab-active {
+      color: #40a9ff !important;
+      fill: #40a9ff !important;
+      background: linear-gradient(135deg, rgba(24,144,255,0.2) 0%, rgba(24,144,255,0.3) 100%) !important;
+      border-color: rgba(24,144,255,0.4) !important;
+    }
+
+    /* 深色模式 - 问题内容区域 */
+    html.theme--dark .scratchpad__problem {
+      background: linear-gradient(180deg, #1f1f1f 0%, #1a1a1a 100%) !important;
+    }
+
+    /* 深色模式 - 问题内容区域内的卡片 */
+    html.theme--dark .scratchpad__problem .card {
+      background: #2a2a2a !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3) !important;
+    }
+
+    /* 深色模式 - 问题标题 */
+    html.theme--dark .scratchpad__problem h1,
+    html.theme--dark .scratchpad__problem h2,
+    html.theme--dark .scratchpad__problem h3 {
+      color: #fff !important;
+    }
+
+    /* 深色模式 - 问题描述文字 */
+    html.theme--dark .scratchpad__problem p,
+    html.theme--dark .scratchpad__problem li {
+      color: #bfbfbf !important;
+    }
+
+    /* 深色模式 - 代码块 */
+    html.theme--dark .scratchpad__problem pre,
+    html.theme--dark .scratchpad__problem code {
+      background: #2a2a2a !important;
+      color: #e6e6e6 !important;
+    }
+
+    /* 深色模式 - 表格样式 */
+    html.theme--dark .scratchpad__problem th {
+      background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%) !important;
+      color: #e6e6e6 !important;
+    }
+
+    html.theme--dark .scratchpad__problem td {
+      color: #bfbfbf !important;
+      border-bottom: 1px solid #333 !important;
+    }
+
+    html.theme--dark .scratchpad__problem tr:hover {
+      background: #2a2a2a !important;
+    }
+
+    /* === 导航栏整体美化 === */
+    .nav {
+      background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%) !important;
+      border-bottom: 1px solid #e8eef3 !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+      height: 48px !important;
+      line-height: 48px !important;
+      padding: 0 !important;
+    }
+
+    /* === 导航栏按钮美化 === */
+    .nav__list-item .nav__item, .nav__list-item button {
+      position: relative;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 8px;
+      margin: 6px 4px;
+      padding: 8px 16px !important;
+      background: transparent !important;
+      color: #64748b !important;
+      font-weight: 500;
+      border: none;
+      height: 36px;
+      line-height: 20px;
+    }
+
+    .nav__list-item .nav__item:hover, .nav__list-item button:hover {
+      background: rgba(24, 144, 255, 0.08) !important;
+      color: #1890ff !important;
+      box-shadow: 0 2px 6px rgba(24, 144, 255, 0.1);
+    }
+
+    /* === 导航栏按钮激活状态 === */
+    .nav__list-item .nav__item.nav--active, .nav__list-item.nav--active button {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      color: white !important;
+      box-shadow: 
+        0 2px 8px rgba(24, 144, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    /* === 题库页面蓝白配色 - 亮色模式 === */
+    body.page--problem_main.theme--default table.data-table {
+      border-radius: 8px !important;
+      border: 1px solid #e6f0fa !important;
+      overflow: hidden !important;
+    }
+    
+    body.page--problem_main.theme--default table.data-table thead th {
+      background: linear-gradient(180deg, #1890ff, #096dd9) !important;
+      border-bottom: 2px solid #0050b3 !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+    }
+    
+    body.page--problem_main.theme--default table.data-table tbody tr {
+      background: #ffffff !important;
+      border-bottom: 1px solid #f0f7ff !important;
+    }
+    
+    body.page--problem_main.theme--default table.data-table tbody tr:nth-child(even) {
+      background: #e6f7ff !important;
+    }
+    
+    body.page--problem_main.theme--default table.data-table tbody tr:hover {
+      background: #b3d7ff !important;
+    }
+    
+    body.page--problem_main.theme--default table.data-table .col--name a {
+      color: #0d47a1 !important;
+    }
+    
+    body.page--problem_main.theme--default table.data-table .col--name a:hover {
+      color: #1890ff !important;
+    }
+    
+    body.page--problem_main.theme--default .pagination .current {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      color: white !important;
+    }
+
+    /* === 题库页面暗色模式配色 === */
+    .theme--dark.page--problem_main table.data-table,
+    body.page--problem_main.theme--dark table.data-table {
+      border-radius: 8px !important;
+      border: 1px solid #2b2b2b !important;
+      overflow: hidden !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table thead tr,
+    .theme--dark.page--problem_main table.data-table thead th,
+    body.page--problem_main.theme--dark table.data-table thead tr,
+    body.page--problem_main.theme--dark table.data-table thead th {
+      background: linear-gradient(180deg, #1a1a2e, #16213e) !important;
+      border-bottom: 2px solid #0f3460 !important;
+      color: #e0e0e0 !important;
+      font-weight: 600 !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table tbody tr,
+    body.page--problem_main.theme--dark table.data-table tbody tr {
+      background: #1f1f1f !important;
+      border-bottom: 1px solid #2b2b2b !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table tbody tr:nth-child(even),
+    body.page--problem_main.theme--dark table.data-table tbody tr:nth-child(even) {
+      background: #252525 !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table tbody tr:hover,
+    body.page--problem_main.theme--dark table.data-table tbody tr:hover {
+      background: #3a3a3a !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table .col--name a,
+    body.page--problem_main.theme--dark table.data-table .col--name a {
+      color: #8ab4f8 !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table .col--name a:hover,
+    body.page--problem_main.theme--dark table.data-table .col--name a:hover {
+      color: #aecbfa !important;
+    }
+    
+    .theme--dark.page--problem_main .pagination .current,
+    body.page--problem_main.theme--dark .pagination .current {
+      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+      color: #e0e0e0 !important;
+    }
+
+    /* === 全局按钮悬停效果（参考重测整题按钮） === */
+    button, .btn, [type="submit"], [type="reset"], [type="button"],
+    a.button, button.button, .button,
+    a.menu__link, button.menu__link,
+    .section__tools a, .section__tools button,
+    .toolbar-item a, .toolbar-item button {
+      position: relative;
+      border-left: none;
+      transition: all 0.2s ease;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button:hover:not(:disabled), .btn:hover:not(:disabled), 
+    [type="submit"]:hover:not(:disabled), [type="reset"]:hover:not(:disabled), 
+    [type="button"]:hover:not(:disabled),
+    a.button:hover, button.button:hover, .button:hover,
+    a.menu__link:hover:not(.disabled), button.menu__link:hover:not(.disabled),
+    .section__tools a:hover, .section__tools button:hover,
+    .toolbar-item a:hover, .toolbar-item button:hover {
+      background: linear-gradient(135deg, rgba(24, 144, 255, 0.12), rgba(24, 144, 255, 0.06)) !important;
+      color: #1890ff !important;
+      box-shadow: 
+        0 2px 8px rgba(24, 144, 255, 0.15),
+        inset 0 0 0 1px rgba(24, 144, 255, 0.2) !important;
+    }
+
+    /* === 题目信息区域美化 - 亮色模式 === */
+    .theme--default.page--problem_detail .section:first-child,
+    .page--problem_detail.theme--default .section:first-child {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      border: 1px solid #e2e8f0;
+    }
+
+    .theme--default.page--problem_detail .section:first-child .section__title,
+    .page--problem_detail.theme--default .section:first-child .section__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme--default.page--problem_detail .section:first-child .section__title a,
+    .page--problem_detail.theme--default .section:first-child .section__title a {
+      color: #1e293b;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .theme--default.page--problem_detail .section:first-child .section__title a:hover,
+    .page--problem_detail.theme--default .section:first-child .section__title a:hover {
+      color: #1890ff;
+    }
+
+    /* === 题目信息区域美化 - 暗色模式 === */
+    .theme--dark.page--problem_detail .section:first-child,
+    .page--problem_detail.theme--dark .section:first-child {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border: 1px solid #2b2b2b;
+    }
+
+    .theme--dark.page--problem_detail .section:first-child .section__title,
+    .page--problem_detail.theme--dark .section:first-child .section__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme--dark.page--problem_detail .section:first-child .section__title a,
+    .page--problem_detail.theme--dark .section:first-child .section__title a {
+      color: #e0e0e0;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .theme--dark.page--problem_detail .section:first-child .section__title a:hover,
+    .page--problem_detail.theme--dark .section:first-child .section__title a:hover {
+      color: #8ab4f8;
+    }
+
+    /* === 右侧操作菜单美化 - 暗色模式 === */
+    .theme--dark.page--problem_detail .section.side,
+    .page--problem_detail.theme--dark .section.side {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+      border-radius: 12px !important;
+      border: 1px solid #2b2b2b !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side .menu__link,
+    .page--problem_detail.theme--dark .section.side .menu__link {
+      color: #e0e0e0 !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side .menu__link:hover,
+    .page--problem_detail.theme--dark .section.side .menu__link:hover {
+      background: rgba(138, 180, 248, 0.15) !important;
+      color: #8ab4f8 !important;
+    }
+
+    /* === 评测记录详情页面侧边栏菜单按钮样式 === */
+    .page--record_detail .section.side .menu {
+      list-style: none !important;
+      padding: 8px !important;
+      margin: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+    }
+    
+    .page--record_detail .section.side .menu__item {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    .page--record_detail .section.side .menu__link {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 10px 16px !important;
+      border-radius: 8px !important;
+      background: #1890ff !important;
+      color: #fff !important;
+      border: none !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3) !important;
+    }
+    
+    .page--record_detail .section.side .menu__link:hover {
+      background: #40a9ff !important;
+      box-shadow: 0 4px 12px rgba(24, 144, 255, 0.4) !important;
+      transform: translateY(-1px) !important;
+    }
+    
+    .page--record_detail .section.side .menu__link:active {
+      transform: translateY(0) !important;
+      box-shadow: 0 2px 4px rgba(24, 144, 255, 0.3) !important;
+    }
+    
+    /* 深色模式 */
+    .theme--dark.page--record_detail .section.side .menu__link {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2) !important;
+    }
+    
+    .theme--dark.page--record_detail .section.side .menu__link:hover {
+      background: linear-gradient(135deg, #40a9ff, #1890ff) !important;
+    }
+
+    /* 元信息标签 - 亮色模式 */
+    html:not(.theme--dark).page--problem_detail .problem__tag-item,
+    .page--problem_detail html:not(.theme--dark) .problem__tag-item {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 3px !important;
+      font-size: 12px !important;
+      color: #64748b !important;
+      padding: 2px 8px !important;
+      background: #f1f5f9 !important;
+      border-radius: 4px !important;
+      border: 1px solid #e2e8f0 !important;
+      margin-right: 4px !important;
+      margin-bottom: 4px !important;
+    }
+
+    html:not(.theme--dark).page--problem_detail .problem__tag-item i,
+    .page--problem_detail html:not(.theme--dark) .problem__tag-item i {
+      color: #94a3b8 !important;
+    }
+
+    html:not(.theme--dark).page--problem_detail .problem__tag-item.author,
+    .page--problem_detail html:not(.theme--dark) .problem__tag-item.author {
+      color: #1890ff !important;
+      font-weight: 500 !important;
+    }
+
+    /* 元信息标签 - 暗色模式 */
+    .theme--dark.page--problem_detail .problem__tag-item,
+    .page--problem_detail.theme--dark .problem__tag-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      color: #9ca3af;
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 6px;
+      border: 1px solid #374151;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .theme--dark.page--problem_detail .problem__tag-item i,
+    .page--problem_detail.theme--dark .problem__tag-item i {
+      color: #6b7280;
+    }
+
+    .theme--dark.page--problem_detail .problem__tag-item.author,
+    .page--problem_detail.theme--dark .problem__tag-item.author {
+      color: #8ab4f8;
+      font-weight: 500;
+    }
+
+    /* 删除标签按钮，直接显示标签 */
+    .page--problem_detail .problem__tags-toggle {
+      display: none !important;
+    }
+
+    .page--problem_detail .nojs--hide[data-target="tags"] {
+      display: flex !important;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    /* 暗色模式下进入在线编程模式按钮 */
+    .theme--dark.page--problem_detail .section.side button.button,
+    .theme--dark.page--problem_detail .section.side a.button,
+    .page--problem_detail.theme--dark .section.side button.button,
+    .page--problem_detail.theme--dark .section.side a.button {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+      color: #ffffff !important;
+      border: 1px solid #3b82f6 !important;
+      border-radius: 8px !important;
+      padding: 10px 16px !important;
+      font-weight: 500 !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side button.button:hover,
+    .theme--dark.page--problem_detail .section.side a.button:hover,
+    .page--problem_detail.theme--dark .section.side button.button:hover,
+    .page--problem_detail.theme--dark .section.side a.button:hover {
+      background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+      border-color: #60a5fa !important;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+    }
+
+    .page--problem_detail .problem__tag {
+      margin: 0 !important;
+    }
+
+    .page--problem_detail .problem__tag-link {
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .page--problem_detail .problem__tag-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* === 首页最新题目 - 隐藏时间显示 === */
+    .section.side.nojs--hide .col--problem-name p span[style*="float: right"],
+    .section.side.nojs--hide .col--problem-name p > span[style*="float"],
+    .section.side.nojs--hide [class*="problem-name"] p span[style*="float"] {
+      display: none !important;
+    }
+
+    /* === 禁用 Markdown 表格单元格合并 === */
+    .typo table {
+      border-collapse: collapse !important;
+    }
+    
+    .typo table td[rowspan],
+    .typo table th[rowspan],
+    .typo table td[colspan],
+    .typo table th[colspan] {
+      vertical-align: inherit !important;
+    }
+
+    /* === 统一问题详情页面布局 === */
+    html body.page--problem_detail .section:first-child .section__body {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+    
+    html body.page--problem_detail .section:first-child .section__body > div:first-child {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      align-items: center !important;
+    }
+
+    /* === 主色调覆盖 === */
+    html body button.button:not(.codicon).primary,
+    html body a.button:not(.codicon).primary,
+    html body input.button:not(.codicon).primary {
+      background-color: #1890ff !important;
+      border-color: #1890ff !important;
+      color: #ffffff !important;
+    }
+    
+    html body button.button:not(.codicon).primary:hover,
+    html body a.button:not(.codicon).primary:hover,
+    html body input.button:not(.codicon).primary:hover {
+      background-color: #40a9ff !important;
+      border-color: #40a9ff !important;
+    }
+
+    html body.page--problem_detail .section:first-child .section__body > div:last-child {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      align-items: center !important;
+    }
+
+      </style>
   {% if process.env.DEV %}
     <script src="/default.theme.js?version={{ global.Hydro.version['ui-default'] }}"></script>
     <link rel="stylesheet" media="all" href="/theme.css?version={{ global.Hydro.version['ui-default'] }}">
@@ -287,11 +2375,38 @@
       var UiContext = '{{ UiContext|json|jsesc|safe }}';
       var UserContext = '{{ UserContext|json|jsesc|safe }}';
     </script>
-  {% endif %}  
+  {% endif %}
   {% set UiContext = Object.create(UiContext) %}
   {% set UserContext = Object.create(UserContext) %}
 </head>
 <body>
+  <script>
+    (function() {
+      function fixContestButtons() {
+        if (!document.body.classList.contains('page--contest_list')) return;
+        
+        var buttons = document.querySelectorAll('.section.side a.button:not(.codicon).primary');
+        buttons.forEach(function(btn) {
+          btn.style.setProperty('background-color', '#1890ff', 'important');
+          btn.style.setProperty('border-color', '#1890ff', 'important');
+          btn.style.setProperty('color', '#ffffff', 'important');
+        });
+      }
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fixContestButtons);
+      } else {
+        fixContestButtons();
+      }
+      
+      setTimeout(fixContestButtons, 100);
+      setTimeout(fixContestButtons, 500);
+      setTimeout(fixContestButtons, 1000);
+      
+      var observer = new MutationObserver(fixContestButtons);
+      observer.observe(document.body, { childList: true, subtree: true });
+    })();
+  </script>
   {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
     <script type="text/javascript" src="/resource/{{ UiContext.constantVersion }}/entry.js"></script>
     <script type="text/javascript" src="{{ UiContext.cdn_prefix }}resource/{{ global.Hydro.version['ui-default'] }}/lang-{{ _('__id') }}.js"></script>
@@ -303,6 +2418,86 @@
     <script>
       var UiContextNew = '{{ UiContext|json|jsesc|safe }}';
       var UserContextNew = '{{ UserContext|json|jsesc|safe }}';
+    </script>
+    <script>
+      (function() {
+        function disableTableMerge() {
+          var tables = document.querySelectorAll('.typo table');
+          tables.forEach(function(table) {
+            if (table.dataset.mergeHandled) return;
+            table.dataset.mergeHandled = 'true';
+            
+            var rows = Array.from(table.querySelectorAll('tr'));
+            
+            rows.forEach(function(row, rowIndex) {
+              var cells = Array.from(row.querySelectorAll('td, th'));
+              var cellsToAdd = [];
+              
+              cells.forEach(function(cell) {
+                var rowspan = parseInt(cell.getAttribute('rowspan') || '1', 10);
+                var colspan = parseInt(cell.getAttribute('colspan') || '1', 10);
+                
+                if (colspan > 1) {
+                  cell.removeAttribute('colspan');
+                  for (var i = 1; i < colspan; i++) {
+                    var newCell = document.createElement(cell.tagName);
+                    newCell.innerHTML = cell.innerHTML;
+                    newCell.className = cell.className;
+                    cellsToAdd.push(newCell);
+                  }
+                }
+                
+                if (rowspan > 1) {
+                  cell.removeAttribute('rowspan');
+                  for (var r = 1; r < rowspan; r++) {
+                    var targetRow = rows[rowIndex + r];
+                    if (targetRow) {
+                      var newCell = document.createElement(cell.tagName);
+                      newCell.innerHTML = cell.innerHTML;
+                      newCell.className = cell.className;
+                      var insertIndex = Array.from(row.querySelectorAll('td, th')).indexOf(cell);
+                      targetRow.insertBefore(newCell, targetRow.children[insertIndex] || null);
+                    }
+                  }
+                }
+              });
+              
+              cellsToAdd.forEach(function(newCell) {
+                row.appendChild(newCell);
+              });
+            });
+          });
+        }
+        
+        function initObserver() {
+          disableTableMerge();
+          
+          var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              if (mutation.addedNodes.length > 0) {
+                mutation.addedNodes.forEach(function(node) {
+                  if (node.nodeType === 1) {
+                    if (node.classList && (node.classList.contains('typo') || node.querySelector('.typo'))) {
+                      disableTableMerge();
+                    }
+                  }
+                });
+              }
+            });
+          });
+          
+          observer.observe(document.body, {
+            childList: true,
+            subtree: true
+          });
+        }
+        
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initObserver);
+        } else {
+          initObserver();
+        }
+      })();
     </script>
   {% endif %}
 </body>
