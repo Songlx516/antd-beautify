@@ -666,10 +666,12 @@
     }
 
     /* 浅色模式下 problem__tags 宽度调整 */
-    html:not(.theme--dark) .page--problem_detail .problem__tags {
+    html:not(.theme--dark) .page--problem_detail .problem__tags,
+    html.theme--default .page--problem_detail .problem__tags {
       max-width: 633px !important;
-      display: flex;
-      flex-wrap: wrap;
+      width: 633px !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
     }
 
     .problem__tag {
