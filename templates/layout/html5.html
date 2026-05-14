@@ -665,6 +665,13 @@
       word-break: keep-all;
     }
 
+    /* 浅色模式下 scratchpad problem__tags 宽度调整 */
+    .scratchpad__problem .problem__tags,
+    html:not(.theme--dark) .scratchpad__problem .problem__tags {
+      max-width: 633px !important;
+      width: 633px !important;
+    }
+
     /* 浅色模式下 problem__tags 宽度调整 */
     html:not(.theme--dark) .page--problem_detail .problem__tags,
     html.theme--default .page--problem_detail .problem__tags {
