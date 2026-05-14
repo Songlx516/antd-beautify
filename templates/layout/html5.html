@@ -665,26 +665,10 @@
       word-break: keep-all;
     }
 
-    /* 浅色模式下 problem__tags 宽度调整 - 通用 */
+    /* 浅色模式下 problem__tags 布局调整 - 保持与深色模式一致 */
     html:not(.theme--dark) .problem__tags {
-      max-width: 633px !important;
-      width: 633px !important;
-    }
-
-    /* 浅色模式下 scratchpad problem__tags 宽度调整 */
-    .scratchpad__problem .problem__tags,
-    html:not(.theme--dark) .scratchpad__problem .problem__tags {
-      max-width: 633px !important;
-      width: 633px !important;
-    }
-
-    /* 浅色模式下 problem_detail page problem__tags 宽度调整 */
-    html:not(.theme--dark) .page--problem_detail .problem__tags,
-    html.theme--default .page--problem_detail .problem__tags {
-      max-width: 633px !important;
-      width: 633px !important;
-      display: flex !important;
-      flex-wrap: wrap !important;
+      max-width: 100% !important;
+      width: auto !important;
     }
 
     .problem__tag {
