@@ -663,6 +663,11 @@
       list-style: none !important;
       font-size: 0;
       word-break: keep-all;
+    }
+
+    /* 浅色模式下 problem__tags 宽度调整 */
+    html:not(.theme--dark) .page--problem_detail .problem__tags {
+      max-width: 633px !important;
       display: flex;
       flex-wrap: wrap;
     }
