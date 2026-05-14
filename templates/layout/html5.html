@@ -2109,6 +2109,29 @@
       border: 1px solid #e0e0e0;
     }
 
+    html:not(.theme--dark) .page--problem_detail .section:first-child .section__title,
+    .page--problem_detail:not(.theme--dark) .section:first-child .section__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333333;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .section:first-child .section__title a,
+    .page--problem_detail:not(.theme--dark) .section:first-child .section__title a {
+      color: #333333;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .section:first-child .section__title a:hover,
+    .page--problem_detail:not(.theme--dark) .section:first-child .section__title a:hover {
+      color: #1890ff;
+    }
+
     /* === 题目信息区域美化 - 暗色模式 === */
     .theme--dark.page--problem_detail .section:first-child,
     .page--problem_detail.theme--dark .section:first-child {
