@@ -47,50 +47,50 @@
     /* --- 按钮现代化美化 --- */
     /* ============================================
        蓝白风格按钮样式 - 覆盖旧配色
-       仅针对提交类型的按钮
        ============================================ */
 
-    /* 仅针对明确标记为 primary 的按钮 */
+    /* 通用按钮样式 - 统一所有主要按钮样式 */
     button.btn-primary:not(.star):not([data-star]):not([data-star-action]),
     .btn.btn-primary:not(.star):not([data-star]):not([data-star-action]),
     [type="submit"].btn-primary:not(.star):not([data-star]):not([data-star-action]),
     .button.button--primary:not(.star):not([data-star]):not([data-star-action]),
-    a.button.button--primary:not(.star):not([data-star]):not([data-star-action]) {
-      background: #1890ff !important;
-      border-color: #1890ff !important;
-      color: #ffffff !important;
-    }
-
-    /* 针对提交按钮 */
+    a.button.button--primary:not(.star):not([data-star]):not([data-star-action]),
     button[type="submit"]:not(.star),
     input[type="submit"]:not(.star),
-    .submit button:not(.star) {
-      background: #1890ff !important;
-      border-color: #1890ff !important;
-      color: #ffffff !important;
-    }
-
-    button[type="submit"]:hover:not(:disabled):not(.star),
-    input[type="submit"]:hover:not(:disabled):not(.star),
-    .submit button:hover:not(:disabled):not(.star) {
-      background: #40a9ff !important;
-      border-color: #40a9ff !important;
-    }
-
-    /* 针对工具栏中的主要按钮（过滤、递交等）- 排除收藏按钮 */
+    .submit button:not(.star),
     .section__tools button:not(.star):not([data-star]):not([data-star-action]),
     .section__tools a.button:not(.star):not([data-star]):not([data-star-action]),
     .toolbar button:not(.star):not([data-star]):not([data-star-action]),
-    .toolbar a.button:not(.star):not([data-star]):not([data-star-action]) {
+    .toolbar a.button:not(.star):not([data-star]):not([data-star-action]),
+    button.primary:not(.star):not([data-star]):not([data-star-action]),
+    input[type="submit"].primary:not(.star):not([data-star]):not([data-star-action]),
+    .button--primary:not(.star):not([data-star]):not([data-star-action]),
+    .btn.primary:not(.star):not([data-star]):not([data-star-action]),
+    input[type="button"].primary:not(.star):not([data-star]):not([data-star-action]) {
       background: #1890ff !important;
       border-color: #1890ff !important;
       color: #ffffff !important;
     }
 
+    /* 按钮悬停状态 */
+    button.btn-primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .btn.btn-primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    [type="submit"].btn-primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .button.button--primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    a.button.button--primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    button[type="submit"]:hover:not(:disabled):not(.star),
+    input[type="submit"]:hover:not(:disabled):not(.star),
+    .submit button:hover:not(:disabled):not(.star),
     .section__tools button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
     .section__tools a.button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
     .toolbar button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
-    .toolbar a.button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled) {
+    .toolbar a.button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
+    button.primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    input[type="submit"].primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .button--primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .btn-primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .btn.primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    input[type="button"].primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]) {
       background: #40a9ff !important;
       border-color: #40a9ff !important;
     }
@@ -102,32 +102,6 @@
     input[type="reset"]:not(.nav__item) {
       border-radius: 6px !important;
       transition: all 0.2s ease !important;
-    }
-
-    /* 统一所有按钮配色为蓝白风格 */
-    button.primary:not(.star):not([data-star]):not([data-star-action]),
-    input[type="submit"].primary:not(.star):not([data-star]):not([data-star-action]),
-    .button--primary:not(.star):not([data-star]):not([data-star-action]),
-    .btn-primary:not(.star):not([data-star]):not([data-star-action]),
-    .btn.primary:not(.star):not([data-star]):not([data-star-action]),
-    input[type="button"].primary:not(.star):not([data-star]):not([data-star-action]),
-    button[type="submit"]:not(.star):not([data-star]):not([data-star-action]),
-    input[type="submit"]:not(.star):not([data-star]):not([data-star-action]) {
-      background: #1890ff !important;
-      border-color: #1890ff !important;
-      color: #ffffff !important;
-    }
-
-    button.primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
-    input[type="submit"].primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
-    .button--primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
-    .btn-primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
-    .btn.primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
-    input[type="button"].primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
-    button[type="submit"]:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
-    input[type="submit"]:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]) {
-      background: #40a9ff !important;
-      border-color: #40a9ff !important;
     }
 
     /* 确保标签链接保留边框样式 */
@@ -972,8 +946,8 @@
 
     /* === 题库分类对话框标签样式 === */
     
-    /* 浅色模式 - 分类标签 */
-    html:not(.theme--dark) .widget--category-filter__tag {
+    /* 通用样式 - 浅色和深色模式共享 */
+    .widget--category-filter__tag {
       display: inline-block !important;
       padding: 4px 12px !important;
       margin: 4px !important;
@@ -982,6 +956,10 @@
       cursor: pointer !important;
       transition: all 0.3s ease !important;
       border: none !important;
+    }
+    
+    /* 浅色模式 - 分类标签 */
+    html:not(.theme--dark) .widget--category-filter__tag {
       background: #f5f5f5 !important;
       color: #595959 !important;
     }
@@ -989,25 +967,15 @@
     html:not(.theme--dark) .widget--category-filter__tag:hover {
       background: #e6f7ff !important;
       color: #1890ff !important;
-      border: none !important;
     }
     
     html:not(.theme--dark) .widget--category-filter__tag.selected {
       background: #1890ff !important;
       color: #fff !important;
-      border: none !important;
     }
     
     /* 深色模式 - 分类标签 */
     html.theme--dark .widget--category-filter__tag {
-      display: inline-block !important;
-      padding: 4px 12px !important;
-      margin: 4px !important;
-      border-radius: 14px !important;
-      font-size: 12px !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
-      border: none !important;
       background: #353535 !important;
       color: #bfbfbf !important;
     }
@@ -1015,13 +983,11 @@
     html.theme--dark .widget--category-filter__tag:hover {
       background: rgba(24,144,255,0.15) !important;
       color: #1890ff !important;
-      border: none !important;
     }
     
     html.theme--dark .widget--category-filter__tag.selected {
       background: #1890ff !important;
       color: #fff !important;
-      border: none !important;
     }
 
     {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
@@ -1942,91 +1908,82 @@
     }
 
     /* === 题库页面蓝白配色 - 亮色模式 === */
-    body.page--problem_main.theme--default table.data-table {
+    .theme--default.page--problem_main table.data-table {
       border-radius: 8px !important;
       border: 1px solid #e6f0fa !important;
       overflow: hidden !important;
     }
     
-    body.page--problem_main.theme--default table.data-table thead th {
+    .theme--default.page--problem_main table.data-table thead th {
       background: linear-gradient(180deg, #1890ff, #096dd9) !important;
       border-bottom: 2px solid #0050b3 !important;
       color: #ffffff !important;
       font-weight: 600 !important;
     }
     
-    body.page--problem_main.theme--default table.data-table tbody tr {
+    .theme--default.page--problem_main table.data-table tbody tr {
       background: #ffffff !important;
       border-bottom: 1px solid #f0f7ff !important;
     }
     
-    body.page--problem_main.theme--default table.data-table tbody tr:nth-child(even) {
+    .theme--default.page--problem_main table.data-table tbody tr:nth-child(even) {
       background: #e6f7ff !important;
     }
     
-    body.page--problem_main.theme--default table.data-table tbody tr:hover {
+    .theme--default.page--problem_main table.data-table tbody tr:hover {
       background: #b3d7ff !important;
     }
     
-    body.page--problem_main.theme--default table.data-table .col--name a {
+    .theme--default.page--problem_main table.data-table .col--name a {
       color: #0d47a1 !important;
     }
     
-    body.page--problem_main.theme--default table.data-table .col--name a:hover {
+    .theme--default.page--problem_main table.data-table .col--name a:hover {
       color: #1890ff !important;
     }
     
-    body.page--problem_main.theme--default .pagination .current {
+    .theme--default.page--problem_main .pagination .current {
       background: linear-gradient(135deg, #1890ff, #096dd9) !important;
       color: white !important;
     }
 
     /* === 题库页面暗色模式配色 === */
-    .theme--dark.page--problem_main table.data-table,
-    body.page--problem_main.theme--dark table.data-table {
+    .theme--dark.page--problem_main table.data-table {
       border-radius: 8px !important;
       border: 1px solid #2b2b2b !important;
       overflow: hidden !important;
     }
     
     .theme--dark.page--problem_main table.data-table thead tr,
-    .theme--dark.page--problem_main table.data-table thead th,
-    body.page--problem_main.theme--dark table.data-table thead tr,
-    body.page--problem_main.theme--dark table.data-table thead th {
+    .theme--dark.page--problem_main table.data-table thead th {
       background: linear-gradient(180deg, #1a1a2e, #16213e) !important;
       border-bottom: 2px solid #0f3460 !important;
       color: #e0e0e0 !important;
       font-weight: 600 !important;
     }
     
-    .theme--dark.page--problem_main table.data-table tbody tr,
-    body.page--problem_main.theme--dark table.data-table tbody tr {
+    .theme--dark.page--problem_main table.data-table tbody tr {
       background: #1f1f1f !important;
       border-bottom: 1px solid #2b2b2b !important;
     }
     
-    .theme--dark.page--problem_main table.data-table tbody tr:nth-child(even),
-    body.page--problem_main.theme--dark table.data-table tbody tr:nth-child(even) {
+    .theme--dark.page--problem_main table.data-table tbody tr:nth-child(even) {
       background: #252525 !important;
     }
     
-    .theme--dark.page--problem_main table.data-table tbody tr:hover,
-    body.page--problem_main.theme--dark table.data-table tbody tr:hover {
+    .theme--dark.page--problem_main table.data-table tbody tr:hover {
       background: #3a3a3a !important;
     }
     
-    .theme--dark.page--problem_main table.data-table .col--name a,
-    body.page--problem_main.theme--dark table.data-table .col--name a {
+    .theme--dark.page--problem_main table.data-table .col--name a {
       color: #8ab4f8 !important;
     }
     
-    .theme--dark.page--problem_main table.data-table .col--name a:hover,
-    body.page--problem_main.theme--dark table.data-table .col--name a:hover {
+    .theme--dark.page--problem_main table.data-table .col--name a:hover {
       color: #aecbfa !important;
     }
     
-    .theme--dark.page--problem_main .pagination .current,
-    body.page--problem_main.theme--dark .pagination .current {
+    .theme--dark.page--problem_main .pagination .current {
       background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
       color: #e0e0e0 !important;
     }
