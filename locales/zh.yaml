@@ -1,6 +1,8 @@
 __langname: 简体中文
 
 # Ant Design 美化插件相关翻译
+'Search': '搜索'
+'Search problems': 'Search problems'
 'Hide tags': '隐藏标签'
 'Show tags': '显示标签'
 'Hide all tags': '隐藏所有标签'

@@ -2390,6 +2390,212 @@
       align-items: center !important;
     }
 
+    /* === 侧边栏搜索框美化 - 浅色模式 === */
+    .page--problem_main .section.side .section__body,
+    .page--problem_category .section.side .section__body {
+      overflow: visible !important;
+    }
+
+    .page--problem_main .section.side #searchForm,
+    .page--problem_category .section.side #searchForm {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      overflow: visible !important;
+    }
+
+    .page--problem_main .section.side .search,
+    .page--problem_category .section.side .search {
+      display: flex !important;
+      align-items: center !important;
+      background: #ffffff !important;
+      border: 1px solid #e8e8e8 !important;
+      border-radius: 6px !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+    }
+
+    .page--problem_main .section.side .search > input,
+    .page--problem_category .section.side .search > input {
+      flex: 1 !important;
+      border: none !important;
+      outline: none !important;
+      padding: 10px 12px !important;
+      font-size: 13px !important;
+      background: transparent !important;
+      color: #333333 !important;
+    }
+
+    .page--problem_main .section.side .search > input::placeholder,
+    .page--problem_category .section.side .search > input::placeholder {
+      color: #bfbfbf !important;
+      font-style: normal !important;
+    }
+
+    .page--problem_main .section.side .search > button,
+    .page--problem_category .section.side .search > button {
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 0 6px 6px 0 !important;
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      border: none !important;
+      color: #ffffff !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all 0.2s ease !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .page--problem_main .section.side .search > button:hover,
+    .page--problem_category .section.side .search > button:hover {
+      background: linear-gradient(135deg, #40a9ff, #1890ff) !important;
+    }
+
+    .page--problem_main .section.side .search > button:active,
+    .page--problem_category .section.side .search > button:active {
+      background: #096dd9 !important;
+    }
+
+    .page--problem_main .section.side .search-info,
+    .page--problem_category .section.side .search-info {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      margin-top: 10px !important;
+      padding: 0 4px !important;
+      width: 100% !important;
+    }
+
+    .page--problem_main .section.side [data-fragment-id="problem_stat"],
+    .page--problem_category .section.side [data-fragment-id="problem_stat"] {
+      flex: 0 1 auto !important;
+    }
+
+    .page--problem_main .section.side [data-fragment-id="problem_stat"] p,
+    .page--problem_category .section.side [data-fragment-id="problem_stat"] p {
+      font-size: 12px !important;
+      color: #8c8c8c !important;
+      margin: 0 !important;
+    }
+
+    .page--problem_main .section.side select[name="sort"],
+    .page--problem_category .section.side select[name="sort"],
+    .page--problem_main .section.side .search-sort,
+    .page--problem_category .section.side .search-sort {
+      width: 85px !important;
+      border: 1px solid #d9d9d9 !important;
+      border-radius: 4px !important;
+      padding: 4px 20px 4px 8px !important;
+      background: #ffffff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%238c8c8c' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") no-repeat right 4px center !important;
+      background-size: 12px !important;
+      color: #595959 !important;
+      font-size: 11px !important;
+      cursor: pointer !important;
+      height: 24px !important;
+      line-height: 14px !important;
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      flex: 0 0 auto !important;
+      position: relative !important;
+      z-index: 1000 !important;
+      border-image: none !important;
+      box-sizing: border-box !important;
+    }
+
+    .page--problem_main .section.side select[name="sort"]::-webkit-scrollbar,
+    .page--problem_category .section.side select[name="sort"]::-webkit-scrollbar,
+    .page--problem_main .section.side .search-sort::-webkit-scrollbar,
+    .page--problem_category .section.side .search-sort::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    .page--problem_main .section.side select[name="sort"]::-ms-expand,
+    .page--problem_category .section.side select[name="sort"]::-ms-expand,
+    .page--problem_main .section.side .search-sort::-ms-expand,
+    .page--problem_category .section.side .search-sort::-ms-expand {
+      display: none !important;
+    }
+
+    .page--problem_main .section.side select[name="sort"]::after,
+    .page--problem_category .section.side select[name="sort"]::after,
+    .page--problem_main .section.side .search-sort::after,
+    .page--problem_category .section.side .search-sort::after {
+      display: none !important;
+    }
+
+    .page--problem_main .section.side .search-sort:hover,
+    .page--problem_category .section.side .search-sort:hover {
+      border-color: #1890ff !important;
+    }
+
+    .page--problem_main .section.side .search-sort:focus,
+    .page--problem_category .section.side .search-sort:focus {
+      outline: none !important;
+      border-color: #1890ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.1) !important;
+    }
+
+    /* === 侧边栏搜索框美化 - 深色模式 === */
+    .theme--dark.page--problem_main .section.side .search,
+    .theme--dark.page--problem_category .section.side .search {
+      background: #1a1a2e !important;
+      border-color: #2b2b2b !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search > input,
+    .theme--dark.page--problem_category .section.side .search > input {
+      color: #e0e0e0 !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search > input::placeholder,
+    .theme--dark.page--problem_category .section.side .search > input::placeholder {
+      color: #8c8c8c !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search > button,
+    .theme--dark.page--problem_category .section.side .search > button {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      box-shadow: 0 2px 8px rgba(24,144,255,0.3) !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search > button:hover,
+    .theme--dark.page--problem_category .section.side .search > button:hover {
+      background: linear-gradient(135deg, #40a9ff, #1890ff) !important;
+      box-shadow: 0 4px 12px rgba(24,144,255,0.35) !important;
+    }
+
+    .theme--dark.page--problem_main .section.side [data-fragment-id="problem_stat"] p,
+    .theme--dark.page--problem_category .section.side [data-fragment-id="problem_stat"] p {
+      color: #9ca3af !important;
+    }
+
+    .theme--dark.page--problem_main .section.side select[name="sort"],
+    .theme--dark.page--problem_category .section.side select[name="sort"],
+    .theme--dark.page--problem_main .section.side .search-sort,
+    .theme--dark.page--problem_category .section.side .search-sort {
+      background: #262626 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23bfbfbf' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") no-repeat right 4px center !important;
+      background-size: 12px !important;
+      border-color: #434343 !important;
+      color: #d9d9d9 !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search-sort:hover,
+    .theme--dark.page--problem_category .section.side .search-sort:hover {
+      border-color: #1890ff !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search-sort:focus,
+    .theme--dark.page--problem_category .section.side .search-sort:focus {
+      border-color: #1890ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.2) !important;
+    }
+
     /* === 主色调覆盖 === */
     html body button.button:not(.codicon).primary,
     html body a.button:not(.codicon).primary,
