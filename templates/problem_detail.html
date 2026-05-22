@@ -63,7 +63,18 @@
       </div>
     </div>
     {% endif %}
-    <div class="section">
+    <div class="section problem-detail-section">
+      {% if psdoc.status == STATUS.STATUS_ACCEPTED %}
+      <div class="passed-stamp-container">
+        <div class="passed-stamp">
+          <div class="stamp-outer-ring"></div>
+          <div class="stamp-inner-ring"></div>
+          <div class="stamp-text-wrapper">
+            <span class="stamp-text">通 过</span>
+          </div>
+        </div>
+      </div>
+      {% endif %}
       <div class="problem-content-container"><div class="problem-content" data-marker-enabled>
         <div class="section__header non-scratchpad--hide">
           <h1 class="section__title">{{ pdoc.title }}</h1>

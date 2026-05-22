@@ -7,6 +7,16 @@
 <!DOCTYPE html>
 <html data-page="{{ page_name }}" data-layout="{{ layout_name }}" class="layout--{{ layout_name }} page--{{ page_name }} theme--{{ (handler.user|default({})).theme|default('default') }} nojs" lang="{{ UserContext.viewLang }}" data-app="Hydro">
 <head>
+  <svg style="display: none;">
+    <filter id="stamp-noise" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0"/>
+      <feComponentTransfer in="noise">
+        <feFuncA type="table" tableValues="0.1 0.3"/>
+      </feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="noise" mode="soft-light"/>
+    </filter>
+  </svg>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
@@ -257,6 +267,37 @@
     }
     .data-table td, table td, .table td {
       border-bottom: 1px solid #f0f0f0 !important;
+    }
+
+    /* --- 首页讨论卡片文字颜色修复 --- */
+    .page--discussion_main .discussion__title a,
+    .page--homepage .discussion__title a {
+      color: #333 !important;
+    }
+
+    .page--discussion_main .discussion__title a:hover,
+    .page--homepage .discussion__title a:hover {
+      color: #4f46e5 !important;
+    }
+
+    .page--discussion_main .discussion__title a:visited,
+    .page--homepage .discussion__title a:visited {
+      color: #666 !important;
+    }
+
+    .theme--dark.page--discussion_main .discussion__title a,
+    .theme--dark.page--homepage .discussion__title a {
+      color: #e0e0e0 !important;
+    }
+
+    .theme--dark.page--discussion_main .discussion__title a:hover,
+    .theme--dark.page--homepage .discussion__title a:hover {
+      color: #a78bfa !important;
+    }
+
+    .theme--dark.page--discussion_main .discussion__title a:visited,
+    .theme--dark.page--homepage .discussion__title a:visited {
+      color: #a0a0a0 !important;
     }
 
     /* --- 首页表格深色模式 --- */
@@ -1613,9 +1654,9 @@
     /* 水平线样式 */
     .page--problem_detail .typo hr {
       border: none !important;
-      height: 2px !important;
-      background: linear-gradient(90deg, transparent, #e2e8f0, transparent) !important;
-      margin: 2em 0 !important;
+      height: 1px !important;
+      background: linear-gradient(90deg, transparent, #cbd5e1, #94a3b8, #cbd5e1, transparent) !important;
+      margin: 1.5em 0 !important;
     }
 
     /* 强调样式 */
@@ -1769,7 +1810,7 @@
     }
 
     html.theme--dark .page--problem_detail .typo hr {
-      background: linear-gradient(90deg, transparent, #374151, transparent) !important;
+      background: linear-gradient(90deg, transparent, #4b5563, #6b7280, #4b5563, transparent) !important;
     }
 
     html.theme--dark body .page--problem_detail .typo strong,
@@ -1943,8 +1984,9 @@
     }
     
     .theme--default.page--problem_main .pagination .current {
-      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      background: linear-gradient(135deg, #4f46e5, #4338ca) !important;
       color: white !important;
+      border-color: #4f46e5 !important;
     }
 
     /* === 题库页面暗色模式配色 === */
@@ -1984,8 +2026,9 @@
     }
     
     .theme--dark.page--problem_main .pagination .current {
-      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
-      color: #e0e0e0 !important;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+      color: white !important;
+      border-color: #7c3aed !important;
     }
 
     /* === 全局按钮悬停效果（参考重测整题按钮） === */
@@ -2300,6 +2343,142 @@
 
     .page--problem_detail .problem__tag {
       margin: 0 !important;
+    }
+
+    /* === 通过印章样式 === */
+    .page--problem_detail .problem-detail-section {
+      position: relative !important;
+    }
+
+    .page--problem_detail .passed-stamp-container {
+      position: absolute !important;
+      top: 15px !important;
+      right: 15px !important;
+      z-index: 100 !important;
+      pointer-events: none !important;
+    }
+
+    .page--problem_detail .passed-stamp {
+      position: relative !important;
+      width: 100px !important;
+      height: 100px !important;
+      transform: rotate(-6deg) !important;
+    }
+
+    .page--problem_detail .stamp-outer-ring {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border: 2px solid #ef4444 !important;
+      border-radius: 50% !important;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.02) 100%) !important;
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.15),
+        inset 0 0 20px rgba(239, 68, 68, 0.05) !important;
+    }
+
+    .page--problem_detail .stamp-inner-ring {
+      position: absolute !important;
+      top: 12px !important;
+      left: 12px !important;
+      width: calc(100% - 24px) !important;
+      height: calc(100% - 24px) !important;
+      border: 1px solid rgba(239, 68, 68, 0.5) !important;
+      border-radius: 50% !important;
+    }
+
+    .page--problem_detail .stamp-text-wrapper {
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) rotate(-4deg) !important;
+      width: 75px !important;
+      height: 26px !important;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 4px !important;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4) !important;
+    }
+
+    .page--problem_detail .stamp-text {
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+      letter-spacing: 2px !important;
+    }
+
+    /* 深色模式 */
+    .theme--dark.page--problem_detail .stamp-outer-ring {
+      border-color: #f87171 !important;
+      background: linear-gradient(135deg, rgba(248, 113, 113, 0.12) 0%, rgba(248, 113, 113, 0.04) 100%) !important;
+      box-shadow: 
+        0 0 20px rgba(248, 113, 113, 0.2),
+        inset 0 0 20px rgba(248, 113, 113, 0.08) !important;
+    }
+
+    .theme--dark.page--problem_detail .stamp-inner-ring {
+      border-color: rgba(248, 113, 113, 0.5) !important;
+    }
+
+    .theme--dark.page--problem_detail .stamp-text-wrapper {
+      background: linear-gradient(135deg, #f87171 0%, #ef4444 100%) !important;
+      box-shadow: 0 2px 8px rgba(248, 113, 113, 0.5) !important;
+    }
+
+    /* === 侧边栏按钮配色优化 === */
+    /* 进入在线编程模式按钮 */
+    .page--problem_detail .section.side .menu__link.highlight {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe) !important;
+      color: #0369a1 !important;
+      border: 1px solid #7dd3fc !important;
+      border-radius: 8px !important;
+    }
+
+    .page--problem_detail .section.side .menu__link.highlight:hover {
+      background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important;
+      border-color: #38bdf8 !important;
+      color: #075985 !important;
+    }
+
+    /* 重测整题按钮 */
+    .page--problem_detail .section.side button[name="problem-sidebar__rejudge"] {
+      background: linear-gradient(135deg, #fef3c7, #fde68a) !important;
+      color: #92400e !important;
+      border: 1px solid #fbbf24 !important;
+      border-radius: 8px !important;
+    }
+
+    .page--problem_detail .section.side button[name="problem-sidebar__rejudge"]:hover {
+      background: linear-gradient(135deg, #fde68a, #fcd34d) !important;
+      border-color: #f59e0b !important;
+      color: #78350f !important;
+    }
+
+    /* 深色模式 */
+    .theme--dark.page--problem_detail .section.side .menu__link.highlight {
+      background: linear-gradient(135deg, #0c4a6e, #075985) !important;
+      color: #7dd3fc !important;
+      border-color: #0284c7 !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side .menu__link.highlight:hover {
+      background: linear-gradient(135deg, #075985, #0369a1) !important;
+      border-color: #38bdf8 !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side button[name="problem-sidebar__rejudge"] {
+      background: linear-gradient(135deg, #78350f, #451a03) !important;
+      color: #fcd34d !important;
+      border-color: #f59e0b !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side button[name="problem-sidebar__rejudge"]:hover {
+      background: linear-gradient(135deg, #92400e, #78350f) !important;
+      border-color: #fbbf24 !important;
     }
 
     .page--problem_detail .problem__tag-link {
@@ -2649,68 +2828,77 @@
 
     .page--problem_detail .problem-info-item {
       border-radius: 8px !important;
-      padding: 6px !important;
+      padding: 8px 6px !important;
       text-align: center !important;
+      background: #f8fafc !important;
+      border: 1px solid #e2e8f0 !important;
     }
 
     .page--problem_detail .problem-info-item.difficulty {
-      background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+      border-color: #a5b4fc !important;
+      background: linear-gradient(135deg, #f5f3ff, #ede9fe) !important;
     }
 
     .page--problem_detail .problem-info-item.acceptance {
-      background: linear-gradient(135deg, #10b981, #059669) !important;
+      border-color: #6ee7b7 !important;
+      background: linear-gradient(135deg, #f0fdf4, #ecfdf5) !important;
     }
 
     .page--problem_detail .problem-info-item.attempts {
-      background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+      border-color: #93c5fd !important;
+      background: linear-gradient(135deg, #eff6ff, #dbeafe) !important;
     }
 
     .page--problem_detail .problem-info-item.passed {
-      background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
+      border-color: #5eead4 !important;
+      background: linear-gradient(135deg, #f0fdfa, #ecfeff) !important;
     }
 
     .page--problem_detail .problem-info-label {
       display: block !important;
-      font-size: 12px !important;
-      color: #ffffff !important;
-      margin-bottom: 3px !important;
-      font-weight: 600 !important;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+      font-size: 11px !important;
+      color: #64748b !important;
+      margin-bottom: 2px !important;
+      font-weight: 500 !important;
       letter-spacing: 0.5px !important;
     }
 
     .page--problem_detail .problem-info-value {
       display: block !important;
-      font-size: 18px !important;
+      font-size: 16px !important;
       font-weight: 700 !important;
-      color: #ffffff !important;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) !important;
+      color: #334155 !important;
     }
 
     .page--problem_detail .problem-info-value a {
-      color: #ffffff !important;
+      color: #3b82f6 !important;
+      text-decoration: none !important;
+    }
+
+    .page--problem_detail .problem-info-value a:hover {
       text-decoration: underline !important;
-      text-underline-offset: 2px !important;
     }
 
     .page--problem_detail .problem-score-section {
       margin-bottom: 10px !important;
       padding: 10px !important;
-      background: linear-gradient(135deg, #fef3c7, #fde68a) !important;
+      background: linear-gradient(135deg, #fefce8, #fef9c3) !important;
+      border: 1px solid #fde047 !important;
       border-radius: 8px !important;
       text-align: center !important;
     }
 
     .page--problem_detail .score-label {
       font-size: 11px !important;
-      color: #92400e !important;
+      color: #78716c !important;
       font-weight: 500 !important;
       margin-bottom: 3px !important;
     }
 
     .page--problem_detail .score-value {
-      font-size: 22px !important;
+      font-size: 20px !important;
       font-weight: 700 !important;
+      color: #4a5568 !important;
     }
 
     .page--problem_detail .problem-info-details {
@@ -2780,28 +2968,50 @@
       border-color: rgba(255, 255, 255, 0.25) !important;
     }
 
+    .theme--dark.page--problem_detail .problem-info-item {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+    }
+
     .theme--dark.page--problem_detail .problem-info-item.difficulty {
-      background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+      border-color: rgba(139, 92, 246, 0.4) !important;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)) !important;
     }
 
     .theme--dark.page--problem_detail .problem-info-item.acceptance {
-      background: linear-gradient(135deg, #059669, #047857) !important;
+      border-color: rgba(16, 185, 129, 0.4) !important;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)) !important;
     }
 
     .theme--dark.page--problem_detail .problem-info-item.attempts {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+      border-color: rgba(59, 130, 246, 0.4) !important;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05)) !important;
     }
 
     .theme--dark.page--problem_detail .problem-info-item.passed {
-      background: linear-gradient(135deg, #0891b2, #0e7490) !important;
+      border-color: rgba(6, 182, 212, 0.4) !important;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(6, 182, 212, 0.05)) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-label {
+      color: #d1d5db !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-value {
+      color: #f9fafb !important;
     }
 
     .theme--dark.page--problem_detail .problem-score-section {
-      background: linear-gradient(135deg, #451a03, #713f12) !important;
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05)) !important;
+      border-color: rgba(251, 191, 36, 0.3) !important;
     }
 
     .theme--dark.page--problem_detail .score-label {
-      color: #fcd34d !important;
+      color: #a8a29e !important;
+    }
+
+    .theme--dark.page--problem_detail .score-value {
+      color: #d6d3d1 !important;
     }
 
     .theme--dark.page--problem_detail .problem-info-details {
