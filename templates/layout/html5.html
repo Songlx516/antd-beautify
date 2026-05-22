@@ -2596,6 +2596,270 @@
       box-shadow: 0 0 0 3px rgba(24,144,255,0.2) !important;
     }
 
+    /* === 题目信息卡片美化 === */
+    .page--problem_detail .problem-info-card {
+      background: linear-gradient(145deg, #ffffff, #f8f9fa) !important;
+      border-radius: 16px !important;
+      padding: 20px !important;
+      margin-bottom: 16px !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+      border: 1px solid #e9ecef !important;
+    }
+
+    .page--problem_detail .problem-info-header {
+      margin-bottom: 16px !important;
+      padding-bottom: 12px !important;
+      border-bottom: 1px solid #e9ecef !important;
+    }
+
+    .page--problem_detail .problem-title-row {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      flex-wrap: wrap !important;
+    }
+
+    .page--problem_detail .problem-title-row form {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .page--problem_detail .problem-title-row .star {
+      background: none !important;
+      border: none !important;
+      cursor: pointer !important;
+      padding: 4px !important;
+      margin: 0 !important;
+    }
+
+    .page--problem_detail .problem-title {
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      color: #212529 !important;
+      line-height: 1.5 !important;
+    }
+
+    .page--problem_detail .problem-tags-section {
+      margin-bottom: 16px !important;
+      padding: 12px !important;
+      background: #f8f9fa !important;
+      border-radius: 12px !important;
+    }
+
+    .page--problem_detail .tags-header {
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      margin-bottom: 10px !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: #495057 !important;
+    }
+
+    .page--problem_detail .tags-header .icon {
+      font-size: 14px !important;
+      color: #6c757d !important;
+    }
+
+    .page--problem_detail .tags-list {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
+
+    .page--problem_detail .tag-item {
+      padding: 4px 10px !important;
+      background: #ffffff !important;
+      border: 1px solid #dee2e6 !important;
+      border-radius: 16px !important;
+      font-size: 12px !important;
+      color: #495057 !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .page--problem_detail .tag-item:hover {
+      background: #e9ecef !important;
+      border-color: #adb5bd !important;
+    }
+
+    .page--problem_detail .problem-info-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 6px !important;
+      margin-bottom: 10px !important;
+    }
+
+    .page--problem_detail .problem-info-item {
+      border-radius: 8px !important;
+      padding: 6px !important;
+      text-align: center !important;
+    }
+
+    .page--problem_detail .problem-info-item.difficulty {
+      background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+    }
+
+    .page--problem_detail .problem-info-item.acceptance {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+    }
+
+    .page--problem_detail .problem-info-item.attempts {
+      background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+    }
+
+    .page--problem_detail .problem-info-item.passed {
+      background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
+    }
+
+    .page--problem_detail .problem-info-label {
+      display: block !important;
+      font-size: 10px !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      margin-bottom: 2px !important;
+      font-weight: 500 !important;
+    }
+
+    .page--problem_detail .problem-info-value {
+      display: block !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+    }
+
+    .page--problem_detail .problem-info-value a {
+      color: #ffffff !important;
+      text-decoration: underline !important;
+      text-underline-offset: 2px !important;
+    }
+
+    .page--problem_detail .problem-score-section {
+      margin-bottom: 10px !important;
+      padding: 10px !important;
+      background: linear-gradient(135deg, #fef3c7, #fde68a) !important;
+      border-radius: 8px !important;
+      text-align: center !important;
+    }
+
+    .page--problem_detail .score-label {
+      font-size: 11px !important;
+      color: #92400e !important;
+      font-weight: 500 !important;
+      margin-bottom: 3px !important;
+    }
+
+    .page--problem_detail .score-value {
+      font-size: 22px !important;
+      font-weight: 700 !important;
+    }
+
+    .page--problem_detail .problem-info-details {
+      padding-top: 12px !important;
+      border-top: 1px solid #e9ecef !important;
+    }
+
+    .page--problem_detail .problem-info-details .info-row {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 8px 0 !important;
+      border-bottom: 1px solid #f1f3f4 !important;
+    }
+
+    .page--problem_detail .problem-info-details .info-row:last-child {
+      border-bottom: none !important;
+    }
+
+    .page--problem_detail .problem-info-details .info-label {
+      font-size: 13px !important;
+      color: #64748b !important;
+      font-weight: 500 !important;
+    }
+
+    .page--problem_detail .problem-info-details .info-value {
+      font-size: 13px !important;
+      color: #212529 !important;
+      font-weight: 500 !important;
+    }
+
+    /* 深色模式题目信息卡片 */
+    .theme--dark.page--problem_detail .problem-info-card {
+      background: linear-gradient(145deg, #1a1a2e, #16213e) !important;
+      border-color: #374151 !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-header {
+      border-bottom-color: #374151 !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-title {
+      color: #e5e7eb !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-tags-section {
+      background: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .theme--dark.page--problem_detail .tags-header {
+      color: #d1d5db !important;
+    }
+
+    .theme--dark.page--problem_detail .tags-header .icon {
+      color: #9ca3af !important;
+    }
+
+    .theme--dark.page--problem_detail .tag-item {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+      color: #d1d5db !important;
+    }
+
+    .theme--dark.page--problem_detail .tag-item:hover {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-color: rgba(255, 255, 255, 0.25) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item.difficulty {
+      background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item.acceptance {
+      background: linear-gradient(135deg, #059669, #047857) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item.attempts {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item.passed {
+      background: linear-gradient(135deg, #0891b2, #0e7490) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-score-section {
+      background: linear-gradient(135deg, #451a03, #713f12) !important;
+    }
+
+    .theme--dark.page--problem_detail .score-label {
+      color: #fcd34d !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-details {
+      border-top-color: #374151 !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-details .info-row {
+      border-bottom-color: #374151 !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-details .info-label {
+      color: #9ca3af !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-details .info-value {
+      color: #e5e7eb !important;
+    }
+
     /* === 主色调覆盖 === */
     html body button.button:not(.codicon).primary,
     html body a.button:not(.codicon).primary,
