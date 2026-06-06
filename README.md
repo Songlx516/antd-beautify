@@ -109,6 +109,96 @@ antd-beautify/
 
 ---
 
+## 字体设置
+
+### HarmonyOS Sans 在线字体
+
+**字体来源**：jsDelivr CDN
+
+**CDN 地址**：
+```
+https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/
+```
+
+**字体格式**：
+- **woff2**（优先）：体积小，加载速度快
+- **woff**（备用）：兼容性好
+
+**字体栈（优先级从高到低）**：
+
+| 字体 | 平台 | 说明 |
+|------|------|------|
+| `HarmonyOS_Sans_SC_Medium` | 在线加载 | 华为鸿蒙字体，现代、简洁、易读 |
+| `PingFang SC` | macOS/iOS | 苹方 - 苹果系统中文默认字体 |
+| `Microsoft YaHei` | Windows | 微软雅黑 - Windows 中文默认字体 |
+| `Helvetica Neue` | macOS/iOS | 经典英文字体 |
+| `Source Han Sans SC` | 跨平台 | 思源黑体 - Adobe 开源中文字体 |
+| `Noto Sans CJK SC` | 跨平台 | Google 开源中文字体 |
+| `WenQuanYi Micro Hei` | Linux | 文泉驿微米黑 |
+| `-apple-system` | macOS/iOS | 系统默认字体 |
+| `BlinkMacSystemFont` | macOS | macOS 系统字体 |
+| `Segoe UI` | Windows | Windows 系统字体 |
+| `Open Sans` | 跨平台 | Google 开源英文字体 |
+| `sans-serif` | 兜底 | 系统无衬线字体 |
+
+### 字体渲染优化
+
+| CSS 属性 | 值 | 效果 |
+|---------|-----|------|
+| `-webkit-font-smoothing` | `subpixel-antialiased` | 次像素抗锯齿，Windows 上文字更清晰 |
+| `text-rendering` | `optimizeLegibility` | 优化可读性，启用连字和字距调整 |
+| `font-display` | `fallback` | 短暂阻塞期（约 100ms）等待字体加载，减少 FOUT 闪烁 |
+| `font-size` | `17px` | 全局字号，比默认 16px 大一号 |
+
+### 字体预加载（减少 FOUT）
+
+使用 `<link rel="preload">` 提前加载字体：
+
+```html
+<link rel="preload" 
+      href="https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff2" 
+      as="font" 
+      type="font/woff2" 
+      crossorigin="anonymous">
+```
+
+**优点**：
+- 浏览器优先下载字体
+- 与 `font-display: fallback` 配合使用，大幅减少字体切换闪烁
+
+### font-display 对比
+
+| 值 | 效果 | 适用场景 |
+|---|------|---------|
+| `swap` | 立即显示备用字体，字体加载后切换 | 字体不重要，优先显示内容 |
+| `fallback` | 等待约 100ms，没加载完显示备用字体 | 平衡用户体验和字体一致性 |
+| `block` | 等待字体加载完成（最多 3 秒） | 字体非常重要，宁可等待 |
+
+**当前选择**：`fallback` - 最佳平衡点
+
+### 全局字号
+
+**默认字号**：`16px` → **修改后**：`17px`
+
+修改位置：`html { font-size: 17px; }`
+
+由于 HydroOJ 使用 `rem` 单位，修改 `html` 的 `font-size` 会影响整个网站：
+- 1rem = 16px（默认）
+- 1rem = 17px（修改后，整体放大 6.25%）
+
+### 版权说明
+
+**HarmonyOS Sans** 是华为终端有限公司设计开发的字体家族，**支持免费商用**：
+
+- 许可方授予不可转让、非排他性、免版税的全球版权许可
+- 可用于软件、材料、徽标、应用软件等
+- 不得单独分发或销售字体文件本身
+
+详见官方许可协议：
+- https://gitcode.com/openharmony/global_system_resources/blob/master/LICENSE_Fonts
+
+---
+
 ## 注意事项
 
 ### 1. 样式生效方式

@@ -36,11 +36,26 @@
   <meta property="og:image" content="{{ UiContext.cdn_prefix }}favicon-96x96.png" />
   {% endblock %}
   <title>{{ handler.renderTitle(page_name) }}</title>
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <style>
+    @font-face {
+      font-family: "HarmonyOS_Sans_SC_Medium";
+      font-style: normal;
+      font-display: fallback;
+      src: url("https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff2") format("woff2"),
+           url("https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff") format("woff");
+    }
+    html {
+      font-size: 17px;
+      -webkit-font-smoothing: subpixel-antialiased;
+      text-rendering: optimizeLegibility;
+    }
     body {
-      --font-family: "{{ UserContext.fontFamily }}", "Open Sans", "Seravek", "Segoe UI", "Verdana", "PingFang SC", "Hiragino Sans GB", "Lantinghei SC", "Microsoft Yahei", "WenQuanYi Micro Hei", "sans";
+      --font-family: "HarmonyOS_Sans_SC_Medium", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", sans-serif;
       --code-font-family: "{{ UserContext.codeFontFamily }}", "monaco", "Source Code Pro", "Consolas", "Lucida Console", "monospace";
       --font-ligatures: {{ "normal" if UserContext.codeFontLigatures else "none" }} !important;
+      -webkit-font-smoothing: subpixel-antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     /* --- 现代化美化 - 卡片阴影与悬停 --- */
