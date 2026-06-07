@@ -61,6 +61,134 @@
           {%- endfor %}
         </div>
       </div>
+      <div class="section__body" style="padding: 2px 20px 4px 20px !important; margin: 0 !important; min-height: 24px !important;">
+        <style>
+          /* 美化后的列表样式 - 明确两行布局 */
+          html body .problem-info-rows-inline {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 4px !important;
+            max-width: calc(100% - 200px) !important;
+            padding-top: 6px !important;
+            padding-bottom: 10px !important;
+          }
+          html body .problem-info-row-inline {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            gap: 10px !important;
+            align-items: center !important;
+          }
+          html body .problem-info-item-inline {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            padding: 5px 12px !important;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9) !important;
+            border-radius: 8px !important;
+            border: none !important;
+            white-space: nowrap !important;
+            transition: all 0.2s ease !important;
+          }
+          html body .problem-info-item-inline:hover {
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1) !important;
+            transform: translateY(-1px) !important;
+          }
+          html body .problem-info-item-inline .problem-info-label {
+            font-size: 11px !important;
+            color: #64748b !important;
+            font-weight: 500 !important;
+          }
+          html body .problem-info-item-inline .problem-info-value {
+            font-size: 13px !important;
+            color: #1e293b !important;
+            font-weight: 600 !important;
+          }
+          html body .problem-tags-inline {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 8px !important;
+            margin-top: 16px !important;
+            padding-top: 16px !important;
+            border-top: 1px solid #e5e7eb !important;
+          }
+          html body .tag-item-inline {
+            padding: 4px 12px !important;
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9) !important;
+            color: #ffffff !important;
+            border-radius: 20px !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3) !important;
+            transition: all 0.2s ease !important;
+          }
+          html body .tag-item-inline:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4) !important;
+          }
+          /* 深色模式 */
+          html.theme--dark body .problem-info-item-inline {
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)) !important;
+            border: none !important;
+          }
+          html.theme--dark body .problem-info-item-inline:hover {
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08)) !important;
+          }
+          html.theme--dark body .problem-info-item-inline .problem-info-label {
+            color: #94a3b8 !important;
+          }
+          html.theme--dark body .problem-info-item-inline .problem-info-value {
+            color: #f1f5f9 !important;
+          }
+          html.theme--dark body .tag-item-inline {
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6) !important;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4) !important;
+          }
+        </style>
+        <div class="problem-info-rows-inline">
+          <div class="problem-info-row-inline">
+            <div class="problem-info-item-inline">
+              <span class="problem-info-label">ID</span>
+              <span class="problem-info-value">{{ pdoc.docId }}</span>
+            </div>
+            <div class="problem-info-item-inline">
+              <span class="problem-info-label">难度</span>
+              <span class="problem-info-value">{{ pdoc['difficulty'] or '(无)' }}</span>
+            </div>
+            <div class="problem-info-item-inline">
+              <span class="problem-info-label">通过率</span>
+              <span class="problem-info-value">{% if pdoc.nAccept > 0 and pdoc.nSubmit > 0 %}{{ (pdoc.nAccept * 100 / pdoc.nSubmit)|round(1) }}%{% else %}0%{% endif %}</span>
+            </div>
+            <div class="problem-info-item-inline">
+              <span class="problem-info-label">已通过</span>
+              <span class="problem-info-value">{% if psdoc.status == STATUS.STATUS_ACCEPTED %}是{% else %}否{% endif %}</span>
+            </div>
+          </div>
+          <div class="problem-info-row-inline">
+            <div class="problem-info-item-inline">
+              <span class="problem-info-label">类型</span>
+              <span class="problem-info-value">{{ _('problem_type.' + pdoc.config.type).format(pdoc.config.subType) }}</span>
+            </div>
+            {% if pdoc.config.type != 'objective' and pdoc.config.type != 'submit_answer' %}
+            <div class="problem-info-item-inline">
+              <span class="problem-info-label">时间限制</span>
+              <span class="problem-info-value">{{ pdoc.config.timeMax if pdoc.config.timeMax == pdoc.config.timeMin else pdoc.config.timeMin+'~'+pdoc.config.timeMax }}ms</span>
+            </div>
+            <div class="problem-info-item-inline">
+              <span class="problem-info-label">内存限制</span>
+              <span class="problem-info-value">{{ pdoc.config.memoryMax if pdoc.config.memoryMax == pdoc.config.memoryMin else pdoc.config.memoryMin+'~'+pdoc.config.memoryMax }}MiB</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% if pdoc.tag.length %}
+        <div class="problem-tags-inline">
+          {%- for tag in pdoc.tag -%}
+            <a class="tag-item-inline" href="{{ url('problem_main', query={q:'category:'+tag}) }}">{{ tag }}</a>
+          {%- endfor -%}
+        </div>
+        {% endif %}
+      </div>
     </div>
     {% endif %}
     <div class="section problem-detail-section">
@@ -97,6 +225,7 @@
     </div>
   </div>
   <div class="medium-3 columns"><div data-sticky="large">
+    {% if not (tdoc and tdoc.pids|length <= 26 and tdoc.pids|length > 1) %}
     <div class="problem-info-card">
       <div class="problem-info-header">
         <div class="problem-title-row">
@@ -129,7 +258,7 @@
         </div>
         <div class="problem-info-item acceptance">
           <span class="problem-info-label">通过率</span>
-          <span class="problem-info-value">{% if pdoc.nAccept > 0 and pdoc.nSubmit > 0 %}{{ ((pdoc.nAccept / pdoc.nSubmit * 100).toFixed(1) + '%') }}{% else %}0%{% endif %}</span>
+          <span class="problem-info-value">{% if pdoc.nAccept > 0 and pdoc.nSubmit > 0 %}{{ (pdoc.nAccept * 100 / pdoc.nSubmit)|round(1) }}%{% else %}0%{% endif %}</span>
         </div>
         <div class="problem-info-item attempts">
           <span class="problem-info-label">{{ _('Tried') }}</span>
@@ -196,6 +325,7 @@
       </div>
       {% endif %}
     </div>
+    {% endif %}
     {% include "partials/problem_sidebar.html" %}
   </div></div>
 </div>

@@ -3265,6 +3265,119 @@
       color: #e5e7eb !important;
     }
 
+    /* === 内联问题信息样式（作业/竞赛页面）=== */
+    .page--problem_detail .problem-info-inline {
+      padding: 20px !important;
+      margin: 0 !important;
+      background: linear-gradient(145deg, #ffffff, #fafafa) !important;
+      border-top: 1px solid #e5e7eb !important;
+    }
+
+    .page--problem_detail .problem-info-grid-inline {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+      gap: 12px !important;
+    }
+
+    .page--problem_detail .problem-info-item-inline {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 4px !important;
+      padding: 12px 16px !important;
+      background: white !important;
+      border-radius: 12px !important;
+      border: 1px solid #e5e7eb !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .page--problem_detail .problem-info-item-inline:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+      border-color: #d1d5db !important;
+    }
+
+    .page--problem_detail .problem-info-item-inline .problem-info-label {
+      font-size: 11px !important;
+      color: #9ca3af !important;
+      font-weight: 500 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    .page--problem_detail .problem-info-item-inline .problem-info-value {
+      font-size: 14px !important;
+      color: #1f2937 !important;
+      font-weight: 600 !important;
+      line-height: 1.4 !important;
+    }
+
+    .page--problem_detail .problem-tags-inline {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      margin-top: 16px !important;
+      padding-top: 16px !important;
+      border-top: 1px dashed #e5e7eb !important;
+    }
+
+    .page--problem_detail .tag-item-inline {
+      padding: 6px 14px !important;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+      color: white !important;
+      border-radius: 20px !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
+    }
+
+    .page--problem_detail .tag-item-inline:hover {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4) !important;
+    }
+
+    /* 深色模式内联问题信息 */
+    .theme--dark.page--problem_detail .problem-info-inline {
+      background: linear-gradient(145deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9)) !important;
+      border-top-color: #374151 !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item-inline {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item-inline:hover {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item-inline .problem-info-label {
+      color: #9ca3af !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item-inline .problem-info-value {
+      color: #f9fafb !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-tags-inline {
+      border-top-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .theme--dark.page--problem_detail .tag-item-inline {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa) !important;
+      box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3) !important;
+    }
+
+    .theme--dark.page--problem_detail .tag-item-inline:hover {
+      background: linear-gradient(135deg, #7c3aed, #9333ea) !important;
+    }
+
     /* === 主色调覆盖 === */
     html body button.button:not(.codicon).primary,
     html body a.button:not(.codicon).primary,
