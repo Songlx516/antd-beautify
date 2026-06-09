@@ -512,6 +512,25 @@
       color: #e0e0e0 !important;
     }
 
+    /* --- 首页讨论卡片样式美化 --- */
+    .page--discussion_main .discussion__item,
+    .page--homepage .discussion__item {
+      border-left: 4px solid transparent !important;
+      padding-left: 12px !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .page--discussion_main .discussion__item.highlight,
+    .page--homepage .discussion__item.highlight {
+      border-left: 4px solid #1890ff !important;
+      background: linear-gradient(90deg, rgba(24, 144, 255, 0.05) 0%, transparent 100%) !important;
+    }
+
+    .page--discussion_main .discussion__item:hover,
+    .page--homepage .discussion__item:hover {
+      background: rgba(24, 144, 255, 0.03) !important;
+    }
+
     /* --- 首页讨论卡片文字颜色修复 --- */
     .page--discussion_main .discussion__title a,
     .page--homepage .discussion__title a {
@@ -526,6 +545,17 @@
     .page--discussion_main .discussion__title a:visited,
     .page--homepage .discussion__title a:visited {
       color: #666 !important;
+    }
+
+    .theme--dark.page--discussion_main .discussion__item.highlight,
+    .theme--dark.page--homepage .discussion__item.highlight {
+      border-left: 4px solid #60b6ff !important;
+      background: linear-gradient(90deg, rgba(96, 182, 255, 0.1) 0%, transparent 100%) !important;
+    }
+
+    .theme--dark.page--discussion_main .discussion__item:hover,
+    .theme--dark.page--homepage .discussion__item:hover {
+      background: rgba(96, 182, 255, 0.05) !important;
     }
 
     .theme--dark.page--discussion_main .discussion__title a,
@@ -575,6 +605,212 @@
     
     .page--ranking .section .data-table td.col--bio {
       height: auto !important;
+    }
+
+    /* --- 排名列表前三名特效 - 浅色模式 --- */
+    .page--ranking .data-table tr.ranking-top-1,
+    .page--homepage .data-table tr.ranking-top-1 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-1:hover,
+    .page--homepage .data-table tr.ranking-top-1:hover {
+      background: linear-gradient(90deg, #fef08a 0%, #facc15 50%, #eab308 100%) !important;
+      box-shadow: 0 4px 20px rgba(234, 179, 8, 0.6) !important;
+      transform: scale(1.02) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-1 td:first-child,
+    .page--homepage .data-table tr.ranking-top-1 td:first-child {
+      position: relative !important;
+      font-weight: 700 !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-1 td:first-child::before,
+    .page--homepage .data-table tr.ranking-top-1 td:first-child::before {
+      content: '★ ' !important;
+      margin-right: 4px !important;
+      color: #eab308 !important;
+      text-shadow: 0 0 10px rgba(234, 179, 8, 0.9) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-1:hover td:first-child,
+    .page--homepage .data-table tr.ranking-top-1:hover td:first-child {
+      color: #854d0e !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-2,
+    .page--homepage .data-table tr.ranking-top-2 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-2:hover,
+    .page--homepage .data-table tr.ranking-top-2:hover {
+      background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 50%, #94a3b8 100%) !important;
+      box-shadow: 0 4px 20px rgba(100, 116, 139, 0.5) !important;
+      transform: scale(1.02) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-2 td:first-child,
+    .page--homepage .data-table tr.ranking-top-2 td:first-child {
+      position: relative !important;
+      font-weight: 700 !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-2 td:first-child::before,
+    .page--homepage .data-table tr.ranking-top-2 td:first-child::before {
+      content: '☆ ' !important;
+      margin-right: 4px !important;
+      color: #94a3b8 !important;
+      text-shadow: 0 0 8px rgba(148, 163, 184, 0.8) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-2:hover td:first-child,
+    .page--homepage .data-table tr.ranking-top-2:hover td:first-child {
+      color: #334155 !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-3,
+    .page--homepage .data-table tr.ranking-top-3 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-3:hover,
+    .page--homepage .data-table tr.ranking-top-3:hover {
+      background: linear-gradient(90deg, rgba(254, 243, 199, 0.6) 0%, rgba(251, 146, 60, 0.5) 50%, rgba(234, 88, 12, 0.4) 100%) !important;
+      box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3) !important;
+      transform: scale(1.02) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-3 td:first-child,
+    .page--homepage .data-table tr.ranking-top-3 td:first-child {
+      position: relative !important;
+      font-weight: 700 !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-3 td:first-child::before,
+    .page--homepage .data-table tr.ranking-top-3 td:first-child::before {
+      content: '◆ ' !important;
+      margin-right: 4px !important;
+      color: #fb923c !important;
+      text-shadow: 0 0 8px rgba(251, 146, 60, 0.8) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-3:hover td:first-child,
+    .page--homepage .data-table tr.ranking-top-3:hover td:first-child {
+      color: #9a3412 !important;
+    }
+
+    /* --- 排名列表前三名特效 - 深色模式 --- */
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1 td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1 td {
+      color: #ffffff !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1 td:first-child::before,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1 td:first-child::before {
+      content: '★ ' !important;
+      margin-right: 4px !important;
+      color: #eab308 !important;
+      text-shadow: 0 0 10px rgba(234, 179, 8, 0.9) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1:hover,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1:hover {
+      background: linear-gradient(90deg, rgba(234, 179, 8, 0.35) 0%, rgba(234, 179, 8, 0.5) 50%, rgba(234, 179, 8, 0.35) 100%) !important;
+      box-shadow: 0 4px 20px rgba(234, 179, 8, 0.6) !important;
+      transform: scale(1.02) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1:hover td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1:hover td {
+      color: #1a1a2e !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1:hover td:first-child,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1:hover td:first-child {
+      color: #854d0e !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2 td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2 td {
+      color: #ffffff !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2 td:first-child::before,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2 td:first-child::before {
+      content: '☆ ' !important;
+      margin-right: 4px !important;
+      color: #cbd5e1 !important;
+      text-shadow: 0 0 8px rgba(148, 163, 184, 0.8) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2:hover,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2:hover {
+      background: linear-gradient(90deg, rgba(148, 163, 184, 0.25) 0%, rgba(148, 163, 184, 0.35) 50%, rgba(100, 116, 139, 0.25) 100%) !important;
+      box-shadow: 0 4px 20px rgba(148, 163, 184, 0.5) !important;
+      transform: scale(1.02) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2:hover td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2:hover td {
+      color: #1a1a2e !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2:hover td:first-child,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2:hover td:first-child {
+      color: #334155 !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3 td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3 td {
+      color: #ffffff !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3 td:first-child::before,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3 td:first-child::before {
+      content: '◆ ' !important;
+      margin-right: 4px !important;
+      color: #fb923c !important;
+      text-shadow: 0 0 8px rgba(251, 146, 60, 0.8) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3:hover,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3:hover {
+      background: linear-gradient(90deg, rgba(234, 88, 12, 0.1) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(234, 88, 12, 0.1) 100%) !important;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.2) !important;
+      transform: scale(1.02) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3:hover td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3:hover td {
+      color: #1a1a2e !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3:hover td:first-child,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3:hover td:first-child {
+      color: #9a3412 !important;
     }
 
     /* --- 代码框美化 - 浅色模式 --- */
@@ -3458,6 +3694,61 @@
     <script>
       var UiContextNew = '{{ UiContext|json|jsesc|safe }}';
       var UserContextNew = '{{ UserContext|json|jsesc|safe }}';
+    </script>
+    <script>
+      (function() {
+        function addRankingTopEffects() {
+          var isRankingPage = document.body.classList.contains('page--ranking') || 
+                             document.body.classList.contains('page--homepage') ||
+                             document.documentElement.classList.contains('page--ranking') ||
+                             document.documentElement.classList.contains('page--homepage');
+          
+          if (!isRankingPage) return;
+          
+          var tables = document.querySelectorAll('.data-table');
+          tables.forEach(function(table) {
+            if (table.dataset.rankingEffects) return;
+            table.dataset.rankingEffects = 'true';
+            
+            var rows = Array.from(table.querySelectorAll('tbody tr'));
+            
+            rows.forEach(function(row, index) {
+              var rankCell = row.querySelector('.col--rank');
+              if (!rankCell) return;
+              
+              var rankText = rankCell.textContent.trim();
+              var rankNum = parseInt(rankText, 10);
+              
+              if (rankNum === 1) {
+                row.classList.add('ranking-top-1');
+              } else if (rankNum === 2) {
+                row.classList.add('ranking-top-2');
+              } else if (rankNum === 3) {
+                row.classList.add('ranking-top-3');
+              }
+            });
+          });
+        }
+        
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', addRankingTopEffects);
+        } else {
+          addRankingTopEffects();
+        }
+        
+        var observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length > 0) {
+              addRankingTopEffects();
+            }
+          });
+        });
+        
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      })();
     </script>
     <script>
       (function() {
