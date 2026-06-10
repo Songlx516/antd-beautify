@@ -48,6 +48,158 @@
     html {
       font-size: 17px;
       -webkit-font-smoothing: subpixel-antialiased;
+    }
+
+    /* === 现代化标签样式 - 强制覆盖系统样式 === */
+    html body .problem__tags {
+      margin: 0 !important;
+      padding: 0 !important;
+      list-style: none !important;
+      font-size: 0;
+      word-break: keep-all;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      line-height: 1;
+    }
+
+    html body .problem__tag {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      vertical-align: top !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    html body .problem__tag-item {
+      padding: 4px 12px !important;
+      margin-left: 0 !important;
+      margin-bottom: 0 !important;
+      display: inline-flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      border: none !important;
+      border-radius: 9999px !important;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.05) inset !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.2px !important;
+      line-height: 18px !important;
+      max-width: 100% !important;
+      min-height: 24px !important;
+      min-width: auto !important;
+      position: relative !important;
+      background-color: #F1F4F7 !important;
+      color: #5D6C7B !important;
+      transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+    }
+
+    html body .problem__tag-item:hover {
+      text-decoration: none !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.08) inset !important;
+    }
+
+    html body .problem__tag-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 4px 14px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      max-width: 250px !important;
+      min-height: 24px !important;
+      line-height: 18px !important;
+      height: auto !important;
+      border-radius: 9999px !important;
+      border: none !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.2px !important;
+      transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+      text-decoration: none !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.06) !important;
+      position: relative !important;
+      backdrop-filter: blur(10px) !important;
+      -webkit-backdrop-filter: blur(10px) !important;
+    }
+
+    html body .problem__tag-link:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.1) !important;
+      filter: brightness(1.02) saturate(1.05) !important;
+    }
+
+    /* 标签配色 */
+    html body .problem__tag-link[data-tag="CSP-J"] {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a5a) !important;
+      color: #ffffff !important;
+    }
+    html body .problem__tag-link[data-tag="CSP-S"] {
+      background: linear-gradient(135deg, #ffa940, #fa8c16) !important;
+      color: #ffffff !important;
+    }
+    html body .problem__tag-link[data-tag="NOIP"] {
+      background: linear-gradient(135deg, #9254de, #722ed1) !important;
+      color: #ffffff !important;
+    }
+    html body .problem__tag-link[data-tag="GESP"] {
+      background: linear-gradient(135deg, #ffd700, #daa520) !important;
+      color: #7a5c00 !important;
+    }
+    html body .problem__tag-link[data-tag="贪心"] {
+      background: linear-gradient(135deg, #52c41a, #389e0d) !important;
+      color: #ffffff !important;
+    }
+    html body .problem__tag-link[data-tag="动态规划"] {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      color: #ffffff !important;
+    }
+    html body .problem__tag-link[data-tag="树结构"] {
+      background: linear-gradient(135deg, #389e0d, #237804) !important;
+      color: #ffffff !important;
+    }
+    html body .problem__tag-link[data-tag="图结构"] {
+      background: linear-gradient(135deg, #722ed1, #531dab) !important;
+      color: #ffffff !important;
+    }
+    html body .problem__tag-link[data-tag="数据结构"] {
+      background: linear-gradient(135deg, #13c2c2, #08979c) !important;
+      color: #ffffff !important;
+    }
+
+    /* 年份和难度标签 */
+    html body .problem__tag-link[data-tag*="2019"],
+    html body .problem__tag-link[data-tag*="2020"],
+    html body .problem__tag-link[data-tag*="2021"],
+    html body .problem__tag-link[data-tag*="2022"],
+    html body .problem__tag-link[data-tag="A"],
+    html body .problem__tag-link[data-tag="B"],
+    html body .problem__tag-link[data-tag="C"],
+    html body .problem__tag-link[data-tag="D"] {
+      background: #ffffff !important;
+      border: 1.5px solid #d9d9d9 !important;
+      color: #5D6C7B !important;
+    }
+
+    html body .problem__tag-link[data-tag*="2019"]:hover,
+    html body .problem__tag-link[data-tag*="2020"]:hover,
+    html body .problem__tag-link[data-tag*="2021"]:hover,
+    html body .problem__tag-link[data-tag*="2022"]:hover,
+    html body .problem__tag-link[data-tag="A"]:hover,
+    html body .problem__tag-link[data-tag="B"]:hover,
+    html body .problem__tag-link[data-tag="C"]:hover,
+    html body .problem__tag-link[data-tag="D"]:hover {
+      background: #f5f5f5 !important;
+      border-color: #bfbfbf !important;
+    }
+
+    html {
       text-rendering: optimizeLegibility;
     }
     body {
