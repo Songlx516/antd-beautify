@@ -50,7 +50,7 @@
       -webkit-font-smoothing: subpixel-antialiased;
     }
 
-    /* === 现代化标签样式 - 强制覆盖系统样式 === */
+    /* === dtoj.team 风格标签样式 - 圆角矩形按钮风格 === */
     html body .problem__tags {
       margin: 0 !important;
       padding: 0 !important;
@@ -80,9 +80,8 @@
       display: inline-flex !important;
       flex-direction: row !important;
       align-items: center !important;
-      border: none !important;
-      border-radius: 9999px !important;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.05) inset !important;
+      border: 1px solid #d9d9d9 !important;
+      border-radius: 6px !important;
       font-size: 12px !important;
       font-weight: 500 !important;
       letter-spacing: 0.2px !important;
@@ -91,17 +90,14 @@
       min-height: 24px !important;
       min-width: auto !important;
       position: relative !important;
-      background-color: #F1F4F7 !important;
+      background-color: #f5f5f5 !important;
       color: #5D6C7B !important;
-      transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
-      backdrop-filter: blur(10px) !important;
-      -webkit-backdrop-filter: blur(10px) !important;
+      transition: all 150ms ease !important;
     }
 
     html body .problem__tag-item:hover {
       text-decoration: none !important;
-      transform: translateY(-1px) !important;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.08) inset !important;
+      filter: brightness(0.95) !important;
     }
 
     html body .problem__tag-link {
@@ -116,64 +112,218 @@
       min-height: 24px !important;
       line-height: 18px !important;
       height: auto !important;
-      border-radius: 9999px !important;
-      border: none !important;
+      border-radius: 6px !important;
       font-size: 12px !important;
       font-weight: 500 !important;
       letter-spacing: 0.2px !important;
-      transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+      transition: all 150ms ease !important;
       text-decoration: none !important;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.06) !important;
-      position: relative !important;
-      backdrop-filter: blur(10px) !important;
-      -webkit-backdrop-filter: blur(10px) !important;
     }
 
     html body .problem__tag-link:hover {
-      transform: translateY(-1px) !important;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.1) !important;
-      filter: brightness(1.02) saturate(1.05) !important;
+      filter: brightness(0.95) !important;
     }
 
-    /* 标签配色 */
+    /* 标签配色 - dtoj风格：淡色背景 + 同色系边框 */
     html body .problem__tag-link[data-tag="CSP-J"] {
-      background: linear-gradient(135deg, #ff6b6b, #ee5a5a) !important;
-      color: #ffffff !important;
+      background: #fff1f0 !important;
+      border: 1px solid #ffa39e !important;
+      color: #cf1322 !important;
     }
     html body .problem__tag-link[data-tag="CSP-S"] {
-      background: linear-gradient(135deg, #ffa940, #fa8c16) !important;
-      color: #ffffff !important;
+      background: #fff7e6 !important;
+      border: 1px solid #ffd591 !important;
+      color: #d48806 !important;
     }
     html body .problem__tag-link[data-tag="NOIP"] {
-      background: linear-gradient(135deg, #9254de, #722ed1) !important;
-      color: #ffffff !important;
+      background: #f9f0ff !important;
+      border: 1px solid #d3adf7 !important;
+      color: #531dab !important;
     }
     html body .problem__tag-link[data-tag="GESP"] {
-      background: linear-gradient(135deg, #ffd700, #daa520) !important;
-      color: #7a5c00 !important;
+      background: #fffbe6 !important;
+      border: 1px solid #ffe58f !important;
+      color: #d48806 !important;
     }
     html body .problem__tag-link[data-tag="贪心"] {
-      background: linear-gradient(135deg, #52c41a, #389e0d) !important;
-      color: #ffffff !important;
+      background: #f6ffed !important;
+      border: 1px solid #b7eb8f !important;
+      color: #389e0d !important;
     }
     html body .problem__tag-link[data-tag="动态规划"] {
-      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
-      color: #ffffff !important;
+      background: #e6f7ff !important;
+      border: 1px solid #91d5ff !important;
+      color: #0050b3 !important;
     }
     html body .problem__tag-link[data-tag="树结构"] {
-      background: linear-gradient(135deg, #389e0d, #237804) !important;
-      color: #ffffff !important;
+      background: #f6ffed !important;
+      border: 1px solid #95de64 !important;
+      color: #237804 !important;
     }
     html body .problem__tag-link[data-tag="图结构"] {
-      background: linear-gradient(135deg, #722ed1, #531dab) !important;
-      color: #ffffff !important;
+      background: #f9f0ff !important;
+      border: 1px solid #b37feb !important;
+      color: #531dab !important;
     }
     html body .problem__tag-link[data-tag="数据结构"] {
-      background: linear-gradient(135deg, #13c2c2, #08979c) !important;
-      color: #ffffff !important;
+      background: #e6fffb !important;
+      border: 1px solid #87e8de !important;
+      color: #006d75 !important;
+    }
+    html body .problem__tag-link[data-tag="数论"] {
+      background: #fff7e6 !important;
+      border: 1px solid #ffd591 !important;
+      color: #d48806 !important;
+    }
+    html body .problem__tag-link[data-tag="搜索算法"],
+    html body .problem__tag-link[data-tag="深度优先搜索"],
+    html body .problem__tag-link[data-tag="广度优先搜索"],
+    html body .problem__tag-link[data-tag="DFS"],
+    html body .problem__tag-link[data-tag="BFS"] {
+      background: #fff1f0 !important;
+      border: 1px solid #ffbb96 !important;
+      color: #d4380d !important;
+    }
+    html body .problem__tag-link[data-tag="字符串"] {
+      background: #fff0f6 !important;
+      border: 1px solid #ffadd2 !important;
+      color: #c41d7f !important;
+    }
+    html body .problem__tag-link[data-tag="分治"],
+    html body .problem__tag-link[data-tag="分治与查询技术"],
+    html body .problem__tag-link[data-tag="RMQ"],
+    html body .problem__tag-link[data-tag="分块"] {
+      background: #f0f5ff !important;
+      border: 1px solid #adc6ff !important;
+      color: #1d39c4 !important;
+    }
+    html body .problem__tag-link[data-tag="数学"],
+    html body .problem__tag-link[data-tag="数学与数论"],
+    html body .problem__tag-link[data-tag="快速幂"],
+    html body .problem__tag-link[data-tag="排列组合"],
+    html body .problem__tag-link[data-tag="位运算"],
+    html body .problem__tag-link[data-tag="进制转换"] {
+      background: #e6fffb !important;
+      border: 1px solid #87e8de !important;
+      color: #006d75 !important;
+    }
+    html body .problem__tag-link[data-tag="构造"],
+    html body .problem__tag-link[data-tag="打表"] {
+      background: #f6ffed !important;
+      border: 1px solid #b7eb8f !important;
+      color: #389e0d !important;
+    }
+    html body .problem__tag-link[data-tag="LCS"],
+    html body .problem__tag-link[data-tag="LIS"],
+    html body .problem__tag-link[data-tag="背包"],
+    html body .problem__tag-link[data-tag="DP"] {
+      background: #e6f7ff !important;
+      border: 1px solid #91d5ff !important;
+      color: #0050b3 !important;
+    }
+    html body .problem__tag-link[data-tag="最近公共祖先"],
+    html body .problem__tag-link[data-tag="LCA"],
+    html body .problem__tag-link[data-tag="生成树"],
+    html body .problem__tag-link[data-tag="次小生成树"],
+    html body .problem__tag-link[data-tag="DFS序列"],
+    html body .problem__tag-link[data-tag="树上倍增"],
+    html body .problem__tag-link[data-tag="树的分治"],
+    html body .problem__tag-link[data-tag="树链剖分"],
+    html body .problem__tag-link[data-tag="Link-Cut-Tree"],
+    html body .problem__tag-link[data-tag="LCT"] {
+      background: #f6ffed !important;
+      border: 1px solid #95de64 !important;
+      color: #237804 !important;
+    }
+    html body .problem__tag-link[data-tag="Floyd"],
+    html body .problem__tag-link[data-tag="Dijkstra"],
+    html body .problem__tag-link[data-tag="SPFA"],
+    html body .problem__tag-link[data-tag="负权边"],
+    html body .problem__tag-link[data-tag="平面图"],
+    html body .problem__tag-link[data-tag="二分图"],
+    html body .problem__tag-link[data-tag="二分图匹配"],
+    html body .problem__tag-link[data-tag="最短路"],
+    html body .problem__tag-link[data-tag="差分约束"],
+    html body .problem__tag-link[data-tag="拓扑排序"] {
+      background: #f9f0ff !important;
+      border: 1px solid #b37feb !important;
+      color: #531dab !important;
+    }
+    html body .problem__tag-link[data-tag="栈"],
+    html body .problem__tag-link[data-tag="队列"],
+    html body .problem__tag-link[data-tag="链表"],
+    html body .problem__tag-link[data-tag="单调队列"],
+    html body .problem__tag-link[data-tag="并查集"],
+    html body .problem__tag-link[data-tag="堆"],
+    html body .problem__tag-link[data-tag="平衡树"],
+    html body .problem__tag-link[data-tag="线段树"],
+    html body .problem__tag-link[data-tag="树状数组"],
+    html body .problem__tag-link[data-tag="树套树"],
+    html body .problem__tag-link[data-tag="四分树"],
+    html body .problem__tag-link[data-tag="划分树"],
+    html body .problem__tag-link[data-tag="归并树"],
+    html body .problem__tag-link[data-tag="替罪羊树"],
+    html body .problem__tag-link[data-tag="左偏树"],
+    html body .problem__tag-link[data-tag="k-d树"],
+    html body .problem__tag-link[data-tag="块状链表"],
+    html body .problem__tag-link[data-tag="Hashing"] {
+      background: #e6fffb !important;
+      border: 1px solid #87e8de !important;
+      color: #006d75 !important;
+    }
+    html body .problem__tag-link[data-tag="容器"],
+    html body .problem__tag-link[data-tag="map"],
+    html body .problem__tag-link[data-tag="stack"],
+    html body .problem__tag-link[data-tag="deque"],
+    html body .problem__tag-link[data-tag="list"],
+    html body .problem__tag-link[data-tag="queue"],
+    html body .problem__tag-link[data-tag="哈希表"] {
+      background: #f5f5f5 !important;
+      border: 1px solid #d9d9d9 !important;
+      color: #595959 !important;
+    }
+    html body .problem__tag-link[data-tag="二分查找"],
+    html body .problem__tag-link[data-tag="三分查找"],
+    html body .problem__tag-link[data-tag="双指针扫描"],
+    html body .problem__tag-link[data-tag="排序"] {
+      background: #f0f5ff !important;
+      border: 1px solid #adc6ff !important;
+      color: #1d39c4 !important;
+    }
+    html body .problem__tag-link[data-tag="递推"],
+    html body .problem__tag-link[data-tag="递归"] {
+      background: #fff1f0 !important;
+      border: 1px solid #ffa39e !important;
+      color: #cf1322 !important;
+    }
+    html body .problem__tag-link[data-tag="输入输出语句"],
+    html body .problem__tag-link[data-tag="一维数组"],
+    html body .problem__tag-link[data-tag="二维数组"],
+    html body .problem__tag-link[data-tag="字符型"],
+    html body .problem__tag-link[data-tag="分支问题"],
+    html body .problem__tag-link[data-tag="函数问题"],
+    html body .problem__tag-link[data-tag="结构体"],
+    html body .problem__tag-link[data-tag="简单循环"],
+    html body .problem__tag-link[data-tag="嵌套循环"],
+    html body .problem__tag-link[data-tag="拆数字"],
+    html body .problem__tag-link[data-tag="基础问题"],
+    html body .problem__tag-link[data-tag="客观题"],
+    html body .problem__tag-link[data-tag="模拟"],
+    html body .problem__tag-link[data-tag="枚举"],
+    html body .problem__tag-link[data-tag="暴力"],
+    html body .problem__tag-link[data-tag="杂项"] {
+      background: #f5f5f5 !important;
+      border: 1px solid #d9d9d9 !important;
+      color: #595959 !important;
+    }
+    html body .problem__tag-link[data-tag="月赛"],
+    html body .problem__tag-link[data-tag="语法周赛"] {
+      background: #f5f5f5 !important;
+      border: 1px solid #d9d9d9 !important;
+      color: #595959 !important;
     }
 
-    /* 年份和难度标签 */
+    /* 年份和难度标签 - 灰色系 */
     html body .problem__tag-link[data-tag*="2019"],
     html body .problem__tag-link[data-tag*="2020"],
     html body .problem__tag-link[data-tag*="2021"],
@@ -182,9 +332,9 @@
     html body .problem__tag-link[data-tag="B"],
     html body .problem__tag-link[data-tag="C"],
     html body .problem__tag-link[data-tag="D"] {
-      background: #ffffff !important;
-      border: 1.5px solid #d9d9d9 !important;
-      color: #5D6C7B !important;
+      background: #f5f5f5 !important;
+      border: 1px solid #d9d9d9 !important;
+      color: #595959 !important;
     }
 
     html body .problem__tag-link[data-tag*="2019"]:hover,
@@ -195,8 +345,7 @@
     html body .problem__tag-link[data-tag="B"]:hover,
     html body .problem__tag-link[data-tag="C"]:hover,
     html body .problem__tag-link[data-tag="D"]:hover {
-      background: #f5f5f5 !important;
-      border-color: #bfbfbf !important;
+      filter: brightness(0.95) !important;
     }
 
     html {
