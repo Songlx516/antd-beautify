@@ -62,11 +62,67 @@
     .section {
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      transition: box-shadow 0.3s ease;
     }
     .section:hover {
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      transform: translateY(-2px);
+    }
+
+    /* --- 问题页面选项样式 - 禁用hover时的transform效果 --- */
+    .page--problem_main .section:hover,
+    .page--problem_detail .section:hover,
+    .page--contest_problem .section:hover {
+      transform: none !important;
+    }
+
+    /* --- 客观题选项样式 - 禁用所有过渡动画 --- */
+    html body .page--problem_detail .radiobox,
+    html body .page--contest_problem .radiobox,
+    html body .page--problem_detail .radiobox *,
+    html body .page--contest_problem .radiobox * {
+      color: #333 !important;
+      transition: none !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    html body .page--problem_detail .radiobox:hover,
+    html body .page--contest_problem .radiobox:hover,
+    html body .page--problem_detail .radiobox:hover *,
+    html body .page--contest_problem .radiobox:hover * {
+      color: #333 !important;
+      transition: none !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    html body .page--problem_detail .radiobox input[type="radio"],
+    html body .page--contest_problem .radiobox input[type="radio"],
+    html body .page--problem_detail .radiobox input[type="radio"]:checked,
+    html body .page--contest_problem .radiobox input[type="radio"]:checked {
+      transition: none !important;
+      transform: none !important;
+    }
+
+    /* 深色模式 - 选项文字颜色 */
+    html.theme--dark body .page--problem_detail .radiobox,
+    html.theme--dark body .page--contest_problem .radiobox,
+    html.theme--dark body .page--problem_detail .radiobox *,
+    html.theme--dark body .page--contest_problem .radiobox * {
+      color: #ffffff !important;
+      transition: none !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    html.theme--dark body .page--problem_detail .radiobox:hover,
+    html.theme--dark body .page--contest_problem .radiobox:hover,
+    html.theme--dark body .page--problem_detail .radiobox:hover *,
+    html.theme--dark body .page--contest_problem .radiobox:hover * {
+      color: #ffffff !important;
+      transition: none !important;
+      transform: none !important;
+      box-shadow: none !important;
     }
 
     /* --- 按钮现代化美化 --- */
@@ -3829,23 +3885,66 @@
         });
       }
       
+      function fixRadioboxColors() {
+        var isDark = document.documentElement.classList.contains('theme--dark');
+        var radioboxes = document.querySelectorAll('.page--problem_detail .radiobox, .page--contest_problem .radiobox');
+        radioboxes.forEach(function(rb) {
+          rb.style.color = isDark ? '#ffffff' : '#333';
+          rb.style.transition = 'none';
+          rb.style.transform = 'none';
+          rb.setAttribute('style', 'color: ' + (isDark ? '#ffffff' : '#333') + ' !important; transition: none !important; transform: none !important;');
+          
+          var children = rb.querySelectorAll('*');
+          children.forEach(function(child) {
+            child.style.transition = 'none';
+            child.style.transform = 'none';
+            child.setAttribute('style', 'transition: none !important; transform: none !important;');
+          });
+        });
+      }
+      
+      function bindRadioboxClickEvents() {
+        var radioboxes = document.querySelectorAll('.page--problem_detail .radiobox, .page--contest_problem .radiobox');
+        radioboxes.forEach(function(rb) {
+          if (!rb.dataset.clickBound) {
+            rb.dataset.clickBound = 'true';
+            rb.addEventListener('click', function(e) {
+              var isDark = document.documentElement.classList.contains('theme--dark');
+              rb.style.color = isDark ? '#ffffff' : '#333';
+              rb.style.transition = 'none';
+              rb.style.transform = 'none';
+              
+              setTimeout(function() {
+                fixRadioboxColors();
+              }, 50);
+            });
+          }
+        });
+      }
+      
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
           fixContestButtons();
           fixTextboxStyles();
+          fixRadioboxColors();
+          bindRadioboxClickEvents();
         });
       } else {
         fixContestButtons();
         fixTextboxStyles();
+        fixRadioboxColors();
+        bindRadioboxClickEvents();
       }
       
-      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); }, 100);
-      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); }, 500);
-      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); }, 1000);
+      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); fixRadioboxColors(); bindRadioboxClickEvents(); }, 100);
+      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); fixRadioboxColors(); bindRadioboxClickEvents(); }, 500);
+      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); fixRadioboxColors(); bindRadioboxClickEvents(); }, 1000);
       
       var observer = new MutationObserver(function() {
         fixContestButtons();
         fixTextboxStyles();
+        fixRadioboxColors();
+        bindRadioboxClickEvents();
       });
       observer.observe(document.body, { childList: true, subtree: true });
     })();
