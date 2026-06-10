@@ -11,4 +11,6 @@ export async function apply(ctx: Context) {
   ctx.template.register('layout/html5.html', join(__dirname, 'templates', 'layout', 'html5.html'));
   ctx.template.register('problem_main.html', join(__dirname, 'templates', 'problem_main.html'));
   ctx.template.register('problem_detail.html', join(__dirname, 'templates', 'problem_detail.html'));
+  
+  ctx.registerFrontendScript(join(__dirname, 'frontend', 'code-button-beautify.page.ts'));
 }
