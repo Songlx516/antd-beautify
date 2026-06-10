@@ -1,0 +1,4591 @@
+{% import "components/form.html" as form with context %}
+{% import "components/sidemenu.html" as sidemenu with context %}
+{% import "components/paginator.html" as paginator with context %}
+{% import "components/nothing.html" as nothing with context %}
+{% import "components/noscript_note.html" as noscript_note with context %}
+{% import "components/user.html" as user with context %}
+<!DOCTYPE html>
+<html data-page="{{ page_name }}" data-layout="{{ layout_name }}" class="layout--{{ layout_name }} page--{{ page_name }} theme--{{ (handler.user|default({})).theme|default('default') }} nojs" lang="{{ UserContext.viewLang }}" data-app="Hydro">
+<head>
+  <svg style="display: none;">
+    <filter id="stamp-noise" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0"/>
+      <feComponentTransfer in="noise">
+        <feFuncA type="table" tableValues="0.1 0.3"/>
+      </feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="noise" mode="soft-light"/>
+    </filter>
+  </svg>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ UiContext.cdn_prefix }}apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="{{ UiContext.cdn_prefix }}favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ UiContext.cdn_prefix }}android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="{{ UiContext.cdn_prefix }}favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="{{ UiContext.cdn_prefix }}favicon-16x16.png" sizes="16x16">
+  {% if handler.context.request.url %}<link rel="canonical" href="{{ model.system.get('server.url') }}{{ handler.context.request.url.substring(1) }}">{% endif %}
+  <meta name="theme-color" content="#1890ff">
+  {% block ogp %}
+  <meta property="og:site_name" content="{{ (handler.domain|default({ui:[]})).ui.name|default(model.system.get('server.name')) }}" />
+  <meta property="og:title" content="{{ handler.renderTitle(page_name) }}" />
+  <meta property="og:url" content="{{ model.system.get('server.url') }}{{ handler.request.path.slice(1) }}" />
+  <meta property="og:image" content="{{ UiContext.cdn_prefix }}favicon-96x96.png" />
+  {% endblock %}
+  <title>{{ handler.renderTitle(page_name) }}</title>
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <style>
+    @font-face {
+      font-family: "HarmonyOS_Sans_SC_Medium";
+      font-style: normal;
+      font-display: fallback;
+      src: url("https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff2") format("woff2"),
+           url("https://cdn.jsdelivr.net/gh/irozhi/HarmonyOS-Sans/HarmonyOS_Sans_SC/HarmonyOS_Sans_SC_Medium.woff") format("woff");
+    }
+    html {
+      font-size: 17px;
+      -webkit-font-smoothing: subpixel-antialiased;
+    }
+
+    /* === dtoj.team 风格标签样式 - 圆角矩形按钮风格 === */
+    html body .problem__tags {
+      margin: 0 !important;
+      padding: 0 !important;
+      list-style: none !important;
+      font-size: 0;
+      word-break: keep-all;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      line-height: 1;
+    }
+
+    html body .problem__tag {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      vertical-align: top !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    html body .problem__tag-item,
+    html body .problem__tag-link {
+      padding: 4px 12px !important;
+      margin-left: 0 !important;
+      margin-bottom: 4px !important;
+      margin-right: 4px !important;
+      display: inline-flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      border: 1px solid #d9d9d9 !important;
+      border-radius: 6px !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.2px !important;
+      line-height: 18px !important;
+      max-width: 100% !important;
+      min-height: 24px !important;
+      min-width: auto !important;
+      position: relative !important;
+      background-color: #f5f5f5 !important;
+      color: #5D6C7B !important;
+      transition: all 150ms ease !important;
+      box-shadow: none !important;
+      height: auto !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      text-decoration: none !important;
+    }
+
+    html body .problem__tag-item:hover,
+    html body .problem__tag-link:hover {
+      text-decoration: none !important;
+      filter: brightness(0.95) !important;
+    }
+
+    /* 标签配色 - dtoj风格：淡色背景 + 同色系边框 */
+    html body .problem__tag-item[data-tag="CSP-J"],
+    html body .problem__tag-link[data-tag="CSP-J"] {
+      background: #fff1f0 !important;
+      border: 1px solid #ffa39e !important;
+      color: #cf1322 !important;
+    }
+    html body .problem__tag-item[data-tag="CSP-S"],
+    html body .problem__tag-link[data-tag="CSP-S"] {
+      background: #fff7e6 !important;
+      border: 1px solid #ffd591 !important;
+      color: #d48806 !important;
+    }
+    html body .problem__tag-item[data-tag="NOIP"],
+    html body .problem__tag-link[data-tag="NOIP"] {
+      background: #f9f0ff !important;
+      border: 1px solid #d3adf7 !important;
+      color: #531dab !important;
+    }
+    html body .problem__tag-item[data-tag="GESP"],
+    html body .problem__tag-link[data-tag="GESP"] {
+      background: #fffbe6 !important;
+      border: 1px solid #ffe58f !important;
+      color: #d48806 !important;
+    }
+    html body .problem__tag-item[data-tag="贪心"],
+    html body .problem__tag-link[data-tag="贪心"] {
+      background: #f6ffed !important;
+      border: 1px solid #b7eb8f !important;
+      color: #389e0d !important;
+    }
+    html body .problem__tag-item[data-tag="动态规划"],
+    html body .problem__tag-link[data-tag="动态规划"] {
+      background: #e6f7ff !important;
+      border: 1px solid #91d5ff !important;
+      color: #0050b3 !important;
+    }
+    html body .problem__tag-item[data-tag="树结构"],
+    html body .problem__tag-link[data-tag="树结构"] {
+      background: #f6ffed !important;
+      border: 1px solid #95de64 !important;
+      color: #237804 !important;
+    }
+    html body .problem__tag-item[data-tag="图论"],
+    html body .problem__tag-link[data-tag="图论"] {
+      background: #f9f0ff !important;
+      border: 1px solid #b37feb !important;
+      color: #531dab !important;
+    }
+    html body .problem__tag-item[data-tag="数据结构"],
+    html body .problem__tag-link[data-tag="数据结构"] {
+      background: #e6fffb !important;
+      border: 1px solid #87e8de !important;
+      color: #006d75 !important;
+    }
+    html body .problem__tag-item[data-tag="数论"],
+    html body .problem__tag-link[data-tag="数论"] {
+      background: #fff7e6 !important;
+      border: 1px solid #ffd591 !important;
+      color: #d48806 !important;
+    }
+    html body .problem__tag-item[data-tag="搜索算法"],
+    html body .problem__tag-link[data-tag="搜索算法"],
+    html body .problem__tag-item[data-tag="深度优先搜索"],
+    html body .problem__tag-link[data-tag="深度优先搜索"],
+    html body .problem__tag-item[data-tag="广度优先搜索"],
+    html body .problem__tag-link[data-tag="广度优先搜索"],
+    html body .problem__tag-item[data-tag="DFS"],
+    html body .problem__tag-link[data-tag="DFS"],
+    html body .problem__tag-item[data-tag="BFS"],
+    html body .problem__tag-link[data-tag="BFS"] {
+      background: #fff1f0 !important;
+      border: 1px solid #ffbb96 !important;
+      color: #d4380d !important;
+    }
+    html body .problem__tag-item[data-tag="字符串"],
+    html body .problem__tag-link[data-tag="字符串"] {
+      background: #fff0f6 !important;
+      border: 1px solid #ffadd2 !important;
+      color: #c41d7f !important;
+    }
+    html body .problem__tag-item[data-tag="分治"],
+    html body .problem__tag-link[data-tag="分治"],
+    html body .problem__tag-item[data-tag="分治与查询技术"],
+    html body .problem__tag-link[data-tag="分治与查询技术"],
+    html body .problem__tag-item[data-tag="RMQ"],
+    html body .problem__tag-link[data-tag="RMQ"],
+    html body .problem__tag-item[data-tag="分块"],
+    html body .problem__tag-link[data-tag="分块"] {
+      background: #f0f5ff !important;
+      border: 1px solid #adc6ff !important;
+      color: #1d39c4 !important;
+    }
+    html body .problem__tag-item[data-tag="数学"],
+    html body .problem__tag-link[data-tag="数学"],
+    html body .problem__tag-item[data-tag="数学与数论"],
+    html body .problem__tag-link[data-tag="数学与数论"],
+    html body .problem__tag-item[data-tag="快速幂"],
+    html body .problem__tag-link[data-tag="快速幂"],
+    html body .problem__tag-item[data-tag="排列组合"],
+    html body .problem__tag-link[data-tag="排列组合"],
+    html body .problem__tag-item[data-tag="位运算"],
+    html body .problem__tag-link[data-tag="位运算"],
+    html body .problem__tag-item[data-tag="进制转换"],
+    html body .problem__tag-link[data-tag="进制转换"] {
+      background: #e6fffb !important;
+      border: 1px solid #87e8de !important;
+      color: #006d75 !important;
+    }
+    html body .problem__tag-item[data-tag="构造"],
+    html body .problem__tag-link[data-tag="构造"],
+    html body .problem__tag-item[data-tag="打表"],
+    html body .problem__tag-link[data-tag="打表"] {
+      background: #f6ffed !important;
+      border: 1px solid #b7eb8f !important;
+      color: #389e0d !important;
+    }
+    html body .problem__tag-item[data-tag="LCS"],
+    html body .problem__tag-link[data-tag="LCS"],
+    html body .problem__tag-item[data-tag="LIS"],
+    html body .problem__tag-link[data-tag="LIS"],
+    html body .problem__tag-item[data-tag="背包"],
+    html body .problem__tag-link[data-tag="背包"],
+    html body .problem__tag-item[data-tag="DP"],
+    html body .problem__tag-link[data-tag="DP"] {
+      background: #e6f7ff !important;
+      border: 1px solid #91d5ff !important;
+      color: #0050b3 !important;
+    }
+    html body .problem__tag-item[data-tag="最近公共祖先"],
+    html body .problem__tag-link[data-tag="最近公共祖先"],
+    html body .problem__tag-item[data-tag="LCA"],
+    html body .problem__tag-link[data-tag="LCA"],
+    html body .problem__tag-item[data-tag="生成树"],
+    html body .problem__tag-link[data-tag="生成树"],
+    html body .problem__tag-item[data-tag="次小生成树"],
+    html body .problem__tag-link[data-tag="次小生成树"],
+    html body .problem__tag-item[data-tag="DFS序列"],
+    html body .problem__tag-link[data-tag="DFS序列"],
+    html body .problem__tag-item[data-tag="树上倍增"],
+    html body .problem__tag-link[data-tag="树上倍增"],
+    html body .problem__tag-item[data-tag="树的分治"],
+    html body .problem__tag-link[data-tag="树的分治"],
+    html body .problem__tag-item[data-tag="树链剖分"],
+    html body .problem__tag-link[data-tag="树链剖分"],
+    html body .problem__tag-item[data-tag="Link-Cut-Tree"],
+    html body .problem__tag-link[data-tag="Link-Cut-Tree"],
+    html body .problem__tag-item[data-tag="LCT"],
+    html body .problem__tag-link[data-tag="LCT"] {
+      background: #f6ffed !important;
+      border: 1px solid #95de64 !important;
+      color: #237804 !important;
+    }
+    html body .problem__tag-item[data-tag="Floyd"],
+    html body .problem__tag-link[data-tag="Floyd"],
+    html body .problem__tag-item[data-tag="Dijkstra"],
+    html body .problem__tag-link[data-tag="Dijkstra"],
+    html body .problem__tag-item[data-tag="SPFA"],
+    html body .problem__tag-link[data-tag="SPFA"],
+    html body .problem__tag-item[data-tag="负权边"],
+    html body .problem__tag-link[data-tag="负权边"],
+    html body .problem__tag-item[data-tag="平面图"],
+    html body .problem__tag-link[data-tag="平面图"],
+    html body .problem__tag-item[data-tag="二分图"],
+    html body .problem__tag-link[data-tag="二分图"],
+    html body .problem__tag-item[data-tag="二分图匹配"],
+    html body .problem__tag-link[data-tag="二分图匹配"],
+    html body .problem__tag-item[data-tag="最短路"],
+    html body .problem__tag-link[data-tag="最短路"],
+    html body .problem__tag-item[data-tag="差分约束"],
+    html body .problem__tag-link[data-tag="差分约束"],
+    html body .problem__tag-item[data-tag="拓扑排序"],
+    html body .problem__tag-link[data-tag="拓扑排序"] {
+      background: #f9f0ff !important;
+      border: 1px solid #b37feb !important;
+      color: #531dab !important;
+    }
+    html body .problem__tag-item[data-tag="栈"],
+    html body .problem__tag-link[data-tag="栈"],
+    html body .problem__tag-item[data-tag="队列"],
+    html body .problem__tag-link[data-tag="队列"],
+    html body .problem__tag-item[data-tag="链表"],
+    html body .problem__tag-link[data-tag="链表"],
+    html body .problem__tag-item[data-tag="单调队列"],
+    html body .problem__tag-link[data-tag="单调队列"],
+    html body .problem__tag-item[data-tag="并查集"],
+    html body .problem__tag-link[data-tag="并查集"],
+    html body .problem__tag-item[data-tag="堆"],
+    html body .problem__tag-link[data-tag="堆"],
+    html body .problem__tag-item[data-tag="平衡树"],
+    html body .problem__tag-link[data-tag="平衡树"],
+    html body .problem__tag-item[data-tag="线段树"],
+    html body .problem__tag-link[data-tag="线段树"],
+    html body .problem__tag-item[data-tag="树状数组"],
+    html body .problem__tag-link[data-tag="树状数组"],
+    html body .problem__tag-item[data-tag="树套树"],
+    html body .problem__tag-link[data-tag="树套树"],
+    html body .problem__tag-item[data-tag="四分树"],
+    html body .problem__tag-link[data-tag="四分树"],
+    html body .problem__tag-item[data-tag="划分树"],
+    html body .problem__tag-link[data-tag="划分树"],
+    html body .problem__tag-item[data-tag="归并树"],
+    html body .problem__tag-link[data-tag="归并树"],
+    html body .problem__tag-item[data-tag="替罪羊树"],
+    html body .problem__tag-link[data-tag="替罪羊树"],
+    html body .problem__tag-item[data-tag="左偏树"],
+    html body .problem__tag-link[data-tag="左偏树"],
+    html body .problem__tag-item[data-tag="k-d树"],
+    html body .problem__tag-link[data-tag="k-d树"],
+    html body .problem__tag-item[data-tag="块状链表"],
+    html body .problem__tag-link[data-tag="块状链表"],
+    html body .problem__tag-item[data-tag="Hashing"],
+    html body .problem__tag-link[data-tag="Hashing"] {
+      background: #e6fffb !important;
+      border: 1px solid #87e8de !important;
+      color: #006d75 !important;
+    }
+    html body .problem__tag-item[data-tag="容器"],
+    html body .problem__tag-link[data-tag="容器"],
+    html body .problem__tag-item[data-tag="map"],
+    html body .problem__tag-link[data-tag="map"],
+    html body .problem__tag-item[data-tag="stack"],
+    html body .problem__tag-link[data-tag="stack"],
+    html body .problem__tag-item[data-tag="deque"],
+    html body .problem__tag-link[data-tag="deque"],
+    html body .problem__tag-item[data-tag="list"],
+    html body .problem__tag-link[data-tag="list"],
+    html body .problem__tag-item[data-tag="queue"],
+    html body .problem__tag-link[data-tag="queue"],
+    html body .problem__tag-item[data-tag="哈希表"],
+    html body .problem__tag-link[data-tag="哈希表"] {
+      background: #f5f5f5 !important;
+      border: 1px solid #d9d9d9 !important;
+      color: #595959 !important;
+    }
+    html body .problem__tag-item[data-tag="二分查找"],
+    html body .problem__tag-link[data-tag="二分查找"],
+    html body .problem__tag-item[data-tag="三分查找"],
+    html body .problem__tag-link[data-tag="三分查找"],
+    html body .problem__tag-item[data-tag="双指针扫描"],
+    html body .problem__tag-link[data-tag="双指针扫描"],
+    html body .problem__tag-item[data-tag="排序"],
+    html body .problem__tag-link[data-tag="排序"] {
+      background: #f0f5ff !important;
+      border: 1px solid #adc6ff !important;
+      color: #1d39c4 !important;
+    }
+    html body .problem__tag-item[data-tag="递推"],
+    html body .problem__tag-link[data-tag="递推"],
+    html body .problem__tag-item[data-tag="递归"],
+    html body .problem__tag-link[data-tag="递归"] {
+      background: #fff1f0 !important;
+      border: 1px solid #ffa39e !important;
+      color: #cf1322 !important;
+    }
+    html body .problem__tag-item[data-tag="输入输出语句"],
+    html body .problem__tag-link[data-tag="输入输出语句"],
+    html body .problem__tag-item[data-tag="一维数组"],
+    html body .problem__tag-link[data-tag="一维数组"],
+    html body .problem__tag-item[data-tag="二维数组"],
+    html body .problem__tag-link[data-tag="二维数组"],
+    html body .problem__tag-item[data-tag="字符型"],
+    html body .problem__tag-link[data-tag="字符型"],
+    html body .problem__tag-item[data-tag="分支问题"],
+    html body .problem__tag-link[data-tag="分支问题"],
+    html body .problem__tag-item[data-tag="函数问题"],
+    html body .problem__tag-link[data-tag="函数问题"],
+    html body .problem__tag-item[data-tag="结构体"],
+    html body .problem__tag-link[data-tag="结构体"],
+    html body .problem__tag-item[data-tag="简单循环"],
+    html body .problem__tag-link[data-tag="简单循环"],
+    html body .problem__tag-item[data-tag="嵌套循环"],
+    html body .problem__tag-link[data-tag="嵌套循环"],
+    html body .problem__tag-item[data-tag="拆数字"],
+    html body .problem__tag-link[data-tag="拆数字"],
+    html body .problem__tag-item[data-tag="基础问题"],
+    html body .problem__tag-link[data-tag="基础问题"],
+    html body .problem__tag-item[data-tag="客观题"],
+    html body .problem__tag-link[data-tag="客观题"] {
+      background: #f5f5f5 !important;
+      border: 1px solid #d9d9d9 !important;
+      color: #595959 !important;
+    }
+    html body .problem__tag-item[data-tag="模拟"],
+    html body .problem__tag-link[data-tag="模拟"],
+    html body .problem__tag-item[data-tag="枚举"],
+    html body .problem__tag-link[data-tag="枚举"],
+    html body .problem__tag-item[data-tag="暴力"],
+    html body .problem__tag-link[data-tag="暴力"],
+    html body .problem__tag-item[data-tag="杂项"],
+    html body .problem__tag-link[data-tag="杂项"],
+    html body .problem__tag-item[data-tag="月赛"],
+    html body .problem__tag-link[data-tag="月赛"],
+    html body .problem__tag-item[data-tag="语法周赛"],
+    html body .problem__tag-link[data-tag="语法周赛"] {
+      background: #f5f5f5 !important;
+      border: 1px solid #d9d9d9 !important;
+      color: #595959 !important;
+    }
+
+    /* 额外标签配色 - dtoj风格 */
+    html body .problem__tag-item[data-tag="杜教筛"],
+    html body .problem__tag-link[data-tag="杜教筛"] {
+      background: #e6f7ff !important;
+      border: 1px solid #91d5ff !important;
+      color: #0050b3 !important;
+    }
+    html body .problem__tag-item[data-tag="莫比乌斯反演"],
+    html body .problem__tag-link[data-tag="莫比乌斯反演"] {
+      background: #fff0f6 !important;
+      border: 1px solid #ffadd2 !important;
+      color: #c41d7f !important;
+    }
+    html body .problem__tag-item[data-tag="除法分块"],
+    html body .problem__tag-link[data-tag="除法分块"] {
+      background: #f6ffed !important;
+      border: 1px solid #b7eb8f !important;
+      color: #389e0d !important;
+    }
+    html body .problem__tag-item[data-tag="Tarjan"],
+    html body .problem__tag-link[data-tag="Tarjan"] {
+      background: #f9f0ff !important;
+      border: 1px solid #d3adf7 !important;
+      color: #531dab !important;
+    }
+    html body .problem__tag-item[data-tag="树上启发式合并"],
+    html body .problem__tag-link[data-tag="树上启发式合并"] {
+      background: #fff7e6 !important;
+      border: 1px solid #ffd591 !important;
+      color: #d48806 !important;
+    }
+    html body .problem__tag-item[data-tag="笛卡尔树"],
+    html body .problem__tag-link[data-tag="笛卡尔树"] {
+      background: #fffbe6 !important;
+      border: 1px solid #ffe58f !important;
+      color: #d48806 !important;
+    }
+    html body .problem__tag-item[data-tag="后缀数组"],
+    html body .problem__tag-link[data-tag="后缀数组"] {
+      background: #fff0f6 !important;
+      border: 1px solid #ffadd2 !important;
+      color: #c41d7f !important;
+    }
+    html body .problem__tag-item[data-tag="快速数论变换"],
+    html body .problem__tag-link[data-tag="快速数论变换"],
+    html body .problem__tag-item[data-tag="NTT"],
+    html body .problem__tag-link[data-tag="NTT"] {
+      background: #fff7e6 !important;
+      border: 1px solid #ffd591 !important;
+      color: #d48806 !important;
+    }
+
+    /* 年份和难度标签 - 灰色系 */
+    html body .problem__tag-item[data-tag*="2019"],
+    html body .problem__tag-link[data-tag*="2019"],
+    html body .problem__tag-item[data-tag*="2020"],
+    html body .problem__tag-link[data-tag*="2020"],
+    html body .problem__tag-item[data-tag*="2021"],
+    html body .problem__tag-link[data-tag*="2021"],
+    html body .problem__tag-item[data-tag*="2022"],
+    html body .problem__tag-link[data-tag*="2022"],
+    html body .problem__tag-item[data-tag="A"],
+    html body .problem__tag-link[data-tag="A"],
+    html body .problem__tag-item[data-tag="B"],
+    html body .problem__tag-link[data-tag="B"],
+    html body .problem__tag-item[data-tag="C"],
+    html body .problem__tag-link[data-tag="C"],
+    html body .problem__tag-item[data-tag="D"],
+    html body .problem__tag-link[data-tag="D"] {
+      background: #f5f5f5 !important;
+      border: 1px solid #d9d9d9 !important;
+      color: #595959 !important;
+    }
+
+    html {
+      text-rendering: optimizeLegibility;
+    }
+    body {
+      --font-family: "HarmonyOS_Sans_SC_Medium", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", -apple-system, BlinkMacSystemFont, "Segoe UI", "Open Sans", sans-serif;
+      --code-font-family: "{{ UserContext.codeFontFamily }}", "monaco", "Source Code Pro", "Consolas", "Lucida Console", "monospace";
+      --font-ligatures: {{ "normal" if UserContext.codeFontLigatures else "none" }} !important;
+      -webkit-font-smoothing: subpixel-antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* --- 现代化美化 - 卡片阴影与悬停 --- */
+    .section {
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: box-shadow 0.3s ease;
+    }
+    .section:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    /* --- 问题页面选项样式 - 禁用hover时的transform效果 --- */
+    .page--problem_main .section:hover,
+    .page--problem_detail .section:hover,
+    .page--contest_problem .section:hover {
+      transform: none !important;
+    }
+
+    /* --- 客观题选项样式 - 禁用所有过渡动画 --- */
+    html body .page--problem_detail .radiobox,
+    html body .page--contest_problem .radiobox,
+    html body .page--problem_detail .radiobox *,
+    html body .page--contest_problem .radiobox * {
+      color: #333 !important;
+      transition: none !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    html body .page--problem_detail .radiobox:hover,
+    html body .page--contest_problem .radiobox:hover,
+    html body .page--problem_detail .radiobox:hover *,
+    html body .page--contest_problem .radiobox:hover * {
+      color: #333 !important;
+      transition: none !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    html body .page--problem_detail .radiobox input[type="radio"],
+    html body .page--contest_problem .radiobox input[type="radio"],
+    html body .page--problem_detail .radiobox input[type="radio"]:checked,
+    html body .page--contest_problem .radiobox input[type="radio"]:checked {
+      transition: none !important;
+      transform: none !important;
+    }
+
+    /* 深色模式 - 选项文字颜色 */
+    html.theme--dark body .page--problem_detail .radiobox,
+    html.theme--dark body .page--contest_problem .radiobox,
+    html.theme--dark body .page--problem_detail .radiobox *,
+    html.theme--dark body .page--contest_problem .radiobox * {
+      color: #ffffff !important;
+      transition: none !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    html.theme--dark body .page--problem_detail .radiobox:hover,
+    html.theme--dark body .page--contest_problem .radiobox:hover,
+    html.theme--dark body .page--problem_detail .radiobox:hover *,
+    html.theme--dark body .page--contest_problem .radiobox:hover * {
+      color: #ffffff !important;
+      transition: none !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* --- 按钮现代化美化 --- */
+    /* ============================================
+       蓝白风格按钮样式 - 覆盖旧配色
+       ============================================ */
+
+    /* 通用按钮样式 - 统一所有主要按钮样式 */
+    button.btn-primary:not(.star):not([data-star]):not([data-star-action]),
+    .btn.btn-primary:not(.star):not([data-star]):not([data-star-action]),
+    [type="submit"].btn-primary:not(.star):not([data-star]):not([data-star-action]),
+    .button.button--primary:not(.star):not([data-star]):not([data-star-action]),
+    a.button.button--primary:not(.star):not([data-star]):not([data-star-action]),
+    button[type="submit"]:not(.star),
+    input[type="submit"]:not(.star),
+    .submit button:not(.star),
+    .section__tools button:not(.star):not([data-star]):not([data-star-action]),
+    .section__tools a.button:not(.star):not([data-star]):not([data-star-action]),
+    .toolbar button:not(.star):not([data-star]):not([data-star-action]),
+    .toolbar a.button:not(.star):not([data-star]):not([data-star-action]),
+    button.primary:not(.star):not([data-star]):not([data-star-action]),
+    input[type="submit"].primary:not(.star):not([data-star]):not([data-star-action]),
+    .button--primary:not(.star):not([data-star]):not([data-star-action]),
+    .btn.primary:not(.star):not([data-star]):not([data-star-action]),
+    input[type="button"].primary:not(.star):not([data-star]):not([data-star-action]) {
+      background: #1890ff !important;
+      border-color: #1890ff !important;
+      color: #ffffff !important;
+    }
+
+    /* 按钮悬停状态 */
+    button.btn-primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .btn.btn-primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    [type="submit"].btn-primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .button.button--primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    a.button.button--primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    button[type="submit"]:hover:not(:disabled):not(.star),
+    input[type="submit"]:hover:not(:disabled):not(.star),
+    .submit button:hover:not(:disabled):not(.star),
+    .section__tools button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
+    .section__tools a.button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
+    .toolbar button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
+    .toolbar a.button:not(.star):not([data-star]):not([data-star-action]):hover:not(:disabled),
+    button.primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    input[type="submit"].primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .button--primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .btn-primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    .btn.primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]),
+    input[type="button"].primary:hover:not(:disabled):not(.star):not([data-star]):not([data-star-action]) {
+      background: #40a9ff !important;
+      border-color: #40a9ff !important;
+    }
+
+    /* 通用按钮圆角和阴影 */
+    button:not(.nav__item):not(.tabs__tab):not(.menu__link):not(.problem__tag-link):not(.star):not([data-star]):not([data-star-action]),
+    input[type="button"]:not(.nav__item),
+    input[type="submit"]:not(.nav__item),
+    input[type="reset"]:not(.nav__item) {
+      border-radius: 6px !important;
+      transition: all 0.2s ease !important;
+    }
+
+    /* 确保标签链接保留边框样式 */
+    .problem__tag-link {
+      border-radius: inherit !important;
+    }
+    
+    /* 浅色模式标签边框 */
+    html:not(.theme--dark) .problem__tag-link {
+      border: 1px solid currentColor !important;
+    }
+
+    /* 恢复收藏按钮和星星图标的原始样式 */
+    .star,
+    [data-star],
+    [data-star-action],
+    .star *,
+    [data-star] *,
+    [data-star-action] * {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    
+    /* 恢复评测记录列表页面按钮样式 */
+    .col--problem-name button:not(.problem__tag-link),
+    .col--problem-name a:not(.problem__tag-link),
+    .col--problem-name button.link,
+    .col--problem-name button.link:hover,
+    .col--problem-name button.link:active,
+    .col--problem-name button.link:focus {
+      background: transparent !important;
+      border: none !important;
+      color: inherit !important;
+      box-shadow: none !important;
+    }
+
+    /* ============================================
+       登录界面白色边框修复
+       ============================================ */
+    .login-form,
+    .login-form .section,
+    .page--login .section,
+    .page--register .section,
+    .page--reset .section {
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .login-form input,
+    .login-form textarea,
+    .page--login input,
+    .page--register input,
+    .page--reset input,
+    .page--auth input,
+    .inverse .material .textbox,
+    .inverse .textbox,
+    .page--auth .textbox,
+    .auth-form .textbox,
+    .auth-form input {
+      border: none !important;
+      background: rgba(255,255,255,0.8) !important;
+      box-shadow: none !important;
+    }
+
+    /* 登录对话框输入框容器边框修复 - 覆盖 Material Textbox 样式 */
+    html body .dialog--signin__main label.textbox,
+    html body .dialog--signin__main label.textbox.material {
+      border: none !important;
+      border-width: 0 !important;
+      border-style: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+
+    /* 登录对话框输入框样式 - 覆盖 Material Textbox 的底部边框 */
+    html body .dialog--signin__main label.textbox input,
+    html body .dialog--signin__main label.textbox.material input {
+      border: 1px solid #d9d9d9 !important;
+      border-bottom: 1px solid #d9d9d9 !important;
+      border-radius: 4px !important;
+      background: rgba(255,255,255,0.95) !important;
+      padding: 8px 12px !important;
+      margin-top: 4px !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    html body .dialog--signin__main label.textbox input:hover,
+    html body .dialog--signin__main label.textbox.material input:hover {
+      border-bottom: 1px solid #d9d9d9 !important;
+    }
+
+    html body .dialog--signin__main label.textbox input:focus,
+    html body .dialog--signin__main label.textbox.material input:focus {
+      border: 1px solid #40a9ff !important;
+      border-bottom: 1px solid #40a9ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.1) !important;
+      outline: none !important;
+    }
+
+    /* 注册页面输入框容器边框修复 - 覆盖 Material Textbox 样式 */
+    html body .page--register label.inverse.textbox,
+    html body .page--register label.inverse.material.textbox,
+    html body .inverse label.textbox,
+    html body .inverse label.material.textbox {
+      border: none !important;
+      border-width: 0 !important;
+      border-style: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+
+    /* 关键：移除 Material Textbox 的底部边框 */
+    html body .page--register label.inverse.textbox input,
+    html body .page--register label.inverse.material.textbox input,
+    html body .inverse label.textbox input,
+    html body .inverse label.material.textbox input {
+      border: 1px solid #d9d9d9 !important;
+      border-bottom: 1px solid #d9d9d9 !important;
+      border-radius: 4px !important;
+      background: rgba(255,255,255,0.95) !important;
+      padding: 8px 12px !important;
+      margin-top: 4px !important;
+      box-shadow: none !important;
+      outline: none !important;
+      color: #333 !important;
+    }
+
+    /* 确保placeholder文字颜色也可见 */
+    html body .page--register label.inverse.textbox input::placeholder,
+    html body .page--register label.inverse.material.textbox input::placeholder,
+    html body .inverse label.textbox input::placeholder,
+    html body .inverse label.material.textbox input::placeholder {
+      color: #999 !important;
+    }
+
+    html body .page--register label.inverse.textbox input:hover,
+    html body .page--register label.inverse.material.textbox input:hover,
+    html body .inverse label.textbox input:hover,
+    html body .inverse label.material.textbox input:hover {
+      border-bottom: 1px solid #d9d9d9 !important;
+    }
+
+    html body .page--register label.inverse.textbox input:focus,
+    html body .page--register label.inverse.material.textbox input:focus,
+    html body .inverse label.textbox input:focus,
+    html body .inverse label.material.textbox input:focus {
+      border: 1px solid #40a9ff !important;
+      border-bottom: 1px solid #40a9ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.1) !important;
+      outline: none !important;
+    }
+
+    /* ============ 深色主题下的输入框修复 ============ */
+    html.theme--dark .page--register label.inverse.textbox,
+    html.theme--dark .page--register label.inverse.material.textbox,
+    html.theme--dark .inverse label.textbox,
+    html.theme--dark .inverse label.material.textbox {
+      border: none !important;
+      border-width: 0 !important;
+      border-style: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+
+    html.theme--dark .page--register label.inverse.textbox input,
+    html.theme--dark .page--register label.inverse.material.textbox input,
+    html.theme--dark .inverse label.textbox input,
+    html.theme--dark .inverse label.material.textbox input {
+      border: 1px solid #d9d9d9 !important;
+      border-bottom: 1px solid #d9d9d9 !important;
+      border-radius: 4px !important;
+      background: rgba(255,255,255,0.95) !important;
+      padding: 8px 12px !important;
+      margin-top: 4px !important;
+      box-shadow: none !important;
+      outline: none !important;
+      color: #333 !important;
+    }
+
+    /* 确保placeholder文字颜色也可见 */
+    html.theme--dark .page--register label.inverse.textbox input::placeholder,
+    html.theme--dark .page--register label.inverse.material.textbox input::placeholder,
+    html.theme--dark .inverse label.textbox input::placeholder,
+    html.theme--dark .inverse label.material.textbox input::placeholder {
+      color: #999 !important;
+    }
+
+    html.theme--dark .page--register label.inverse.textbox input:focus,
+    html.theme--dark .page--register label.inverse.material.textbox input:focus,
+    html.theme--dark .inverse label.textbox input:focus,
+    html.theme--dark .inverse label.material.textbox input:focus {
+      border: 1px solid #40a9ff !important;
+      border-bottom: 1px solid #40a9ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.1) !important;
+      outline: none !important;
+    }
+
+    /* 移除外部容器边框（红框），保留输入框边框（绿框） */
+    html body .inverse *:not(input):not(textarea):not(.textbox):not(button):not(select),
+    html body.page--auth *:not(input):not(textarea):not(.textbox):not(button):not(select) {
+      border: none !important;
+      border-width: 0 !important;
+      border-style: none !important;
+      box-shadow: none !important;
+    }
+
+    /* --- 导航栏美化 - 亮色模式 --- */
+    .theme--default .nav,
+    .nav:not(.dark) {
+      background: linear-gradient(135deg, #fff 0%, #f5f7fa 100%) !important;
+      border-bottom: 1px solid #e8e8e8 !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04) !important;
+    }
+    .theme--default .nav__item,
+    .nav__item:not(.dark) {
+      border-radius: 6px !important;
+      transition: all 0.2s ease !important;
+      margin: 0 2px;
+    }
+    .theme--default .nav__item:hover,
+    .nav__item:not(.dark):hover {
+      background: rgba(24,144,255,0.1) !important;
+    }
+    .theme--default .nav__item.nav--active,
+    .nav__item.nav--active:not(.dark) {
+      background: #1890ff !important;
+      color: white !important;
+      box-shadow: 0 2px 8px rgba(24,144,255,0.35);
+    }
+
+    /* --- 导航栏美化 - 暗色模式 --- */
+    .theme--dark .nav {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+      border-bottom: 1px solid #2b2b2b !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+    }
+    .theme--dark .nav__item {
+      border-radius: 6px !important;
+      transition: all 0.2s ease !important;
+      margin: 0 2px;
+      color: #e0e0e0 !important;
+    }
+    .theme--dark .nav__item:hover {
+      background: rgba(138, 180, 248, 0.15) !important;
+      color: #8ab4f8 !important;
+    }
+    .theme--dark .nav__item.nav--active {
+      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+      color: #e0e0e0 !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      border: 1px solid #0f3460 !important;
+    }
+
+    /* --- 输入框美化 --- */
+    input, select, textarea, .textbox, .select,
+    input[type="text"], input[type="password"], input[type="email"],
+    input[type="number"], input[type="search"], input[type="tel"],
+    input[type="url"] {
+      border-radius: 4px !important;
+      border: 1px solid #d9d9d9 !important;
+      transition: all 0.2s ease !important;
+    }
+    input:focus, select:focus, textarea:focus, .textbox:focus,
+    .select:focus, [type="text"]:focus, [type="password"]:focus,
+    [type="email"]:focus, [type="number"]:focus {
+      border-color: #40a9ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.1) !important;
+      outline: none;
+    }
+
+    /* --- 表格美化 --- */
+    .data-table, table, .table {
+      border-radius: 6px !important;
+      overflow: hidden !important;
+      border-collapse: separate !important;
+      border-spacing: 0 !important;
+    }
+    .data-table th, table th, .table th {
+      background: linear-gradient(180deg, #fafafa, #f5f5f5) !important;
+      border-bottom: 2px solid #e8e8e8 !important;
+      font-weight: 600 !important;
+    }
+    .data-table tr,
+    .data-table tr:nth-child(even),
+    table tr,
+    table tr:nth-child(even),
+    .table tr,
+    .table tr:nth-child(even) {
+      background: #ffffff !important;
+    }
+    .data-table tr:hover, table tr:hover, .table tr:hover {
+      background: rgba(24,144,255,0.04) !important;
+    }
+    .data-table td, table td, .table td {
+      border-bottom: 1px solid #f0f0f0 !important;
+    }
+
+    /* --- 深色模式表格样式 --- */
+    .theme--dark .data-table tr,
+    .theme--dark .data-table tr:nth-child(even),
+    .theme--dark table tr,
+    .theme--dark table tr:nth-child(even),
+    .theme--dark .table tr,
+    .theme--dark .table tr:nth-child(even) {
+      background: #1f1f1f !important;
+    }
+
+    .theme--dark .data-table tr:hover,
+    .theme--dark table tr:hover,
+    .theme--dark .table tr:hover {
+      background: #3a3a3a !important;
+    }
+
+    /* --- 训练页面配色优化 --- */
+    .training-status--text.progress,
+    .training-status--text.open,
+    .training-section-status--text.progress,
+    .training-section-status--text.open {
+      color: #1890ff !important;
+    }
+
+    .training-status--icon.progress,
+    .training-status--icon.open,
+    .training-section-status--icon.progress,
+    .training-section-status--icon.open {
+      color: #1890ff !important;
+    }
+
+    .page--training_detail .section.side .menu__item.active a,
+    .page--training_detail .section.side .menu__item.active button,
+    .page--training_detail .section.side a.menu__link.active,
+    .page--training_detail .section.side button.menu__link.active {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      color: white !important;
+    }
+
+    .theme--dark .training-status--text.progress,
+    .theme--dark .training-status--text.open,
+    .theme--dark .training-section-status--text.progress,
+    .theme--dark .training-section-status--text.open {
+      color: #60b6ff !important;
+    }
+
+    .theme--dark .training-status--icon.progress,
+    .theme--dark .training-status--icon.open,
+    .theme--dark .training-section-status--icon.progress,
+    .theme--dark .training-section-status--icon.open {
+      color: #60b6ff !important;
+    }
+
+    .theme--dark.page--training_detail .section.side .menu__item.active a,
+    .theme--dark.page--training_detail .section.side .menu__item.active button,
+    html.theme--dark .page--training_detail .section.side a.menu__link.active,
+    html.theme--dark .page--training_detail .section.side button.menu__link.active {
+      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+      background-color: #1a1a2e !important;
+      color: #e0e0e0 !important;
+    }
+
+    /* --- 用户等级名字颜色 - 浅色模式（科技霓虹风格） --- */
+    .user-profile-name.uname--lv0, .user-profile-name.uname--lv0:hover, .user-profile-link .user-profile-name.uname--lv0, .user-profile-link .user-profile-name.uname--lv0:hover { color: #6b7280 !important; }
+    .user-profile-name.uname--lv1, .user-profile-name.uname--lv1:hover, .user-profile-link .user-profile-name.uname--lv1, .user-profile-link .user-profile-name.uname--lv1:hover { color: #60a5fa !important; }
+    .user-profile-name.uname--lv2, .user-profile-name.uname--lv2:hover, .user-profile-link .user-profile-name.uname--lv2, .user-profile-link .user-profile-name.uname--lv2:hover { color: #22d3ee !important; }
+    .user-profile-name.uname--lv3, .user-profile-name.uname--lv3:hover, .user-profile-link .user-profile-name.uname--lv3, .user-profile-link .user-profile-name.uname--lv3:hover { color: #34d399 !important; }
+    .user-profile-name.uname--lv4, .user-profile-name.uname--lv4:hover, .user-profile-link .user-profile-name.uname--lv4, .user-profile-link .user-profile-name.uname--lv4:hover { color: #14b8a6 !important; }
+    .user-profile-name.uname--lv5, .user-profile-name.uname--lv5:hover, .user-profile-link .user-profile-name.uname--lv5, .user-profile-link .user-profile-name.uname--lv5:hover { color: #84cc16 !important; }
+    .user-profile-name.uname--lv6, .user-profile-name.uname--lv6:hover, .user-profile-link .user-profile-name.uname--lv6, .user-profile-link .user-profile-name.uname--lv6:hover { color: #a3e635 !important; }
+    .user-profile-name.uname--lv7, .user-profile-name.uname--lv7:hover, .user-profile-link .user-profile-name.uname--lv7, .user-profile-link .user-profile-name.uname--lv7:hover { color: #f59e0b !important; }
+    .user-profile-name.uname--lv8, .user-profile-name.uname--lv8:hover, .user-profile-link .user-profile-name.uname--lv8, .user-profile-link .user-profile-name.uname--lv8:hover { color: #f97316 !important; }
+    .user-profile-name.uname--lv9, .user-profile-name.uname--lv9:hover, .user-profile-link .user-profile-name.uname--lv9, .user-profile-link .user-profile-name.uname--lv9:hover { color: #ef4444 !important; }
+    .user-profile-name.uname--lv10, .user-profile-name.uname--lv10:hover, .user-profile-link .user-profile-name.uname--lv10, .user-profile-link .user-profile-name.uname--lv10:hover { color: #a855f7 !important; }
+
+    /* --- 用户等级名字颜色 - 深色模式（科技霓虹风格） --- */
+    .theme--dark .user-profile-name.uname--lv0, .theme--dark .user-profile-name.uname--lv0:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv0, .theme--dark .user-profile-link .user-profile-name.uname--lv0:hover { color: #9ca3af !important; }
+    .theme--dark .user-profile-name.uname--lv1, .theme--dark .user-profile-name.uname--lv1:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv1, .theme--dark .user-profile-link .user-profile-name.uname--lv1:hover { color: #93c5fd !important; }
+    .theme--dark .user-profile-name.uname--lv2, .theme--dark .user-profile-name.uname--lv2:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv2, .theme--dark .user-profile-link .user-profile-name.uname--lv2:hover { color: #67e8f9 !important; }
+    .theme--dark .user-profile-name.uname--lv3, .theme--dark .user-profile-name.uname--lv3:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv3, .theme--dark .user-profile-link .user-profile-name.uname--lv3:hover { color: #6ee7b7 !important; }
+    .theme--dark .user-profile-name.uname--lv4, .theme--dark .user-profile-name.uname--lv4:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv4, .theme--dark .user-profile-link .user-profile-name.uname--lv4:hover { color: #5eead4 !important; }
+    .theme--dark .user-profile-name.uname--lv5, .theme--dark .user-profile-name.uname--lv5:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv5, .theme--dark .user-profile-link .user-profile-name.uname--lv5:hover { color: #bef264 !important; }
+    .theme--dark .user-profile-name.uname--lv6, .theme--dark .user-profile-name.uname--lv6:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv6, .theme--dark .user-profile-link .user-profile-name.uname--lv6:hover { color: #d9f99d !important; }
+    .theme--dark .user-profile-name.uname--lv7, .theme--dark .user-profile-name.uname--lv7:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv7, .theme--dark .user-profile-link .user-profile-name.uname--lv7:hover { color: #fbbf24 !important; }
+    .theme--dark .user-profile-name.uname--lv8, .theme--dark .user-profile-name.uname--lv8:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv8, .theme--dark .user-profile-link .user-profile-name.uname--lv8:hover { color: #fb923c !important; }
+    .theme--dark .user-profile-name.uname--lv9, .theme--dark .user-profile-name.uname--lv9:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv9, .theme--dark .user-profile-link .user-profile-name.uname--lv9:hover { color: #f87171 !important; }
+    .theme--dark .user-profile-name.uname--lv10, .theme--dark .user-profile-name.uname--lv10:hover, .theme--dark .user-profile-link .user-profile-name.uname--lv10, .theme--dark .user-profile-link .user-profile-name.uname--lv10:hover { color: #c084fc !important; }
+
+
+
+
+    /* --- 用户详情页面用户名颜色修复 --- */
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv0 { color: #6b7280 !important; }
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv1 { color: #60a5fa !important; }
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv2 { color: #22d3ee !important; }
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv3 { color: #34d399 !important; }
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv4 { color: #14b8a6 !important; }
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv5 { color: #84cc16 !important; }
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv6 { color: #a3e635 !important; }
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv7 { color: #f59e0b !important; }
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv8 { color: #f97316 !important; }
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv9 { color: #ef4444 !important; }
+    .page--user_detail .user-profile-link span a.user-profile-name.uname--lv10 { color: #a855f7 !important; }
+
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv0 { color: #9ca3af !important; }
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv1 { color: #93c5fd !important; }
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv2 { color: #67e8f9 !important; }
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv3 { color: #6ee7b7 !important; }
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv4 { color: #5eead4 !important; }
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv5 { color: #bef264 !important; }
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv6 { color: #d9f99d !important; }
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv7 { color: #fbbf24 !important; }
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv8 { color: #fb923c !important; }
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv9 { color: #f87171 !important; }
+    .theme--dark.page--user_detail .user-profile-link span a.user-profile-name.uname--lv10 { color: #c084fc !important; }
+
+    /* --- 用户详情页面用户名颜色 - 最高优先级修复 --- */
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv0,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv0:hover {
+      color: #6b7280 !important;
+    }
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv1,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv1:hover {
+      color: #60a5fa !important;
+    }
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv2,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv2:hover {
+      color: #22d3ee !important;
+    }
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv3,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv3:hover {
+      color: #34d399 !important;
+    }
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv4,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv4:hover {
+      color: #14b8a6 !important;
+    }
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv5,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv5:hover {
+      color: #84cc16 !important;
+    }
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv6,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv6:hover {
+      color: #a3e635 !important;
+    }
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv7,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv7:hover {
+      color: #f59e0b !important;
+    }
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv8,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv8:hover {
+      color: #f97316 !important;
+    }
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv9,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv9:hover {
+      color: #ef4444 !important;
+    }
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv10,
+    html.page--user_detail body .profile-header__main h1 a.user-profile-name.uname--lv10:hover {
+      color: #a855f7 !important;
+    }
+
+    /* --- 排行榜页面用户名列宽度调整 --- */
+    .page--ranking .col--user,
+    .page--homepage .col--user {
+      width: 320px !important;
+      min-width: 320px !important;
+    }
+
+    /* --- 试题页面字体大小增大 --- */
+    .page--problem_detail .section__body,
+    .page--problem_detail .section__body p,
+    .page--problem_detail .section__body li,
+    .page--problem_detail .section__body td,
+    .page--problem_detail .section__body th {
+      font-size: 16px !important;
+      line-height: 1.8 !important;
+    }
+
+    /* --- 用户徽章样式 --- */
+    .user-profile-badge {
+      display: inline-flex !important; align-items: center !important; justify-content: center !important;
+      height: 20px !important; padding: 0 7px !important; border-radius: 4px !important;
+      font-size: 10px !important; font-weight: 600 !important; letter-spacing: 0.2px !important;
+      margin-left: 6px !important; vertical-align: middle !important; transform: translateY(0) !important;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important; border: 1px solid rgba(255, 255, 255, 0.25) !important;
+      line-height: 18px !important; white-space: nowrap !important;
+    }
+    .user-profile-badge.badge--su { background: #ff0000 !important; color: white !important; }
+    .user-profile-badge.badge--mod { background: #cc66cc !important; color: white !important; }
+    .user-profile-badge.badge--lv0 { background: #9ca3af !important; color: #1f2937 !important; }
+    .user-profile-badge.badge--lv1 { background: #ef4444 !important; color: white !important; }
+    .user-profile-badge.badge--lv2 { background: #f97316 !important; color: white !important; }
+    .user-profile-badge.badge--lv3 { background: #eab308 !important; color: #1f2937 !important; }
+    .user-profile-badge.badge--lv4 { background: #22c55e !important; color: white !important; }
+    .user-profile-badge.badge--lv5 { background: #14b8a6 !important; color: white !important; }
+    .user-profile-badge.badge--lv6 { background: #3b82f6 !important; color: white !important; }
+    .user-profile-badge.badge--lv7 { background: #6366f1 !important; color: white !important; }
+    .user-profile-badge.badge--lv8 { background: #8b5cf6 !important; color: white !important; }
+    .user-profile-badge.badge--lv9 { background: #ec4899 !important; color: white !important; }
+    .user-profile-badge.badge--lv10 { background: #06b6d4 !important; color: white !important; }
+
+    /* --- 全局活跃菜单链接样式覆盖 --- */
+    .section.side a.menu__link.active,
+    .section.side button.menu__link.active,
+    .section.side .menu__item.active a,
+    .section.side .menu__item.active button {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      color: white !important;
+    }
+
+    html.theme--dark body .section.side a.menu__link.active,
+    html.theme--dark body .section.side button.menu__link.active,
+    html.theme--dark body .section.side .menu__item.active a,
+    html.theme--dark body .section.side .menu__item.active button {
+      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+      background-color: #1a1a2e !important;
+      color: #e0e0e0 !important;
+    }
+
+    /* --- 首页讨论卡片样式美化 --- */
+    .page--discussion_main .discussion__item,
+    .page--homepage .discussion__item {
+      border-left: 4px solid transparent !important;
+      padding-left: 12px !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .page--discussion_main .discussion__item.highlight,
+    .page--homepage .discussion__item.highlight {
+      border-left: 4px solid #1890ff !important;
+      background: linear-gradient(90deg, rgba(24, 144, 255, 0.05) 0%, transparent 100%) !important;
+    }
+
+    .page--discussion_main .discussion__item:hover,
+    .page--homepage .discussion__item:hover {
+      background: rgba(24, 144, 255, 0.03) !important;
+    }
+
+    /* --- 首页讨论卡片文字颜色修复 --- */
+    .page--discussion_main .discussion__title a,
+    .page--homepage .discussion__title a {
+      color: #333 !important;
+    }
+
+    .page--discussion_main .discussion__title a:hover,
+    .page--homepage .discussion__title a:hover {
+      color: #4f46e5 !important;
+    }
+
+    .page--discussion_main .discussion__title a:visited,
+    .page--homepage .discussion__title a:visited {
+      color: #666 !important;
+    }
+
+    .theme--dark.page--discussion_main .discussion__item.highlight,
+    .theme--dark.page--homepage .discussion__item.highlight {
+      border-left: 4px solid #60b6ff !important;
+      background: linear-gradient(90deg, rgba(96, 182, 255, 0.1) 0%, transparent 100%) !important;
+    }
+
+    .theme--dark.page--discussion_main .discussion__item:hover,
+    .theme--dark.page--homepage .discussion__item:hover {
+      background: rgba(96, 182, 255, 0.05) !important;
+    }
+
+    .theme--dark.page--discussion_main .discussion__title a,
+    .theme--dark.page--homepage .discussion__title a {
+      color: #e0e0e0 !important;
+    }
+
+    .theme--dark.page--discussion_main .discussion__title a:hover,
+    .theme--dark.page--homepage .discussion__title a:hover {
+      color: #a78bfa !important;
+    }
+
+    .theme--dark.page--discussion_main .discussion__title a:visited,
+    .theme--dark.page--homepage .discussion__title a:visited {
+      color: #a0a0a0 !important;
+    }
+
+    /* --- 首页表格深色模式 --- */
+    .theme--dark.page--homepage .section .data-table thead th,
+    .theme--dark.page--homepage .section table thead th {
+      background: linear-gradient(180deg, #1a1a2e, #16213e) !important;
+      border-bottom: 2px solid #0f3460 !important;
+      color: #e0e0e0 !important;
+    }
+
+    /* --- 首页排名表格修复 - 确保单元格正确显示 --- */
+    .page--homepage .section .data-table .col--bio {
+      display: table-cell !important;
+    }
+    
+    .page--homepage .section .data-table td.col--bio {
+      height: auto !important;
+    }
+
+    /* --- 深色模式表格表头 - 通用样式 --- */
+    .theme--dark .section .data-table thead th,
+    .theme--dark .section table thead th {
+      background: linear-gradient(180deg, #1a1a2e, #16213e) !important;
+      border-bottom: 2px solid #0f3460 !important;
+      color: #e0e0e0 !important;
+    }
+
+    /* --- 排名页面表格修复 --- */
+    .page--ranking .section .data-table .col--bio {
+      display: table-cell !important;
+    }
+    
+    .page--ranking .section .data-table td.col--bio {
+      height: auto !important;
+    }
+
+    /* --- 排名列表前三名特效 - 浅色模式 --- */
+    .page--ranking .data-table tr.ranking-top-1,
+    .page--homepage .data-table tr.ranking-top-1 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-1:hover,
+    .page--homepage .data-table tr.ranking-top-1:hover {
+      background: linear-gradient(90deg, #fef08a 0%, #facc15 50%, #eab308 100%) !important;
+      box-shadow: 0 4px 20px rgba(234, 179, 8, 0.6) !important;
+      transform: scale(1.02) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-1 td:first-child,
+    .page--homepage .data-table tr.ranking-top-1 td:first-child {
+      position: relative !important;
+      font-weight: 700 !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-1 td:first-child::before,
+    .page--homepage .data-table tr.ranking-top-1 td:first-child::before {
+      content: '★ ' !important;
+      margin-right: 4px !important;
+      color: #eab308 !important;
+      text-shadow: 0 0 10px rgba(234, 179, 8, 0.9) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-1:hover td:first-child,
+    .page--homepage .data-table tr.ranking-top-1:hover td:first-child {
+      color: #854d0e !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-2,
+    .page--homepage .data-table tr.ranking-top-2 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-2:hover,
+    .page--homepage .data-table tr.ranking-top-2:hover {
+      background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 50%, #94a3b8 100%) !important;
+      box-shadow: 0 4px 20px rgba(100, 116, 139, 0.5) !important;
+      transform: scale(1.02) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-2 td:first-child,
+    .page--homepage .data-table tr.ranking-top-2 td:first-child {
+      position: relative !important;
+      font-weight: 700 !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-2 td:first-child::before,
+    .page--homepage .data-table tr.ranking-top-2 td:first-child::before {
+      content: '☆ ' !important;
+      margin-right: 4px !important;
+      color: #94a3b8 !important;
+      text-shadow: 0 0 8px rgba(148, 163, 184, 0.8) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-2:hover td:first-child,
+    .page--homepage .data-table tr.ranking-top-2:hover td:first-child {
+      color: #334155 !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-3,
+    .page--homepage .data-table tr.ranking-top-3 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-3:hover,
+    .page--homepage .data-table tr.ranking-top-3:hover {
+      background: linear-gradient(90deg, rgba(254, 243, 199, 0.6) 0%, rgba(251, 146, 60, 0.5) 50%, rgba(234, 88, 12, 0.4) 100%) !important;
+      box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3) !important;
+      transform: scale(1.02) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-3 td:first-child,
+    .page--homepage .data-table tr.ranking-top-3 td:first-child {
+      position: relative !important;
+      font-weight: 700 !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-3 td:first-child::before,
+    .page--homepage .data-table tr.ranking-top-3 td:first-child::before {
+      content: '◆ ' !important;
+      margin-right: 4px !important;
+      color: #fb923c !important;
+      text-shadow: 0 0 8px rgba(251, 146, 60, 0.8) !important;
+    }
+
+    .page--ranking .data-table tr.ranking-top-3:hover td:first-child,
+    .page--homepage .data-table tr.ranking-top-3:hover td:first-child {
+      color: #9a3412 !important;
+    }
+
+    /* --- 排名列表前三名特效 - 深色模式 --- */
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1 td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1 td {
+      color: #ffffff !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1 td:first-child::before,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1 td:first-child::before {
+      content: '★ ' !important;
+      margin-right: 4px !important;
+      color: #eab308 !important;
+      text-shadow: 0 0 10px rgba(234, 179, 8, 0.9) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1:hover,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1:hover {
+      background: linear-gradient(90deg, rgba(234, 179, 8, 0.35) 0%, rgba(234, 179, 8, 0.5) 50%, rgba(234, 179, 8, 0.35) 100%) !important;
+      box-shadow: 0 4px 20px rgba(234, 179, 8, 0.6) !important;
+      transform: scale(1.02) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1:hover td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1:hover td {
+      color: #1a1a2e !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-1:hover td:first-child,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-1:hover td:first-child {
+      color: #854d0e !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2 td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2 td {
+      color: #ffffff !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2 td:first-child::before,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2 td:first-child::before {
+      content: '☆ ' !important;
+      margin-right: 4px !important;
+      color: #cbd5e1 !important;
+      text-shadow: 0 0 8px rgba(148, 163, 184, 0.8) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2:hover,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2:hover {
+      background: linear-gradient(90deg, rgba(148, 163, 184, 0.25) 0%, rgba(148, 163, 184, 0.35) 50%, rgba(100, 116, 139, 0.25) 100%) !important;
+      box-shadow: 0 4px 20px rgba(148, 163, 184, 0.5) !important;
+      transform: scale(1.02) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2:hover td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2:hover td {
+      color: #1a1a2e !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-2:hover td:first-child,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-2:hover td:first-child {
+      color: #334155 !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3 {
+      position: relative !important;
+      transition: all 0.3s ease !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3 td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3 td {
+      color: #ffffff !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3 td:first-child::before,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3 td:first-child::before {
+      content: '◆ ' !important;
+      margin-right: 4px !important;
+      color: #fb923c !important;
+      text-shadow: 0 0 8px rgba(251, 146, 60, 0.8) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3:hover,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3:hover {
+      background: linear-gradient(90deg, rgba(234, 88, 12, 0.1) 0%, rgba(249, 115, 22, 0.15) 50%, rgba(234, 88, 12, 0.1) 100%) !important;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.2) !important;
+      transform: scale(1.02) !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3:hover td,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3:hover td {
+      color: #1a1a2e !important;
+    }
+
+    html.theme--dark .page--ranking .data-table tr.ranking-top-3:hover td:first-child,
+    html.theme--dark .page--homepage .data-table tr.ranking-top-3:hover td:first-child {
+      color: #9a3412 !important;
+    }
+
+    /* --- 代码框美化 - 浅色模式 --- */
+    .theme--default .sample pre,
+    .sample pre:not(.theme--dark *) {
+      background: #f6f8fa !important;
+      border: 1px solid #e1e4e8 !important;
+      border-radius: 6px !important;
+      padding: 12px 16px !important;
+    }
+    
+    .theme--default .sample code,
+    .sample code:not(.theme--dark *) {
+      background: transparent !important;
+      color: #24292e !important;
+      font-family: "Consolas", "Monaco", "Source Code Pro", "Monospace" !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+    }
+
+    /* --- 代码框美化 - 深色模式 --- */
+    .theme--dark .sample pre {
+      background: #1e1e2e !important;
+      border: 1px solid #3b3b4f !important;
+      border-radius: 6px !important;
+      padding: 12px 16px !important;
+    }
+    
+    .theme--dark .sample code {
+      background: transparent !important;
+      color: #e4e4e7 !important;
+      font-family: "Consolas", "Monaco", "Source Code Pro", "Monospace" !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+    }
+
+    /* --- 全局过渡动画 --- */
+    * {
+      transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    /* ============================================
+       问题标签样式 - 深色模式与浅色模式一致
+       ============================================ */
+    html.theme--dark .problem__tag-link {
+      display: inline-block;
+      padding: 4px 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 250px;
+      line-height: 20px;
+      height: 28px;
+      background: #f0f0f0 !important;
+      color: #333 !important;
+      border-radius: 14px !important;
+      font-size: 12px;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      border: 1px solid currentColor !important;
+    }
+
+    html.theme--dark .problem__tag-link:hover {
+      background: #1890ff !important;
+      color: #fff !important;
+      border-color: #1890ff !important;
+      text-decoration: none;
+    }
+    
+    html.theme--dark .problem__tag-link:active,
+    html.theme--dark .problem__tag-link:focus {
+      background: #096dd9 !important;
+      color: #fff !important;
+      border-color: #096dd9 !important;
+      outline: none;
+    }
+
+    html.theme--dark .problem__tag-link span,
+    html.theme--dark .problem__tag-link a,
+    html.theme--dark .problem__tag-link * {
+      color: inherit !important;
+      text-shadow: none !important;
+      font-weight: inherit !important;
+    }
+
+    /* 深色模式 - 动态规划（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="动态规划"],
+    html.theme--dark .problem__tag-link[data-tag="LCS"],
+    html.theme--dark .problem__tag-link[data-tag="LIS"],
+    html.theme--dark .problem__tag-link[data-tag*="背包"],
+    html.theme--dark .problem__tag-link[data-tag="DP"],
+    html.theme--dark .problem__tag-link[data-tag="单调性DP"],
+    html.theme--dark .problem__tag-link[data-tag="环形DP"],
+    html.theme--dark .problem__tag-link[data-tag="树形DP"],
+    html.theme--dark .problem__tag-link[data-tag="状态压缩DP"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 贪心（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag="贪心"],
+    html.theme--dark .problem__tag-link[data-tag*="构造"],
+    html.theme--dark .problem__tag-link[data-tag*="打表"] {
+      background: #f6ffed !important;
+      color: #52c41a !important;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 树结构（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="树结构"],
+    html.theme--dark .problem__tag-link[data-tag*="树"],
+    html.theme--dark .problem__tag-link[data-tag="最近公共祖先"],
+    html.theme--dark .problem__tag-link[data-tag*="生成树"],
+    html.theme--dark .problem__tag-link[data-tag="次小生成树"],
+    html.theme--dark .problem__tag-link[data-tag="DFS序列"],
+    html.theme--dark .problem__tag-link[data-tag*="树上倍增"],
+    html.theme--dark .problem__tag-link[data-tag*="树的分治"],
+    html.theme--dark .problem__tag-link[data-tag*="树链剖分"],
+    html.theme--dark .problem__tag-link[data-tag="Link-Cut-Tree"] {
+      background: #fff2f0 !important;
+      color: #ff4d4f !important;
+      border: 1px solid #ff4d4f !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 图结构（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="图结构"],
+    html.theme--dark .problem__tag-link[data-tag*="图"],
+    html.theme--dark .problem__tag-link[data-tag="Floyd"],
+    html.theme--dark .problem__tag-link[data-tag="Dijkstra"],
+    html.theme--dark .problem__tag-link[data-tag="SPFA"],
+    html.theme--dark .problem__tag-link[data-tag*="负权边"],
+    html.theme--dark .problem__tag-link[data-tag*="平面图"],
+    html.theme--dark .problem__tag-link[data-tag*="二分图"],
+    html.theme--dark .problem__tag-link[data-tag*="二分图匹配"],
+    html.theme--dark .problem__tag-link[data-tag*="最短路"],
+    html.theme--dark .problem__tag-link[data-tag*="差分约束"],
+    html.theme--dark .problem__tag-link[data-tag*="拓扑排序"] {
+      background: #f9f0ff !important;
+      color: #722ed1 !important;
+      border: 1px solid #722ed1 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 数据结构（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="数据结构"],
+    html.theme--dark .problem__tag-link[data-tag="栈"],
+    html.theme--dark .problem__tag-link[data-tag="队列"],
+    html.theme--dark .problem__tag-link[data-tag*="链表"],
+    html.theme--dark .problem__tag-link[data-tag*="单调队列"],
+    html.theme--dark .problem__tag-link[data-tag*="并查集"],
+    html.theme--dark .problem__tag-link[data-tag="堆"],
+    html.theme--dark .problem__tag-link[data-tag*="平衡树"],
+    html.theme--dark .problem__tag-link[data-tag*="线段树"],
+    html.theme--dark .problem__tag-link[data-tag*="树状数组"],
+    html.theme--dark .problem__tag-link[data-tag*="树套树"],
+    html.theme--dark .problem__tag-link[data-tag*="四分树"],
+    html.theme--dark .problem__tag-link[data-tag*="划分树"],
+    html.theme--dark .problem__tag-link[data-tag*="归并树"],
+    html.theme--dark .problem__tag-link[data-tag*="替罪羊树"],
+    html.theme--dark .problem__tag-link[data-tag*="左偏树"],
+    html.theme--dark .problem__tag-link[data-tag*="k-d树"],
+    html.theme--dark .problem__tag-link[data-tag*="块状链表"],
+    html.theme--dark .problem__tag-link[data-tag*="Hashing"] {
+      background: #e6fffb !important;
+      color: #13c2c2 !important;
+      border: 1px solid #13c2c2 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 容器（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="容器"],
+    html.theme--dark .problem__tag-link[data-tag="map"],
+    html.theme--dark .problem__tag-link[data-tag="stack"],
+    html.theme--dark .problem__tag-link[data-tag="deque"],
+    html.theme--dark .problem__tag-link[data-tag="list"],
+    html.theme--dark .problem__tag-link[data-tag="queue"],
+    html.theme--dark .problem__tag-link[data-tag*="哈希表"] {
+      background: #fffbe6 !important;
+      color: #faad14 !important;
+      border: 1px solid #faad14 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 搜索算法（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="深度优先搜索"],
+    html.theme--dark .problem__tag-link[data-tag*="广度优先搜索"],
+    html.theme--dark .problem__tag-link[data-tag*="迭代加深搜索"] {
+      background: #fff7e6 !important;
+      color: #fa8c16 !important;
+      border: 1px solid #fa8c16 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 分治与查询技术（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="分治"],
+    html.theme--dark .problem__tag-link[data-tag="RMQ"],
+    html.theme--dark .problem__tag-link[data-tag*="分块"] {
+      background: #f0f5ff !important;
+      color: #108ee9 !important;
+      border: 1px solid #108ee9 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 数学与数论（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="快速幂"],
+    html.theme--dark .problem__tag-link[data-tag*="排列组合"],
+    html.theme--dark .problem__tag-link[data-tag*="位运算"],
+    html.theme--dark .problem__tag-link[data-tag*="进制转换"],
+    html.theme--dark .problem__tag-link[data-tag*="数学"] {
+      background: #f9f0ff !important;
+      color: #9c27b0 !important;
+      border: 1px solid #9c27b0 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 基础算法技巧（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="二分查找"],
+    html.theme--dark .problem__tag-link[data-tag*="三分查找"],
+    html.theme--dark .problem__tag-link[data-tag*="双指针扫描"],
+    html.theme--dark .problem__tag-link[data-tag*="排序"] {
+      background: #f5f5f5 !important;
+      color: #666 !important;
+      border: 1px solid #666 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 递推（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="递推"] {
+      background: #fff7e6 !important;
+      color: #fa8c16 !important;
+      border: 1px solid #fa8c16 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 递归（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="递归"] {
+      background: #fff1e6 !important;
+      color: #d46b08 !important;
+      border: 1px solid #d46b08 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 数组（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="一维数组"],
+    html.theme--dark .problem__tag-link[data-tag*="二维数组"] {
+      background: #fff0f6 !important;
+      color: #eb2f96 !important;
+      border: 1px solid #eb2f96 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 字符串（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="字符串"],
+    html.theme--dark .problem__tag-link[data-tag*="字符型"] {
+      background: #e6fffb !important;
+      color: #13c2c2 !important;
+      border: 1px solid #13c2c2 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 函数与分支（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="函数问题"],
+    html.theme--dark .problem__tag-link[data-tag*="分支问题"] {
+      background: #f6ffed !important;
+      color: #52c41a !important;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 结构体（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="结构体"] {
+      background: #f9f0ff !important;
+      color: #722ed1 !important;
+      border: 1px solid #722ed1 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 循环（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="简单循环"],
+    html.theme--dark .problem__tag-link[data-tag*="嵌套循环"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 输入输出语句（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="输入输出语句"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 竞赛标签（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag="CSP-J"],
+    html.theme--dark .problem__tag-link[data-tag="CSP-S"],
+    html.theme--dark .problem__tag-link[data-tag="NOIP"] {
+      background: #fff2f0 !important;
+      color: #ff4d4f !important;
+      border: 1px solid #ff4d4f !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - GESP（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag="GESP"] {
+      background: #f6ffed !important;
+      color: #52c41a !important;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 客观题（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="客观题"] {
+      background: #f5f5f5 !important;
+      color: #666 !important;
+      border: 1px solid #666 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - USACO（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="USACO"] {
+      background: #fff0f6 !important;
+      color: #eb2f96 !important;
+      border: 1px solid #eb2f96 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深色模式 - 蓝桥杯（与浅色模式一致） */
+    html.theme--dark .problem__tag-link[data-tag*="蓝桥杯"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 问题标签样式 - Ant Design 风格 */
+    .problem__tags {
+      margin: 0 !important;
+      padding: 0 !important;
+      list-style: none !important;
+      font-size: 0;
+      word-break: keep-all;
+    }
+
+    .problem__tag {
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 4px 4px 0 !important;
+      padding: 0 !important;
+    }
+
+    /* 浅色模式 - 标签基础样式 */
+    html:not(.theme--dark) .problem__tag-link {
+      display: inline-block;
+      padding: 4px 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 250px;
+      line-height: 20px;
+      height: 28px;
+      background: #f0f0f0;
+      color: #333 !important;
+      border-radius: 14px !important;
+      font-size: 12px;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      border: 1px solid currentColor !important;
+    }
+
+    html:not(.theme--dark) .problem__tag-link:hover {
+      background: #1890ff !important;
+      color: #fff !important;
+      border-color: #1890ff !important;
+      text-decoration: none;
+    }
+    
+    html:not(.theme--dark) .problem__tag-link:active,
+    html:not(.theme--dark) .problem__tag-link:focus {
+      background: #096dd9 !important;
+      color: #fff !important;
+      border-color: #096dd9 !important;
+      outline: none;
+    }
+
+    .col--problem-name .problem__tags {
+      float: right;
+    }
+
+    .col--problem-name .problem__tag {
+      margin: 0 4px 0 0 !important;
+    }
+
+    /* 浅色模式 - 标签颜色美化 */
+
+    /* 蓝色系 - 动态规划 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="动态规划"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="LCS"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="LIS"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="背包"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="DP"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="单调性DP"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="环形DP"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="树形DP"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="状态压缩DP"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 绿色系 - 贪心 */
+    html:not(.theme--dark) .problem__tag-link[data-tag="贪心"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="构造"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="打表"] {
+      background: #f6ffed !important;
+      color: #52c41a !important;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
+    }
+
+    /* 红色系 - 树结构 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树结构"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="最近公共祖先"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="生成树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="次小生成树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="DFS序列"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树上倍增"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树的分治"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树链剖分"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="Link-Cut-Tree"] {
+      background: #fff2f0 !important;
+      color: #ff4d4f !important;
+      border: 1px solid #ff4d4f !important;
+      border-radius: 14px !important;
+    }
+
+    /* 紫色系 - 图结构 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="图结构"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="图"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="Floyd"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="Dijkstra"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="SPFA"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="负权边"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="平面图"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="二分图"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="二分图匹配"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="最短路"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="差分约束"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="拓扑排序"] {
+      background: #f9f0ff !important;
+      color: #722ed1 !important;
+      border: 1px solid #722ed1 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 青色 - 数据结构 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="数据结构"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="栈"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="队列"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="链表"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="单调队列"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="并查集"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="堆"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="平衡树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="线段树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树状数组"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="树套树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="四分树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="划分树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="归并树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="替罪羊树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="左偏树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="k-d树"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="块状链表"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="Hashing"] {
+      background: #e6fffb !important;
+      color: #13c2c2 !important;
+      border: 1px solid #13c2c2 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 黄色系 - 容器 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="容器"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="map"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="stack"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="deque"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="list"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="queue"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="哈希表"] {
+      background: #fffbe6 !important;
+      color: #faad14 !important;
+      border: 1px solid #faad14 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 橙色系 - 搜索算法 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="深度优先搜索"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="广度优先搜索"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="迭代加深搜索"] {
+      background: #fff7e6 !important;
+      color: #fa8c16 !important;
+      border: 1px solid #fa8c16 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 深蓝色系 - 分治与查询技术 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="分治"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="RMQ"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="分块"] {
+      background: #f0f5ff !important;
+      color: #108ee9 !important;
+      border: 1px solid #108ee9 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 紫色系 - 数学与数论 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="快速幂"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="排列组合"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="位运算"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="进制转换"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="数学"] {
+      background: #f9f0ff !important;
+      color: #9c27b0 !important;
+      border: 1px solid #9c27b0 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 灰色系 - 基础算法技巧 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="二分查找"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="三分查找"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="双指针扫描"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="排序"] {
+      background: #f5f5f5 !important;
+      color: #666 !important;
+      border: 1px solid #666 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 橙色系 - 递推 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="递推"] {
+      background: #fff7e6 !important;
+      color: #fa8c16 !important;
+      border: 1px solid #fa8c16 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 棕色系 - 递归 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="递归"] {
+      background: #fff1e6 !important;
+      color: #d46b08 !important;
+      border: 1px solid #d46b08 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 粉色系 - 数组 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="一维数组"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="二维数组"] {
+      background: #fff0f6 !important;
+      color: #eb2f96 !important;
+      border: 1px solid #eb2f96 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 青色系 - 字符串与字符型 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="字符串"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="字符型"] {
+      background: #e6fffb !important;
+      color: #13c2c2 !important;
+      border: 1px solid #13c2c2 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 绿色系 - 函数与分支 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="函数问题"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="分支问题"] {
+      background: #f6ffed !important;
+      color: #52c41a !important;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
+    }
+
+    /* 紫色系 - 结构体 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="结构体"] {
+      background: #f9f0ff !important;
+      color: #722ed1 !important;
+      border: 1px solid #722ed1 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 蓝色系 - 循环 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="简单循环"],
+    html:not(.theme--dark) .problem__tag-link[data-tag*="嵌套循环"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 蓝色系 - 输入输出语句 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="输入输出语句"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* 红色系 - 竞赛标签 */
+    html:not(.theme--dark) .problem__tag-link[data-tag="CSP-J"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="CSP-S"],
+    html:not(.theme--dark) .problem__tag-link[data-tag="NOIP"] {
+      background: #fff2f0 !important;
+      color: #ff4d4f !important;
+      border: 1px solid #ff4d4f !important;
+      border-radius: 14px !important;
+    }
+
+    /* 绿色系 - GESP */
+    html:not(.theme--dark) .problem__tag-link[data-tag="GESP"] {
+      background: #f6ffed !important;
+      color: #52c41a !important;
+      border: 1px solid #52c41a !important;
+      border-radius: 14px !important;
+    }
+
+    /* 灰色系 - 客观题 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="客观题"] {
+      background: #f5f5f5 !important;
+      color: #666 !important;
+      border: 1px solid #666 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 粉色系 - USACO */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="USACO"] {
+      background: #fff0f6 !important;
+      color: #eb2f96 !important;
+      border: 1px solid #eb2f96 !important;
+      border-radius: 14px !important;
+    }
+
+    /* 蓝色系 - 蓝桥杯 */
+    html:not(.theme--dark) .problem__tag-link[data-tag*="蓝桥杯"] {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 14px !important;
+    }
+
+    /* === 题库分类对话框标签样式 === */
+    
+    /* 通用样式 - 浅色和深色模式共享 */
+    .widget--category-filter__tag {
+      display: inline-block !important;
+      padding: 4px 12px !important;
+      margin: 4px !important;
+      border-radius: 14px !important;
+      font-size: 12px !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      border: none !important;
+    }
+    
+    /* 浅色模式 - 分类标签 */
+    html:not(.theme--dark) .widget--category-filter__tag {
+      background: #f5f5f5 !important;
+      color: #595959 !important;
+    }
+    
+    html:not(.theme--dark) .widget--category-filter__tag:hover {
+      background: #e6f7ff !important;
+      color: #1890ff !important;
+    }
+    
+    html:not(.theme--dark) .widget--category-filter__tag.selected {
+      background: #1890ff !important;
+      color: #fff !important;
+    }
+    
+    /* 深色模式 - 分类标签 */
+    html.theme--dark .widget--category-filter__tag {
+      background: #353535 !important;
+      color: #bfbfbf !important;
+    }
+    
+    html.theme--dark .widget--category-filter__tag:hover {
+      background: rgba(24,144,255,0.15) !important;
+      color: #1890ff !important;
+    }
+    
+    html.theme--dark .widget--category-filter__tag.selected {
+      background: #1890ff !important;
+      color: #fff !important;
+    }
+
+    {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
+      #panel { display: flex; flex-direction: column; }
+    {% endif %}
+
+    /* === 代码框工具栏按钮美化 - 移到标题右侧 + 现代配色 === */
+    body.section.sample,
+    body .problem-statement .sample,
+    body .richmedia .sample {
+      position: relative;
+    }
+    
+    /* 题库页面 - 默认位置 */
+    .page--problem_detail .section.sample > .toolbar,
+    .page--problem_detail .problem-statement .sample > .toolbar,
+    .page--problem_detail .richmedia .sample > .toolbar,
+    .page--problem_detail .section.sample > pre > .toolbar,
+    .page--problem_detail .problem-statement .sample > pre > .toolbar,
+    .page--problem_detail .richmedia .sample > pre > .toolbar,
+    .page--problem_detail .sample > .toolbar,
+    .page--problem_detail .sample > pre > .toolbar {
+      position: absolute !important;
+      right: 15px !important;
+      top: 40px !important;
+      background: transparent !important;
+      padding: 0 !important;
+      gap: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      opacity: 1 !important;
+      z-index: 9999 !important;
+      width: auto !important;
+      margin: 0 !important;
+      float: none !important;
+    }
+    
+    /* 作业页面 - 向下调整一点 */
+    .page--homework_detail_problem .section.sample > .toolbar,
+    .page--homework_detail_problem .problem-statement .sample > .toolbar,
+    .page--homework_detail_problem .richmedia .sample > .toolbar,
+    .page--homework_detail_problem .section.sample > pre > .toolbar,
+    .page--homework_detail_problem .problem-statement .sample > pre > .toolbar,
+    .page--homework_detail_problem .richmedia .sample > pre > .toolbar,
+    .page--homework_detail_problem .sample > .toolbar,
+    .page--homework_detail_problem .sample > pre > .toolbar {
+      position: absolute !important;
+      right: 15px !important;
+      top: 20px !important;
+      background: transparent !important;
+      padding: 0 !important;
+      gap: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      opacity: 1 !important;
+      z-index: 9999 !important;
+      width: auto !important;
+      margin: 0 !important;
+      float: none !important;
+    }
+    
+    /* 比赛页面 - 与题库页面一致 */
+    .page--contest_detail_problem .section.sample > .toolbar,
+    .page--contest_detail_problem .problem-statement .sample > .toolbar,
+    .page--contest_detail_problem .richmedia .sample > .toolbar,
+    .page--contest_detail_problem .section.sample > pre > .toolbar,
+    .page--contest_detail_problem .problem-statement .sample > pre > .toolbar,
+    .page--contest_detail_problem .richmedia .sample > pre > .toolbar,
+    .page--contest_detail_problem .sample > .toolbar,
+    .page--contest_detail_problem .sample > pre > .toolbar {
+      position: absolute !important;
+      right: 15px !important;
+      top: 20px !important;
+      background: transparent !important;
+      padding: 0 !important;
+      gap: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      opacity: 1 !important;
+      z-index: 9999 !important;
+      width: auto !important;
+      margin: 0 !important;
+      float: none !important;
+    }
+    
+    /* 通用样式 - 其他页面 */
+    body .section.sample > .toolbar,
+    body .problem-statement .sample > .toolbar,
+    body .richmedia .sample > .toolbar,
+    body .section.sample > pre > .toolbar,
+    body .problem-statement .sample > pre > .toolbar,
+    body .richmedia .sample > pre > .toolbar,
+    html body .sample > .toolbar,
+    html body .sample > pre > .toolbar,
+    body .sample > .toolbar,
+    body .sample > pre > .toolbar {
+      position: absolute !important;
+      right: 15px !important;
+      top: 25px !important;
+      background: transparent !important;
+      padding: 0 !important;
+      gap: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      opacity: 1 !important;
+      z-index: 9999 !important;
+      width: auto !important;
+      margin: 0 !important;
+      float: none !important;
+    }
+    :root .toolbar .toolbar-item a,
+    :root .toolbar .toolbar-item.scratchpad-fill-button a,
+    :root body .toolbar-item a,
+    :root body .toolbar-item.scratchpad-fill-button a {
+      font-size: 12px !important;
+      padding: 4px 14px !important;
+      color: #1890ff !important;
+      background: transparent !important;
+      border: 1px solid #1890ff !important;
+      border-radius: 4px !important;
+      transition: all 0.2s ease !important;
+      white-space: nowrap !important;
+      box-shadow: none !important;
+      min-height: 26px !important;
+      min-width: 64px !important;
+      line-height: 1.5 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 0 !important;
+      font-family: inherit !important;
+      font-weight: normal !important;
+      text-decoration: none !important;
+    }
+    :root .toolbar .toolbar-item a:hover,
+    :root .toolbar .toolbar-item.scratchpad-fill-button a:hover,
+    :root body .toolbar-item a:hover,
+    :root body .toolbar-item.scratchpad-fill-button a:hover {
+      color: #ffffff !important;
+      background: #1890ff !important;
+      border-color: #1890ff !important;
+      box-shadow: 0 2px 8px rgba(24,144,255,0.3) !important;
+      transform: translateY(-1px) !important;
+    }
+    :root .toolbar .toolbar-item a:active,
+    :root .toolbar .toolbar-item.scratchpad-fill-button a:active,
+    :root body .toolbar-item a:active,
+    :root body .toolbar-item.scratchpad-fill-button a:active {
+      transform: translateY(0) !important;
+      box-shadow: none !important;
+    }
+
+    /* === 章节切换按钮样式 (A、B按钮) === */
+    .section__tools.contest-problems,
+    html body .section__tools.contest-problems {
+      display: flex !important;
+      gap: 12px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      align-items: center !important;
+      width: auto !important;
+      grid-template-columns: none !important;
+      justify-content: flex-end !important;
+    }
+    
+    .section__tools.contest-problems a,
+    html body .section__tools.contest-problems a {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 10px !important;
+      background: #f5f5f5 !important;
+      border: 2px solid #d9d9d9 !important;
+      color: #666 !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      box-shadow: none !important;
+      position: static !important;
+      opacity: 1 !important;
+    }
+    
+    .section__tools.contest-problems a:before,
+    .section__tools.contest-problems a:after,
+    html body .section__tools.contest-problems a:before,
+    html body .section__tools.contest-problems a:after {
+      content: none !important;
+      display: none !important;
+    }
+    
+    .section__tools.contest-problems a:hover {
+      border-color: #1890ff !important;
+      color: #1890ff !important;
+      background: #e6f7ff !important;
+    }
+    
+    .section__tools.contest-problems a.active {
+      background: #1890ff !important;
+      border-color: #1890ff !important;
+      color: #fff !important;
+    }
+    
+    .section__tools.contest-problems a.pass {
+      border-color: #52c41a !important;
+      color: #52c41a !important;
+      background: #f6ffed !important;
+    }
+    
+    .section__tools.contest-problems a.pass.active {
+      background: #52c41a !important;
+      border-color: #52c41a !important;
+      color: #ffffff !important;
+      fill: #ffffff !important;
+    }
+    
+    .section__tools.contest-problems a.pass.active .id {
+      color: #ffffff !important;
+      display: block !important;
+    }
+    
+    .section__tools.contest-problems a.fail {
+      border-color: #ff4d4f !important;
+      color: #ff4d4f !important;
+      background: #fff2f0 !important;
+    }
+    
+    .section__tools.contest-problems a.fail.active {
+      background: #ff4d4f !important;
+      border-color: #ff4d4f !important;
+      color: #fff !important;
+    }
+    
+    .section__tools.contest-problems a.fail.active .id {
+      color: #ffffff !important;
+      display: block !important;
+    }
+    
+    .section__tools.contest-problems a .id {
+      margin-right: 0 !important;
+      line-height: 1 !important;
+      display: block !important;
+    }
+    
+    .section__tools.contest-problems a .icon {
+      display: none !important;
+    }
+
+    /* === scratchpad tablist styles === */
+
+    /* 标签列表容器 */
+    .scratchpad__tablist {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      padding: 12px !important;
+      background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%) !important;
+      border-radius: 12px !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+      user-select: none !important;
+    }
+
+    /* 标签按钮 */
+    .scratchpad__tablist div {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 44px !important;
+      height: 44px !important;
+      font-size: 24px !important;
+      border-radius: 10px !important;
+      color: #8c8c8c !important;
+      fill: #8c8c8c !important;
+      cursor: pointer !important;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+      background: transparent !important;
+      border: 2px solid transparent !important;
+      margin: 0 !important;
+      border-left: none !important;
+    }
+
+    /* 标签按钮悬停 */
+    .scratchpad__tablist div:hover {
+      color: #1890ff !important;
+      fill: #1890ff !important;
+      background: #e6f7ff !important;
+      transform: translateX(4px) !important;
+      box-shadow: 0 4px 12px rgba(24,144,255,0.2) !important;
+    }
+
+    /* 标签按钮激活状态 */
+    .scratchpad__tablist div.scratchpad__tab-active {
+      color: #1890ff !important;
+      fill: #1890ff !important;
+      background: linear-gradient(135deg, #e6f7ff 0%, #b3d8ff 100%) !important;
+      border-color: #91d5ff !important;
+      box-shadow: 0 4px 16px rgba(24,144,255,0.25) !important;
+      transform: translateX(4px) !important;
+      border-left: none !important;
+    }
+
+    /* === scratchpad panel title styles === */
+
+    /* 面板标题 - 浅色模式 */
+    .scratchpad__panel-title {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      line-height: 34px !important;
+      padding: 0 15px !important;
+      font-size: 14px !important;
+      color: #ffffff !important;
+      font-weight: 500 !important;
+      border-radius: 8px 8px 0 0 !important;
+      box-shadow: 0 2px 8px rgba(24,144,255,0.2) !important;
+    }
+
+    /* 面板标题 - 深色模式 */
+    .theme--dark .scratchpad__panel-title {
+      background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+      border-bottom: 1px solid #2b2b2b !important;
+      color: #e0e0e0 !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    }
+
+    /* === scratchpad problem styles === */
+
+    /* 问题内容区域 */
+    .scratchpad__problem {
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      overflow: auto !important;
+      padding: 20px !important;
+      background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%) !important;
+      border-radius: 12px !important;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.05) !important;
+    }
+
+    /* 问题内容区域内的卡片 */
+    .scratchpad__problem .card {
+      background: #ffffff !important;
+      border-radius: 12px !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
+      border: none !important;
+      overflow: hidden !important;
+    }
+
+    /* 问题标题 */
+    .scratchpad__problem h1,
+    .scratchpad__problem h2,
+    .scratchpad__problem h3 {
+      font-weight: 600 !important;
+      color: #1f1f1f !important;
+      margin-bottom: 16px !important;
+    }
+
+    /* 问题描述文字 */
+    .scratchpad__problem p,
+    .scratchpad__problem li {
+      color: #595959 !important;
+      line-height: 1.8 !important;
+      font-size: 14px !important;
+    }
+
+    /* 代码块 */
+    .scratchpad__problem pre,
+    .scratchpad__problem code {
+      background: #fafafa !important;
+      border-radius: 8px !important;
+      padding: 12px 16px !important;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+      font-size: 13px !important;
+    }
+
+    /* 表格样式 */
+    .scratchpad__problem table {
+      border-collapse: separate !important;
+      border-spacing: 0 !important;
+      width: 100% !important;
+    }
+
+    .scratchpad__problem th,
+    .scratchpad__problem td {
+      padding: 12px 16px !important;
+      text-align: left !important;
+      border-bottom: 1px solid #f0f0f0 !important;
+    }
+
+    .scratchpad__problem th {
+      background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%) !important;
+      font-weight: 600 !important;
+      color: #333 !important;
+    }
+
+    .scratchpad__problem tr:hover {
+      background: #fafafa !important;
+    }
+
+    /* === Markdown/CommonMark 现代化样式 === */
+
+    /* 基础排版 */
+    .page--problem_detail .typo,
+    .page--contest_detail_problem .typo,
+    .page--homework_detail_problem .typo {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif !important;
+      font-size: 15px !important;
+      line-height: 1.8 !important;
+      color: #333 !important;
+    }
+
+    /* 标题样式 */
+    .page--problem_detail .typo h1,
+    .page--problem_detail .typo h2,
+    .page--problem_detail .typo h3,
+    .page--problem_detail .typo h4 {
+      font-weight: 600 !important;
+      margin-top: 1.5em !important;
+      margin-bottom: 0.8em !important;
+      color: #1f1f1f !important;
+      border-bottom: none !important;
+      padding-bottom: 0 !important;
+    }
+
+    .page--problem_detail .typo h1 { font-size: 1.8em !important; }
+    .page--problem_detail .typo h2 { font-size: 1.5em !important; }
+    .page--problem_detail .typo h3 { font-size: 1.3em !important; }
+    .page--problem_detail .typo h4 { font-size: 1.1em !important; }
+
+    /* 段落样式 */
+    .page--problem_detail .typo p {
+      margin-bottom: 1em !important;
+      text-align: justify !important;
+      text-indent: 0 !important;
+    }
+
+    /* 列表样式 */
+    .page--problem_detail .typo ul,
+    .page--problem_detail .typo ol {
+      margin-left: 1.8em !important;
+      margin-bottom: 1em !important;
+    }
+
+    .page--problem_detail .typo ul {
+      list-style: disc !important;
+    }
+
+    .page--problem_detail .typo ol {
+      list-style: decimal !important;
+    }
+
+    .page--problem_detail .typo li {
+      margin-bottom: 0.5em !important;
+      line-height: 1.8 !important;
+    }
+
+    /* 代码块样式 */
+    .page--problem_detail .typo pre {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 10px !important;
+      padding: 16px 20px !important;
+      margin: 1.5em 0 !important;
+      overflow-x: auto !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+    }
+
+    .page--problem_detail .typo code {
+      font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace !important;
+      font-size: 14px !important;
+      background: #f1f5f9 !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+      color: #e74c3c !important;
+    }
+
+    .page--problem_detail .typo pre code {
+      background: transparent !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      color: #334155 !important;
+    }
+
+    /* 表格样式 */
+    .page--problem_detail .typo table {
+      width: 100% !important;
+      border-collapse: separate !important;
+      border-spacing: 0 !important;
+      margin: 1.5em 0 !important;
+      border-radius: 10px !important;
+      overflow: hidden !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+    }
+
+    .page--problem_detail .typo th,
+    .page--problem_detail .typo td {
+      padding: 12px 16px !important;
+      text-align: left !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+      border-left: none !important;
+      border-right: none !important;
+      color: #475569 !important;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .typo table,
+    html:not(.theme--dark) .problem__body .typo table,
+    html:not(.theme--dark) .typo table {
+      background: #ffffff !important;
+      border-collapse: collapse !important;
+      border-radius: 8px !important;
+      overflow: hidden !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .typo th,
+    html:not(.theme--dark) .page--problem_detail .typo td,
+    html:not(.theme--dark) .problem__body .typo th,
+    html:not(.theme--dark) .problem__body .typo td,
+    html:not(.theme--dark) .typo th,
+    html:not(.theme--dark) .typo td {
+      border: 1px solid #e2e8f0 !important;
+      color: #475569 !important;
+      padding: 10px 16px !important;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .typo th,
+    html:not(.theme--dark) .problem__body .typo th,
+    html:not(.theme--dark) .typo th {
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
+      font-weight: 600 !important;
+      color: #1e293b !important;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .typo tr:not(:hover) td,
+    html:not(.theme--dark) .problem__body .typo tr:not(:hover) td,
+    html:not(.theme--dark) .typo tr:not(:hover) td {
+      background: transparent !important;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .typo tr:hover td,
+    html:not(.theme--dark) .problem__body .typo tr:hover td,
+    html:not(.theme--dark) .typo tr:hover td {
+      background: #f1f5f9 !important;
+    }
+
+    /* 引用块样式 */
+    .page--problem_detail .typo blockquote,
+    .typo blockquote {
+      border-left: 4px solid #1890ff !important;
+      background: linear-gradient(90deg, #e6f7ff 0%, #fff 100%) !important;
+      padding: 16px 20px !important;
+      margin: 1.5em 0 !important;
+      border-radius: 0 8px 8px 0 !important;
+      color: #475569 !important;
+      font-style: normal !important;
+    }
+
+    /* NOTE 提示框样式 */
+    .typo blockquote.note,
+    .typo blockquote.warning,
+    [style*="background-color:#fff3cd"],
+    [style*="background-color: #fff3cd"] {
+      background: linear-gradient(90deg, #fef3c7 0%, #fef9c3 100%) !important;
+      border-left: 4px solid #f59e0b !important;
+      padding: 12px 16px !important;
+      margin: 1em 0 !important;
+      border-radius: 0 8px 8px 0 !important;
+      color: #451a03 !important;
+    }
+
+    html.theme--dark .typo blockquote.note,
+    html.theme--dark .typo blockquote.warning,
+    html.theme--dark [style*="background-color:#fff3cd"],
+    html.theme--dark [style*="background-color: #fff3cd"],
+    html.theme--dark body .typo blockquote.note,
+    html.theme--dark body .typo blockquote.warning,
+    html.theme--dark body [style*="background-color:#fff3cd"],
+    html.theme--dark body [style*="background-color: #fff3cd"],
+    .theme--dark .typo blockquote.note,
+    .theme--dark .typo blockquote.warning,
+    .theme--dark [style*="background-color:#fff3cd"],
+    .theme--dark [style*="background-color: #fff3cd"] {
+      background: rgba(251, 191, 36, 0.15) !important;
+      background-color: rgba(251, 191, 36, 0.15) !important;
+      border-left: 4px solid #f59e0b !important;
+      color: #fcd34d !important;
+      border-radius: 0 8px 8px 0 !important;
+      padding: 12px 16px !important;
+    }
+
+    /* 最强优先级 - 覆盖内联样式 */
+    :root.theme--dark [style*="background-color"],
+    :root.theme--dark [style*="background"] {
+      background: inherit !important;
+      background-color: inherit !important;
+    }
+
+    :root.theme--dark .typo blockquote {
+      background: rgba(251, 191, 36, 0.15) !important;
+      background-color: rgba(251, 191, 36, 0.15) !important;
+      border-left: 4px solid #f59e0b !important;
+      color: #fcd34d !important;
+      border-radius: 0 8px 8px 0 !important;
+      padding: 12px 16px !important;
+    }
+
+    /* 链接样式 */
+    .page--problem_detail .typo a {
+      color: #1890ff !important;
+      text-decoration: none !important;
+      border-bottom: 1px solid transparent !important;
+      transition: all 0.3s !important;
+    }
+
+    .page--problem_detail .typo a:hover {
+      color: #40a9ff !important;
+      border-bottom-color: #40a9ff !important;
+    }
+
+    /* 水平线样式 */
+    .page--problem_detail .typo hr {
+      border: none !important;
+      height: 1px !important;
+      background: linear-gradient(90deg, transparent, #cbd5e1, #94a3b8, #cbd5e1, transparent) !important;
+      margin: 1.5em 0 !important;
+    }
+
+    /* 强调样式 */
+    .page--problem_detail .typo strong,
+    .page--problem_detail .typo b {
+      color: #1f1f1f !important;
+      font-weight: 600 !important;
+    }
+
+    .page--problem_detail .typo em,
+    .page--problem_detail .typo i {
+      color: #64748b !important;
+      font-style: italic !important;
+    }
+
+    /* 深色模式 Markdown 样式 - 高优先级 */
+    html.theme--dark body .page--problem_detail .typo,
+    html.theme--dark body .page--contest_detail_problem .typo,
+    html.theme--dark body .page--homework_detail_problem .typo,
+    html.theme--dark .problem__body .typo,
+    html.theme--dark .typo {
+      color: #e5e7eb !important;
+      background: transparent !important;
+    }
+
+    html.theme--dark .page--problem_detail .section,
+    html.theme--dark .page--contest_detail_problem .section,
+    html.theme--dark .page--homework_detail_problem .section {
+      background: #1f1f1f !important;
+    }
+
+    html.theme--dark .page--problem_detail .section__body,
+    html.theme--dark .page--contest_detail_problem .section__body,
+    html.theme--dark .page--homework_detail_problem .section__body {
+      background: #1f1f1f !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo h1,
+    html.theme--dark body .page--problem_detail .typo h2,
+    html.theme--dark body .page--problem_detail .typo h3,
+    html.theme--dark body .page--problem_detail .typo h4,
+    html.theme--dark .problem__body .typo h1,
+    html.theme--dark .problem__body .typo h2,
+    html.theme--dark .problem__body .typo h3,
+    html.theme--dark .problem__body .typo h4,
+    html.theme--dark .typo h1,
+    html.theme--dark .typo h2,
+    html.theme--dark .typo h3,
+    html.theme--dark .typo h4 {
+      color: #ffffff !important;
+      font-weight: 600 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo h5,
+    html.theme--dark body .page--problem_detail .typo h6,
+    html.theme--dark .problem__body .typo h5,
+    html.theme--dark .problem__body .typo h6,
+    html.theme--dark .typo h5,
+    html.theme--dark .typo h6 {
+      color: #e5e7eb !important;
+      font-weight: 500 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo pre,
+    html.theme--dark .problem__body .typo pre,
+    html.theme--dark .typo pre {
+      background: linear-gradient(135deg, #1e1e1e 0%, #1a1a1a 100%) !important;
+      border-color: #374151 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo code,
+    html.theme--dark .problem__body .typo code,
+    html.theme--dark .typo code {
+      background: #1e1e1e !important;
+      color: #f87171 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo pre code,
+    html.theme--dark .problem__body .typo pre code,
+    html.theme--dark .typo pre code {
+      color: #d1d5db !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo .sample pre,
+    html.theme--dark .page--problem_detail .typo .sample code {
+      background: #1a1a1a !important;
+      color: #e5e7eb !important;
+      border-color: #374151 !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo pre code {
+      color: #e5e7eb !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo table,
+    html.theme--dark .problem__body .typo table,
+    html.theme--dark .typo table {
+      background: #1a1a1a !important;
+      border-collapse: collapse !important;
+      border-radius: 8px !important;
+      overflow: hidden !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3) !important;
+      border: 1px solid #374151 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo th,
+    html.theme--dark body .page--problem_detail .typo td,
+    html.theme--dark .problem__body .typo th,
+    html.theme--dark .problem__body .typo td,
+    html.theme--dark .typo th,
+    html.theme--dark .typo td {
+      border: 1px solid #374151 !important;
+      color: #d1d5db !important;
+      padding: 10px 16px !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo th,
+    html.theme--dark .problem__body .typo th,
+    html.theme--dark .typo th {
+      background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%) !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+      text-align: left !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo tr:not(:hover) td,
+    html.theme--dark .problem__body .typo tr:not(:hover) td,
+    html.theme--dark .typo tr:not(:hover) td {
+      background: transparent !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo tr:hover td,
+    html.theme--dark .problem__body .typo tr:hover td,
+    html.theme--dark .typo tr:hover td {
+      background: #2d3748 !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo blockquote {
+      border-left-color: #40a9ff !important;
+      background: linear-gradient(90deg, rgba(24,144,255,0.1) 0%, #1f1f1f 100%) !important;
+      color: #d1d5db !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo a {
+      color: #40a9ff !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo a:hover {
+      color: #60b6ff !important;
+      border-bottom-color: #60b6ff !important;
+    }
+
+    html.theme--dark .page--problem_detail .typo hr {
+      background: linear-gradient(90deg, transparent, #4b5563, #6b7280, #4b5563, transparent) !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo strong,
+    html.theme--dark body .page--problem_detail .typo b,
+    html.theme--dark .problem__body .typo strong,
+    html.theme--dark .problem__body .typo b,
+    html.theme--dark .typo strong,
+    html.theme--dark .typo b {
+      color: #ffffff !important;
+      font-weight: 700 !important;
+    }
+
+    html.theme--dark body .page--problem_detail .typo em,
+    html.theme--dark body .page--problem_detail .typo i,
+    html.theme--dark .problem__body .typo em,
+    html.theme--dark .problem__body .typo i,
+    html.theme--dark .typo em,
+    html.theme--dark .typo i {
+      color: #d1d5db !important;
+      font-style: italic !important;
+    }
+
+    /* === scratchpad dark mode styles === */
+
+    /* 深色模式 - 标签列表容器 */
+    html.theme--dark .scratchpad__tablist {
+      background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%) !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    }
+
+    /* 深色模式 - 标签按钮 */
+    html.theme--dark .scratchpad__tablist div {
+      color: #8c8c8c !important;
+      fill: #8c8c8c !important;
+    }
+
+    /* 深色模式 - 标签按钮悬停 */
+    html.theme--dark .scratchpad__tablist div:hover {
+      color: #40a9ff !important;
+      fill: #40a9ff !important;
+      background: rgba(24,144,255,0.15) !important;
+    }
+
+    /* 深色模式 - 标签按钮激活状态 */
+    html.theme--dark .scratchpad__tablist div.scratchpad__tab-active {
+      color: #40a9ff !important;
+      fill: #40a9ff !important;
+      background: linear-gradient(135deg, rgba(24,144,255,0.2) 0%, rgba(24,144,255,0.3) 100%) !important;
+      border-color: rgba(24,144,255,0.4) !important;
+    }
+
+    /* 深色模式 - 问题内容区域 */
+    html.theme--dark .scratchpad__problem {
+      background: linear-gradient(180deg, #1f1f1f 0%, #1a1a1a 100%) !important;
+    }
+
+    /* 深色模式 - 问题内容区域内的卡片 */
+    html.theme--dark .scratchpad__problem .card {
+      background: #2a2a2a !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3) !important;
+    }
+
+    /* 深色模式 - 问题标题 */
+    html.theme--dark .scratchpad__problem h1,
+    html.theme--dark .scratchpad__problem h2,
+    html.theme--dark .scratchpad__problem h3 {
+      color: #fff !important;
+    }
+
+    /* 深色模式 - 问题描述文字 */
+    html.theme--dark .scratchpad__problem p,
+    html.theme--dark .scratchpad__problem li {
+      color: #bfbfbf !important;
+    }
+
+    /* 深色模式 - 代码块 */
+    html.theme--dark .scratchpad__problem pre,
+    html.theme--dark .scratchpad__problem code {
+      background: #2a2a2a !important;
+      color: #e6e6e6 !important;
+    }
+
+    /* 深色模式 - 表格样式 */
+    html.theme--dark .scratchpad__problem th {
+      background: linear-gradient(180deg, #2a2a2a 0%, #1f1f1f 100%) !important;
+      color: #e6e6e6 !important;
+    }
+
+    html.theme--dark .scratchpad__problem td {
+      color: #bfbfbf !important;
+      border-bottom: 1px solid #333 !important;
+    }
+
+    html.theme--dark .scratchpad__problem tr:hover {
+      background: #2a2a2a !important;
+    }
+
+    /* === 导航栏整体美化 === */
+    .nav {
+      background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%) !important;
+      border-bottom: 1px solid #e8eef3 !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+      height: 48px !important;
+      line-height: 48px !important;
+      padding: 0 !important;
+    }
+
+    /* === 导航栏按钮美化 === */
+    .nav__list-item .nav__item, .nav__list-item button {
+      position: relative;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 8px;
+      margin: 6px 4px;
+      padding: 8px 16px !important;
+      background: transparent !important;
+      color: #64748b !important;
+      font-weight: 500;
+      border: none;
+      height: 36px;
+      line-height: 20px;
+    }
+
+    .nav__list-item .nav__item:hover, .nav__list-item button:hover {
+      background: rgba(24, 144, 255, 0.08) !important;
+      color: #1890ff !important;
+      box-shadow: 0 2px 6px rgba(24, 144, 255, 0.1);
+    }
+
+    /* === 导航栏按钮激活状态 === */
+    .nav__list-item .nav__item.nav--active, .nav__list-item.nav--active button {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      color: white !important;
+      box-shadow: 
+        0 2px 8px rgba(24, 144, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    /* === 题库页面蓝白配色 - 亮色模式 === */
+    .theme--default.page--problem_main table.data-table {
+      border-radius: 8px !important;
+      border: 1px solid #e6f0fa !important;
+      overflow: hidden !important;
+    }
+    
+    .theme--default.page--problem_main table.data-table thead th {
+      background: linear-gradient(180deg, #1890ff, #096dd9) !important;
+      border-bottom: 2px solid #0050b3 !important;
+      color: #ffffff !important;
+      font-weight: 600 !important;
+    }
+    
+    .theme--default.page--problem_main table.data-table tbody tr {
+      background: #ffffff !important;
+      border-bottom: 1px solid #f0f7ff !important;
+    }
+    
+    .theme--default.page--problem_main table.data-table tbody tr:hover {
+      background: #b3d7ff !important;
+    }
+    
+    .theme--default.page--problem_main table.data-table .col--name a {
+      color: #0d47a1 !important;
+    }
+    
+    .theme--default.page--problem_main table.data-table .col--name a:hover {
+      color: #1890ff !important;
+    }
+    
+    .theme--default.page--problem_main .pagination .current {
+      background: linear-gradient(135deg, #4f46e5, #4338ca) !important;
+      color: white !important;
+      border-color: #4f46e5 !important;
+    }
+
+    /* === 题库页面暗色模式配色 === */
+    .theme--dark.page--problem_main table.data-table {
+      border-radius: 8px !important;
+      border: 1px solid #2b2b2b !important;
+      overflow: hidden !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table thead tr,
+    .theme--dark.page--problem_main table.data-table thead th {
+      background: linear-gradient(180deg, #1a1a2e, #16213e) !important;
+      border-bottom: 2px solid #0f3460 !important;
+      color: #e0e0e0 !important;
+      font-weight: 600 !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table tbody tr {
+      background: #1f1f1f !important;
+      border-bottom: 1px solid #2b2b2b !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table tbody tr:hover {
+      background: #3a3a3a !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table .col--name a {
+      color: #8ab4f8 !important;
+    }
+    
+    .theme--dark.page--problem_main table.data-table .col--name a:hover {
+      color: #aecbfa !important;
+    }
+    
+    .theme--dark.page--problem_main .pagination .current {
+      background: linear-gradient(135deg, #7c3aed, #6d28d9) !important;
+      color: white !important;
+      border-color: #7c3aed !important;
+    }
+
+    /* === 全局按钮悬停效果（参考重测整题按钮） === */
+    button, .btn, [type="submit"], [type="reset"], [type="button"],
+    a.button, button.button, .button,
+    a.menu__link, button.menu__link,
+    .section__tools a, .section__tools button,
+    .toolbar-item a, .toolbar-item button {
+      position: relative;
+      border-left: none;
+      transition: all 0.2s ease;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button:hover:not(:disabled), .btn:hover:not(:disabled), 
+    [type="submit"]:hover:not(:disabled), [type="reset"]:hover:not(:disabled), 
+    [type="button"]:hover:not(:disabled),
+    a.button:hover, button.button:hover, .button:hover,
+    a.menu__link:hover:not(.disabled), button.menu__link:hover:not(.disabled),
+    .section__tools a:hover, .section__tools button:hover,
+    .toolbar-item a:hover, .toolbar-item button:hover {
+      background: linear-gradient(135deg, rgba(24, 144, 255, 0.12), rgba(24, 144, 255, 0.06)) !important;
+      color: #1890ff !important;
+      box-shadow: 
+        0 2px 8px rgba(24, 144, 255, 0.15),
+        inset 0 0 0 1px rgba(24, 144, 255, 0.2) !important;
+    }
+
+    /* === 题目信息区域美化 - 亮色模式 === */
+    .theme--default.page--problem_detail .section:first-child,
+    .page--problem_detail.theme--default .section:first-child {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      border: 1px solid #e2e8f0;
+    }
+
+    .theme--default.page--problem_detail .section:first-child .section__title,
+    .page--problem_detail.theme--default .section:first-child .section__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme--default.page--problem_detail .section:first-child .section__title a,
+    .page--problem_detail.theme--default .section:first-child .section__title a {
+      color: #1e293b;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .theme--default.page--problem_detail .section:first-child .section__title a:hover,
+    .page--problem_detail.theme--default .section:first-child .section__title a:hover {
+      color: #1890ff;
+    }
+
+    /* === 题目信息区域美化 - 浅色模式 === */
+    html:not(.theme--dark) .page--problem_detail .section:first-child,
+    .page--problem_detail:not(.theme--dark) .section:first-child {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border: 1px solid #e0e0e0;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .section:first-child .section__title,
+    .page--problem_detail:not(.theme--dark) .section:first-child .section__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333333;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .section:first-child .section__title a,
+    .page--problem_detail:not(.theme--dark) .section:first-child .section__title a {
+      color: #333333;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    html:not(.theme--dark) .page--problem_detail .section:first-child .section__title a:hover,
+    .page--problem_detail:not(.theme--dark) .section:first-child .section__title a:hover {
+      color: #1890ff;
+    }
+
+    /* === 题目信息区域美化 - 暗色模式 === */
+    .theme--dark.page--problem_detail .section:first-child,
+    .page--problem_detail.theme--dark .section:first-child {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border: 1px solid #2b2b2b;
+    }
+
+    .theme--dark.page--problem_detail .section:first-child .section__title,
+    .page--problem_detail.theme--dark .section:first-child .section__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme--dark.page--problem_detail .section:first-child .section__title a,
+    .page--problem_detail.theme--dark .section:first-child .section__title a {
+      color: #e0e0e0;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .theme--dark.page--problem_detail .section:first-child .section__title a:hover,
+    .page--problem_detail.theme--dark .section:first-child .section__title a:hover {
+      color: #8ab4f8;
+    }
+
+    /* === 右侧操作菜单美化 - 浅色模式 === */
+    html:not(.theme--dark).page--problem_detail .section.side,
+    .page--problem_detail:not(.theme--dark) .section.side {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+      border-radius: 12px !important;
+      border: 1px solid #e0e0e0 !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+    }
+
+    html:not(.theme--dark).page--problem_detail .section.side .menu__link,
+    .page--problem_detail:not(.theme--dark) .section.side .menu__link {
+      color: #333333 !important;
+    }
+
+    html:not(.theme--dark).page--problem_detail .section.side .menu__link:hover,
+    .page--problem_detail:not(.theme--dark) .section.side .menu__link:hover {
+      background: rgba(24, 144, 255, 0.1) !important;
+      color: #1890ff !important;
+    }
+
+    /* === 右侧操作菜单美化 - 暗色模式 === */
+    .theme--dark.page--problem_detail .section.side,
+    .page--problem_detail.theme--dark .section.side {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+      border-radius: 12px !important;
+      border: 1px solid #2b2b2b !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side .menu__link,
+    .page--problem_detail.theme--dark .section.side .menu__link {
+      color: #e0e0e0 !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side .menu__link:hover,
+    .page--problem_detail.theme--dark .section.side .menu__link:hover {
+      background: rgba(138, 180, 248, 0.15) !important;
+      color: #8ab4f8 !important;
+    }
+
+    /* === 评测记录详情页面侧边栏菜单按钮样式 === */
+    .page--record_detail .section.side .menu {
+      list-style: none !important;
+      padding: 8px !important;
+      margin: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+    }
+    
+    .page--record_detail .section.side .menu__item {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    .page--record_detail .section.side .menu__link {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 10px 16px !important;
+      border-radius: 8px !important;
+      background: #1890ff !important;
+      color: #fff !important;
+      border: none !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3) !important;
+    }
+    
+    .page--record_detail .section.side .menu__link:hover {
+      background: #40a9ff !important;
+      box-shadow: 0 4px 12px rgba(24, 144, 255, 0.4) !important;
+      transform: translateY(-1px) !important;
+    }
+    
+    .page--record_detail .section.side .menu__link:active {
+      transform: translateY(0) !important;
+      box-shadow: 0 2px 4px rgba(24, 144, 255, 0.3) !important;
+    }
+    
+    /* 深色模式 */
+    .theme--dark.page--record_detail .section.side .menu__link {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2) !important;
+    }
+    
+    .theme--dark.page--record_detail .section.side .menu__link:hover {
+      background: linear-gradient(135deg, #40a9ff, #1890ff) !important;
+    }
+
+    /* 元信息标签 - 亮色模式 */
+    html:not(.theme--dark).page--problem_detail .problem__tag-item,
+    .page--problem_detail html:not(.theme--dark) .problem__tag-item {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      font-size: 13px !important;
+      color: #64748b !important;
+      padding: 4px 10px !important;
+      background: #f1f5f9 !important;
+      border-radius: 6px !important;
+      border: 1px solid #e2e8f0 !important;
+      margin-right: 8px !important;
+      margin-bottom: 8px !important;
+    }
+
+    html:not(.theme--dark).page--problem_detail .problem__tag-item i,
+    .page--problem_detail html:not(.theme--dark) .problem__tag-item i {
+      color: #94a3b8 !important;
+    }
+
+    html:not(.theme--dark).page--problem_detail .problem__tag-item.author,
+    .page--problem_detail html:not(.theme--dark) .problem__tag-item.author {
+      color: #1890ff !important;
+      font-weight: 500 !important;
+    }
+
+    /* 元信息标签 - 暗色模式 */
+    .theme--dark.page--problem_detail .problem__tag-item,
+    .page--problem_detail.theme--dark .problem__tag-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      color: #9ca3af;
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 6px;
+      border: 1px solid #374151;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .theme--dark.page--problem_detail .problem__tag-item i,
+    .page--problem_detail.theme--dark .problem__tag-item i {
+      color: #6b7280;
+    }
+
+    .theme--dark.page--problem_detail .problem__tag-item.author,
+    .page--problem_detail.theme--dark .problem__tag-item.author {
+      color: #8ab4f8;
+      font-weight: 500;
+    }
+
+    /* 删除标签按钮，直接显示标签 */
+    .page--problem_detail .problem__tags-toggle {
+      display: none !important;
+    }
+
+    .page--problem_detail .nojs--hide[data-target="tags"] {
+      display: flex !important;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    /* 暗色模式下进入在线编程模式按钮 */
+    .theme--dark.page--problem_detail .section.side button.button,
+    .theme--dark.page--problem_detail .section.side a.button,
+    .page--problem_detail.theme--dark .section.side button.button,
+    .page--problem_detail.theme--dark .section.side a.button {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+      color: #ffffff !important;
+      border: 1px solid #3b82f6 !important;
+      border-radius: 8px !important;
+      padding: 10px 16px !important;
+      font-weight: 500 !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side button.button:hover,
+    .theme--dark.page--problem_detail .section.side a.button:hover,
+    .page--problem_detail.theme--dark .section.side button.button:hover,
+    .page--problem_detail.theme--dark .section.side a.button:hover {
+      background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+      border-color: #60a5fa !important;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+    }
+
+    .page--problem_detail .problem__tag {
+      margin: 0 !important;
+    }
+
+    /* === 通过印章样式 === */
+    .page--problem_detail .problem-detail-section {
+      position: relative !important;
+    }
+
+    .page--problem_detail .passed-stamp-container {
+      position: absolute !important;
+      top: 15px !important;
+      right: 15px !important;
+      z-index: 100 !important;
+      pointer-events: none !important;
+    }
+
+    .page--problem_detail .passed-stamp {
+      position: relative !important;
+      width: 100px !important;
+      height: 100px !important;
+      transform: rotate(-6deg) !important;
+    }
+
+    .page--problem_detail .stamp-outer-ring {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border: 2px solid #ef4444 !important;
+      border-radius: 50% !important;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.02) 100%) !important;
+      box-shadow: 
+        0 0 20px rgba(239, 68, 68, 0.15),
+        inset 0 0 20px rgba(239, 68, 68, 0.05) !important;
+    }
+
+    .page--problem_detail .stamp-inner-ring {
+      position: absolute !important;
+      top: 12px !important;
+      left: 12px !important;
+      width: calc(100% - 24px) !important;
+      height: calc(100% - 24px) !important;
+      border: 1px solid rgba(239, 68, 68, 0.5) !important;
+      border-radius: 50% !important;
+    }
+
+    .page--problem_detail .stamp-text-wrapper {
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) rotate(-4deg) !important;
+      width: 75px !important;
+      height: 26px !important;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 4px !important;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4) !important;
+    }
+
+    .page--problem_detail .stamp-text {
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+      letter-spacing: 2px !important;
+    }
+
+    /* 深色模式 */
+    .theme--dark.page--problem_detail .stamp-outer-ring {
+      border-color: #f87171 !important;
+      background: linear-gradient(135deg, rgba(248, 113, 113, 0.12) 0%, rgba(248, 113, 113, 0.04) 100%) !important;
+      box-shadow: 
+        0 0 20px rgba(248, 113, 113, 0.2),
+        inset 0 0 20px rgba(248, 113, 113, 0.08) !important;
+    }
+
+    .theme--dark.page--problem_detail .stamp-inner-ring {
+      border-color: rgba(248, 113, 113, 0.5) !important;
+    }
+
+    .theme--dark.page--problem_detail .stamp-text-wrapper {
+      background: linear-gradient(135deg, #f87171 0%, #ef4444 100%) !important;
+      box-shadow: 0 2px 8px rgba(248, 113, 113, 0.5) !important;
+    }
+
+    /* === 侧边栏按钮配色优化 === */
+    /* 进入在线编程模式按钮 */
+    .page--problem_detail .section.side .menu__link.highlight {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe) !important;
+      color: #0369a1 !important;
+      border: 1px solid #7dd3fc !important;
+      border-radius: 8px !important;
+    }
+
+    .page--problem_detail .section.side .menu__link.highlight:hover {
+      background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important;
+      border-color: #38bdf8 !important;
+      color: #075985 !important;
+    }
+
+    /* 重测整题按钮 */
+    .page--problem_detail .section.side button[name="problem-sidebar__rejudge"] {
+      background: linear-gradient(135deg, #fef3c7, #fde68a) !important;
+      color: #92400e !important;
+      border: 1px solid #fbbf24 !important;
+      border-radius: 8px !important;
+    }
+
+    .page--problem_detail .section.side button[name="problem-sidebar__rejudge"]:hover {
+      background: linear-gradient(135deg, #fde68a, #fcd34d) !important;
+      border-color: #f59e0b !important;
+      color: #78350f !important;
+    }
+
+    /* 深色模式 */
+    .theme--dark.page--problem_detail .section.side .menu__link.highlight {
+      background: linear-gradient(135deg, #0c4a6e, #075985) !important;
+      color: #7dd3fc !important;
+      border-color: #0284c7 !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side .menu__link.highlight:hover {
+      background: linear-gradient(135deg, #075985, #0369a1) !important;
+      border-color: #38bdf8 !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side button[name="problem-sidebar__rejudge"] {
+      background: linear-gradient(135deg, #78350f, #451a03) !important;
+      color: #fcd34d !important;
+      border-color: #f59e0b !important;
+    }
+
+    .theme--dark.page--problem_detail .section.side button[name="problem-sidebar__rejudge"]:hover {
+      background: linear-gradient(135deg, #92400e, #78350f) !important;
+      border-color: #fbbf24 !important;
+    }
+
+    .page--problem_detail .problem__tag-link {
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .page--problem_detail .problem__tag-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* === 首页最新题目 - 隐藏时间显示 === */
+    .section.side.nojs--hide .col--problem-name p span[style*="float: right"],
+    .section.side.nojs--hide .col--problem-name p > span[style*="float"],
+    .section.side.nojs--hide [class*="problem-name"] p span[style*="float"] {
+      display: none !important;
+    }
+
+    /* === 禁用 Markdown 表格单元格合并 === */
+    .typo table {
+      border-collapse: collapse !important;
+    }
+    
+    .typo table td[rowspan],
+    .typo table th[rowspan],
+    .typo table td[colspan],
+    .typo table th[colspan] {
+      vertical-align: inherit !important;
+    }
+
+    /* === 统一问题详情页面布局 === */
+    html body.page--problem_detail .section:first-child .section__body {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+    
+    html body.page--problem_detail .section:first-child .section__body > div:first-child {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      align-items: center !important;
+    }
+
+    /* === 侧边栏搜索框美化 - 浅色模式 === */
+    .page--problem_main .section.side .section__body,
+    .page--problem_category .section.side .section__body {
+      overflow: visible !important;
+    }
+
+    .page--problem_main .section.side #searchForm,
+    .page--problem_category .section.side #searchForm {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      overflow: visible !important;
+    }
+
+    .page--problem_main .section.side .search,
+    .page--problem_category .section.side .search {
+      display: flex !important;
+      align-items: center !important;
+      background: #ffffff !important;
+      border: 1px solid #e8e8e8 !important;
+      border-radius: 6px !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+    }
+
+    .page--problem_main .section.side .search > input,
+    .page--problem_category .section.side .search > input {
+      flex: 1 !important;
+      border: none !important;
+      outline: none !important;
+      padding: 10px 12px !important;
+      font-size: 13px !important;
+      background: transparent !important;
+      color: #333333 !important;
+    }
+
+    .page--problem_main .section.side .search > input::placeholder,
+    .page--problem_category .section.side .search > input::placeholder {
+      color: #bfbfbf !important;
+      font-style: normal !important;
+    }
+
+    .page--problem_main .section.side .search > button,
+    .page--problem_category .section.side .search > button {
+      width: 36px !important;
+      height: 36px !important;
+      border-radius: 0 6px 6px 0 !important;
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      border: none !important;
+      color: #ffffff !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all 0.2s ease !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .page--problem_main .section.side .search > button:hover,
+    .page--problem_category .section.side .search > button:hover {
+      background: linear-gradient(135deg, #40a9ff, #1890ff) !important;
+    }
+
+    .page--problem_main .section.side .search > button:active,
+    .page--problem_category .section.side .search > button:active {
+      background: #096dd9 !important;
+    }
+
+    .page--problem_main .section.side .search-info,
+    .page--problem_category .section.side .search-info {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      margin-top: 10px !important;
+      padding: 0 4px !important;
+      width: 100% !important;
+    }
+
+    .page--problem_main .section.side [data-fragment-id="problem_stat"],
+    .page--problem_category .section.side [data-fragment-id="problem_stat"] {
+      flex: 0 1 auto !important;
+    }
+
+    .page--problem_main .section.side [data-fragment-id="problem_stat"] p,
+    .page--problem_category .section.side [data-fragment-id="problem_stat"] p {
+      font-size: 12px !important;
+      color: #8c8c8c !important;
+      margin: 0 !important;
+    }
+
+    .page--problem_main .section.side select[name="sort"],
+    .page--problem_category .section.side select[name="sort"],
+    .page--problem_main .section.side .search-sort,
+    .page--problem_category .section.side .search-sort {
+      width: 85px !important;
+      border: 1px solid #d9d9d9 !important;
+      border-radius: 4px !important;
+      padding: 4px 20px 4px 8px !important;
+      background: #ffffff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%238c8c8c' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") no-repeat right 4px center !important;
+      background-size: 12px !important;
+      color: #595959 !important;
+      font-size: 11px !important;
+      cursor: pointer !important;
+      height: 24px !important;
+      line-height: 14px !important;
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      flex: 0 0 auto !important;
+      position: relative !important;
+      z-index: 1000 !important;
+      border-image: none !important;
+      box-sizing: border-box !important;
+    }
+
+    .page--problem_main .section.side select[name="sort"]::-webkit-scrollbar,
+    .page--problem_category .section.side select[name="sort"]::-webkit-scrollbar,
+    .page--problem_main .section.side .search-sort::-webkit-scrollbar,
+    .page--problem_category .section.side .search-sort::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    .page--problem_main .section.side select[name="sort"]::-ms-expand,
+    .page--problem_category .section.side select[name="sort"]::-ms-expand,
+    .page--problem_main .section.side .search-sort::-ms-expand,
+    .page--problem_category .section.side .search-sort::-ms-expand {
+      display: none !important;
+    }
+
+    .page--problem_main .section.side select[name="sort"]::after,
+    .page--problem_category .section.side select[name="sort"]::after,
+    .page--problem_main .section.side .search-sort::after,
+    .page--problem_category .section.side .search-sort::after {
+      display: none !important;
+    }
+
+    .page--problem_main .section.side .search-sort:hover,
+    .page--problem_category .section.side .search-sort:hover {
+      border-color: #1890ff !important;
+    }
+
+    .page--problem_main .section.side .search-sort:focus,
+    .page--problem_category .section.side .search-sort:focus {
+      outline: none !important;
+      border-color: #1890ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.1) !important;
+    }
+
+    /* === 侧边栏搜索框美化 - 深色模式 === */
+    .theme--dark.page--problem_main .section.side .search,
+    .theme--dark.page--problem_category .section.side .search {
+      background: #1a1a2e !important;
+      border-color: #2b2b2b !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search > input,
+    .theme--dark.page--problem_category .section.side .search > input {
+      color: #e0e0e0 !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search > input::placeholder,
+    .theme--dark.page--problem_category .section.side .search > input::placeholder {
+      color: #8c8c8c !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search > button,
+    .theme--dark.page--problem_category .section.side .search > button {
+      background: linear-gradient(135deg, #1890ff, #096dd9) !important;
+      box-shadow: 0 2px 8px rgba(24,144,255,0.3) !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search > button:hover,
+    .theme--dark.page--problem_category .section.side .search > button:hover {
+      background: linear-gradient(135deg, #40a9ff, #1890ff) !important;
+      box-shadow: 0 4px 12px rgba(24,144,255,0.35) !important;
+    }
+
+    .theme--dark.page--problem_main .section.side [data-fragment-id="problem_stat"] p,
+    .theme--dark.page--problem_category .section.side [data-fragment-id="problem_stat"] p {
+      color: #9ca3af !important;
+    }
+
+    .theme--dark.page--problem_main .section.side select[name="sort"],
+    .theme--dark.page--problem_category .section.side select[name="sort"],
+    .theme--dark.page--problem_main .section.side .search-sort,
+    .theme--dark.page--problem_category .section.side .search-sort {
+      background: #262626 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23bfbfbf' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") no-repeat right 4px center !important;
+      background-size: 12px !important;
+      border-color: #434343 !important;
+      color: #d9d9d9 !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search-sort:hover,
+    .theme--dark.page--problem_category .section.side .search-sort:hover {
+      border-color: #1890ff !important;
+    }
+
+    .theme--dark.page--problem_main .section.side .search-sort:focus,
+    .theme--dark.page--problem_category .section.side .search-sort:focus {
+      border-color: #1890ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.2) !important;
+    }
+
+    /* === 题目信息卡片美化 === */
+    .page--problem_detail .problem-info-card {
+      background: linear-gradient(145deg, #ffffff, #f8f9fa) !important;
+      border-radius: 16px !important;
+      padding: 20px !important;
+      margin-bottom: 16px !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+      border: 1px solid #e9ecef !important;
+    }
+
+    .page--problem_detail .problem-info-header {
+      margin-bottom: 16px !important;
+      padding-bottom: 12px !important;
+      border-bottom: 1px solid #e9ecef !important;
+    }
+
+    .page--problem_detail .problem-title-row {
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      flex-wrap: wrap !important;
+    }
+
+    .page--problem_detail .problem-title-row form {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .page--problem_detail .problem-title-row .star {
+      background: none !important;
+      border: none !important;
+      cursor: pointer !important;
+      padding: 4px !important;
+      margin: 0 !important;
+    }
+
+    .page--problem_detail .problem-title {
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      color: #212529 !important;
+      line-height: 1.5 !important;
+    }
+
+    .page--problem_detail .problem-tags-section {
+      margin-bottom: 16px !important;
+      padding: 12px !important;
+      background: #f8f9fa !important;
+      border-radius: 12px !important;
+    }
+
+    .page--problem_detail .tags-header {
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      margin-bottom: 10px !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      color: #495057 !important;
+    }
+
+    .page--problem_detail .tags-header .icon {
+      font-size: 14px !important;
+      color: #6c757d !important;
+    }
+
+    .page--problem_detail .tags-list {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
+
+    .page--problem_detail .tag-item {
+      padding: 4px 10px !important;
+      background: #ffffff !important;
+      border: 1px solid #dee2e6 !important;
+      border-radius: 16px !important;
+      font-size: 12px !important;
+      color: #495057 !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .page--problem_detail .tag-item:hover {
+      background: #e9ecef !important;
+      border-color: #adb5bd !important;
+    }
+
+    .page--problem_detail .problem-info-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 6px !important;
+      margin-bottom: 10px !important;
+    }
+
+    .page--problem_detail .problem-info-item {
+      border-radius: 8px !important;
+      padding: 8px 6px !important;
+      text-align: center !important;
+      background: #f8fafc !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+
+    .page--problem_detail .problem-info-item.difficulty {
+      border-color: #a5b4fc !important;
+      background: linear-gradient(135deg, #f5f3ff, #ede9fe) !important;
+    }
+
+    .page--problem_detail .problem-info-item.acceptance {
+      border-color: #6ee7b7 !important;
+      background: linear-gradient(135deg, #f0fdf4, #ecfdf5) !important;
+    }
+
+    .page--problem_detail .problem-info-item.attempts {
+      border-color: #93c5fd !important;
+      background: linear-gradient(135deg, #eff6ff, #dbeafe) !important;
+    }
+
+    .page--problem_detail .problem-info-item.passed {
+      border-color: #5eead4 !important;
+      background: linear-gradient(135deg, #f0fdfa, #ecfeff) !important;
+    }
+
+    .page--problem_detail .problem-info-label {
+      display: block !important;
+      font-size: 11px !important;
+      color: #64748b !important;
+      margin-bottom: 2px !important;
+      font-weight: 500 !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    .page--problem_detail .problem-info-value {
+      display: block !important;
+      font-size: 16px !important;
+      font-weight: 700 !important;
+      color: #334155 !important;
+    }
+
+    .page--problem_detail .problem-info-value a {
+      color: #3b82f6 !important;
+      text-decoration: none !important;
+    }
+
+    .page--problem_detail .problem-info-value a:hover {
+      text-decoration: underline !important;
+    }
+
+    .page--problem_detail .problem-score-section {
+      margin-bottom: 10px !important;
+      padding: 10px !important;
+      background: linear-gradient(135deg, #fefce8, #fef9c3) !important;
+      border: 1px solid #fde047 !important;
+      border-radius: 8px !important;
+      text-align: center !important;
+    }
+
+    .page--problem_detail .score-label {
+      font-size: 11px !important;
+      color: #78716c !important;
+      font-weight: 500 !important;
+      margin-bottom: 3px !important;
+    }
+
+    .page--problem_detail .score-value {
+      font-size: 20px !important;
+      font-weight: 700 !important;
+      color: #4a5568 !important;
+    }
+
+    .page--problem_detail .problem-info-details {
+      padding-top: 12px !important;
+      border-top: 1px solid #e9ecef !important;
+    }
+
+    .page--problem_detail .problem-info-details .info-row {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      padding: 8px 0 !important;
+      border-bottom: 1px solid #f1f3f4 !important;
+    }
+
+    .page--problem_detail .problem-info-details .info-row:last-child {
+      border-bottom: none !important;
+    }
+
+    .page--problem_detail .problem-info-details .info-label {
+      font-size: 13px !important;
+      color: #64748b !important;
+      font-weight: 500 !important;
+    }
+
+    .page--problem_detail .problem-info-details .info-value {
+      font-size: 13px !important;
+      color: #212529 !important;
+      font-weight: 500 !important;
+    }
+
+    /* 深色模式题目信息卡片 */
+    .theme--dark.page--problem_detail .problem-info-card {
+      background: linear-gradient(145deg, #1a1a2e, #16213e) !important;
+      border-color: #374151 !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-header {
+      border-bottom-color: #374151 !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-title {
+      color: #e5e7eb !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-tags-section {
+      background: rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .theme--dark.page--problem_detail .tags-header {
+      color: #d1d5db !important;
+    }
+
+    .theme--dark.page--problem_detail .tags-header .icon {
+      color: #9ca3af !important;
+    }
+
+    .theme--dark.page--problem_detail .tag-item {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+      color: #d1d5db !important;
+    }
+
+    .theme--dark.page--problem_detail .tag-item:hover {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-color: rgba(255, 255, 255, 0.25) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item.difficulty {
+      border-color: rgba(139, 92, 246, 0.4) !important;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item.acceptance {
+      border-color: rgba(16, 185, 129, 0.4) !important;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item.attempts {
+      border-color: rgba(59, 130, 246, 0.4) !important;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05)) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item.passed {
+      border-color: rgba(6, 182, 212, 0.4) !important;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(6, 182, 212, 0.05)) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-label {
+      color: #d1d5db !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-value {
+      color: #f9fafb !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-score-section {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05)) !important;
+      border-color: rgba(251, 191, 36, 0.3) !important;
+    }
+
+    .theme--dark.page--problem_detail .score-label {
+      color: #a8a29e !important;
+    }
+
+    .theme--dark.page--problem_detail .score-value {
+      color: #d6d3d1 !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-details {
+      border-top-color: #374151 !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-details .info-row {
+      border-bottom-color: #374151 !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-details .info-label {
+      color: #9ca3af !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-details .info-value {
+      color: #e5e7eb !important;
+    }
+
+    /* === 内联问题信息样式（作业/竞赛页面）=== */
+    .page--problem_detail .problem-info-inline {
+      padding: 20px !important;
+      margin: 0 !important;
+      background: linear-gradient(145deg, #ffffff, #fafafa) !important;
+      border-top: 1px solid #e5e7eb !important;
+    }
+
+    .page--problem_detail .problem-info-grid-inline {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+      gap: 12px !important;
+    }
+
+    .page--problem_detail .problem-info-item-inline {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 4px !important;
+      padding: 12px 16px !important;
+      background: white !important;
+      border-radius: 12px !important;
+      border: 1px solid #e5e7eb !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .page--problem_detail .problem-info-item-inline:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+      border-color: #d1d5db !important;
+    }
+
+    .page--problem_detail .problem-info-item-inline .problem-info-label {
+      font-size: 11px !important;
+      color: #9ca3af !important;
+      font-weight: 500 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    .page--problem_detail .problem-info-item-inline .problem-info-value {
+      font-size: 14px !important;
+      color: #1f2937 !important;
+      font-weight: 600 !important;
+      line-height: 1.4 !important;
+    }
+
+    .page--problem_detail .problem-tags-inline {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      margin-top: 16px !important;
+      padding-top: 16px !important;
+      border-top: 1px dashed #e5e7eb !important;
+    }
+
+    .page--problem_detail .tag-item-inline {
+      padding: 6px 14px !important;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+      color: white !important;
+      border-radius: 20px !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3) !important;
+    }
+
+    .page--problem_detail .tag-item-inline:hover {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4) !important;
+    }
+
+    /* 深色模式内联问题信息 */
+    .theme--dark.page--problem_detail .problem-info-inline {
+      background: linear-gradient(145deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9)) !important;
+      border-top-color: #374151 !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item-inline {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item-inline:hover {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item-inline .problem-info-label {
+      color: #9ca3af !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-info-item-inline .problem-info-value {
+      color: #f9fafb !important;
+    }
+
+    .theme--dark.page--problem_detail .problem-tags-inline {
+      border-top-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .theme--dark.page--problem_detail .tag-item-inline {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa) !important;
+      box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3) !important;
+    }
+
+    .theme--dark.page--problem_detail .tag-item-inline:hover {
+      background: linear-gradient(135deg, #7c3aed, #9333ea) !important;
+    }
+
+    /* === 主色调覆盖 === */
+    html body button.button:not(.codicon).primary,
+    html body a.button:not(.codicon).primary,
+    html body input.button:not(.codicon).primary {
+      background-color: #1890ff !important;
+      border-color: #1890ff !important;
+      color: #ffffff !important;
+    }
+    
+    html body button.button:not(.codicon).primary:hover,
+    html body a.button:not(.codicon).primary:hover,
+    html body input.button:not(.codicon).primary:hover {
+      background-color: #40a9ff !important;
+      border-color: #40a9ff !important;
+    }
+
+    html body.page--problem_detail .section:first-child .section__body > div:last-child {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
+      align-items: center !important;
+    }
+
+      </style>
+  {% if process.env.DEV %}
+    <script src="/default.theme.js?version={{ global.Hydro.version['ui-default'] }}"></script>
+    <link rel="stylesheet" media="all" href="/theme.css?version={{ global.Hydro.version['ui-default'] }}">
+  {% else %}
+    <link rel="stylesheet" media="all" href="{{ UiContext.cdn_prefix }}theme-{{ global.Hydro.version['ui-default'] }}.css">
+  {% endif %}
+  {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
+    <script>
+      var _htmlNode = document.documentElement;
+      _htmlNode.className = _htmlNode.className.replace(' nojs', ' hasjs');
+      var UiContext = '{{ UiContext|json|jsesc|safe }}';
+      var UserContext = '{{ UserContext|json|jsesc|safe }}';
+    </script>
+  {% endif %}
+  {% set UiContext = Object.create(UiContext) %}
+  {% set UserContext = Object.create(UserContext) %}
+</head>
+<body>
+  <script>
+    (function() {
+      function fixContestButtons() {
+        if (!document.body.classList.contains('page--contest_list')) return;
+        
+        var buttons = document.querySelectorAll('.section.side a.button:not(.codicon).primary');
+        buttons.forEach(function(btn) {
+          btn.style.setProperty('background-color', '#1890ff', 'important');
+          btn.style.setProperty('border-color', '#1890ff', 'important');
+          btn.style.setProperty('color', '#ffffff', 'important');
+        });
+      }
+      
+      function fixTextboxStyles() {
+        var textboxContainers = document.querySelectorAll('label.textbox, label.material.textbox, label.inverse.textbox, label.inverse.material.textbox');
+        textboxContainers.forEach(function(container) {
+          container.style.border = 'none';
+          container.style.borderWidth = '0';
+          container.style.borderStyle = 'none';
+          container.style.boxShadow = 'none';
+          container.style.background = 'transparent';
+          container.setAttribute('style', 'border: none !important; border-width: 0 !important; box-shadow: none !important; background: transparent !important;');
+        });
+        
+        var inputs = document.querySelectorAll('label.textbox input, label.material.textbox input, label.inverse.textbox input, label.inverse.material.textbox input');
+        inputs.forEach(function(input) {
+          input.style.border = '1px solid #d9d9d9';
+          input.style.borderBottom = '1px solid #d9d9d9';
+          input.style.borderRadius = '4px';
+          input.style.background = 'rgba(255,255,255,0.95)';
+          input.style.padding = '8px 12px';
+          input.style.marginTop = '4px';
+          input.style.boxShadow = 'none';
+          input.style.outline = 'none';
+          input.style.color = '#333';
+          input.setAttribute('style', 'border: 1px solid #d9d9d9 !important; border-bottom: 1px solid #d9d9d9 !important; border-radius: 4px !important; background: rgba(255,255,255,0.95) !important; padding: 8px 12px !important; margin-top: 4px !important; box-shadow: none !important; outline: none !important; color: #333 !important;');
+        });
+      }
+      
+      function fixRadioboxColors() {
+        var isDark = document.documentElement.classList.contains('theme--dark');
+        var radioboxes = document.querySelectorAll('.page--problem_detail .radiobox, .page--contest_problem .radiobox');
+        radioboxes.forEach(function(rb) {
+          rb.style.color = isDark ? '#ffffff' : '#333';
+          rb.style.transition = 'none';
+          rb.style.transform = 'none';
+          rb.setAttribute('style', 'color: ' + (isDark ? '#ffffff' : '#333') + ' !important; transition: none !important; transform: none !important;');
+          
+          var children = rb.querySelectorAll('*');
+          children.forEach(function(child) {
+            child.style.transition = 'none';
+            child.style.transform = 'none';
+            child.setAttribute('style', 'transition: none !important; transform: none !important;');
+          });
+        });
+      }
+      
+      function bindRadioboxClickEvents() {
+        var radioboxes = document.querySelectorAll('.page--problem_detail .radiobox, .page--contest_problem .radiobox');
+        radioboxes.forEach(function(rb) {
+          if (!rb.dataset.clickBound) {
+            rb.dataset.clickBound = 'true';
+            rb.addEventListener('click', function(e) {
+              var isDark = document.documentElement.classList.contains('theme--dark');
+              rb.style.color = isDark ? '#ffffff' : '#333';
+              rb.style.transition = 'none';
+              rb.style.transform = 'none';
+              
+              setTimeout(function() {
+                fixRadioboxColors();
+              }, 50);
+            });
+          }
+        });
+      }
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          fixContestButtons();
+          fixTextboxStyles();
+          fixRadioboxColors();
+          bindRadioboxClickEvents();
+        });
+      } else {
+        fixContestButtons();
+        fixTextboxStyles();
+        fixRadioboxColors();
+        bindRadioboxClickEvents();
+      }
+      
+      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); fixRadioboxColors(); bindRadioboxClickEvents(); }, 100);
+      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); fixRadioboxColors(); bindRadioboxClickEvents(); }, 500);
+      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); fixRadioboxColors(); bindRadioboxClickEvents(); }, 1000);
+      
+      var observer = new MutationObserver(function() {
+        fixContestButtons();
+        fixTextboxStyles();
+        fixRadioboxColors();
+        bindRadioboxClickEvents();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    })();
+  </script>
+  {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
+    <script type="text/javascript" src="/resource/{{ UiContext.constantVersion }}/entry.js"></script>
+    <script type="text/javascript" src="{{ UiContext.cdn_prefix }}resource/{{ global.Hydro.version['ui-default'] }}/lang-{{ _('__id') }}.js"></script>
+    <script type="text/javascript" src="{{ UiContext.cdn_prefix }}hydro-{{ global.Hydro.version['ui-default'] }}.js"></script>
+  {% endif %}
+  {% block body %}{% endblock %}
+  {% block script %}{% endblock %}
+  {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
+    <script>
+      var UiContextNew = '{{ UiContext|json|jsesc|safe }}';
+      var UserContextNew = '{{ UserContext|json|jsesc|safe }}';
+    </script>
+    <script>
+      (function() {
+        function addRankingTopEffects() {
+          var isRankingPage = document.body.classList.contains('page--ranking') || 
+                             document.body.classList.contains('page--homepage') ||
+                             document.documentElement.classList.contains('page--ranking') ||
+                             document.documentElement.classList.contains('page--homepage');
+          
+          if (!isRankingPage) return;
+          
+          var tables = document.querySelectorAll('.data-table');
+          tables.forEach(function(table) {
+            if (table.dataset.rankingEffects) return;
+            table.dataset.rankingEffects = 'true';
+            
+            var rows = Array.from(table.querySelectorAll('tbody tr'));
+            
+            rows.forEach(function(row, index) {
+              var rankCell = row.querySelector('.col--rank');
+              if (!rankCell) return;
+              
+              var rankText = rankCell.textContent.trim();
+              var rankNum = parseInt(rankText, 10);
+              
+              if (rankNum === 1) {
+                row.classList.add('ranking-top-1');
+              } else if (rankNum === 2) {
+                row.classList.add('ranking-top-2');
+              } else if (rankNum === 3) {
+                row.classList.add('ranking-top-3');
+              }
+            });
+          });
+        }
+        
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', addRankingTopEffects);
+        } else {
+          addRankingTopEffects();
+        }
+        
+        var observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length > 0) {
+              addRankingTopEffects();
+            }
+          });
+        });
+        
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      })();
+    </script>
+    <script>
+      (function() {
+        function disableTableMerge() {
+          var tables = document.querySelectorAll('.typo table');
+          tables.forEach(function(table) {
+            if (table.dataset.mergeHandled) return;
+            table.dataset.mergeHandled = 'true';
+            
+            var rows = Array.from(table.querySelectorAll('tr'));
+            
+            rows.forEach(function(row, rowIndex) {
+              var cells = Array.from(row.querySelectorAll('td, th'));
+              var cellsToAdd = [];
+              
+              cells.forEach(function(cell) {
+                var rowspan = parseInt(cell.getAttribute('rowspan') || '1', 10);
+                var colspan = parseInt(cell.getAttribute('colspan') || '1', 10);
+                
+                if (colspan > 1) {
+                  cell.removeAttribute('colspan');
+                  for (var i = 1; i < colspan; i++) {
+                    var newCell = document.createElement(cell.tagName);
+                    newCell.innerHTML = cell.innerHTML;
+                    newCell.className = cell.className;
+                    cellsToAdd.push(newCell);
+                  }
+                }
+                
+                if (rowspan > 1) {
+                  cell.removeAttribute('rowspan');
+                  for (var r = 1; r < rowspan; r++) {
+                    var targetRow = rows[rowIndex + r];
+                    if (targetRow) {
+                      var newCell = document.createElement(cell.tagName);
+                      newCell.innerHTML = cell.innerHTML;
+                      newCell.className = cell.className;
+                      var insertIndex = Array.from(row.querySelectorAll('td, th')).indexOf(cell);
+                      targetRow.insertBefore(newCell, targetRow.children[insertIndex] || null);
+                    }
+                  }
+                }
+              });
+              
+              cellsToAdd.forEach(function(newCell) {
+                row.appendChild(newCell);
+              });
+            });
+          });
+        }
+        
+        function initObserver() {
+          disableTableMerge();
+          
+          var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              if (mutation.addedNodes.length > 0) {
+                mutation.addedNodes.forEach(function(node) {
+                  if (node.nodeType === 1) {
+                    if (node.classList && (node.classList.contains('typo') || node.querySelector('.typo'))) {
+                      disableTableMerge();
+                    }
+                  }
+                });
+              }
+            });
+          });
+          
+          observer.observe(document.body, {
+            childList: true,
+            subtree: true
+          });
+        }
+        
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initObserver);
+        } else {
+          initObserver();
+        }
+      })();
+
+      (function() {
+        var levelColors = {
+          '0': '#9ca3af',
+          '1': '#ef4444',
+          '2': '#f97316',
+          '3': '#eab308',
+          '4': '#22c55e',
+          '5': '#14b8a6',
+          '6': '#3b82f6',
+          '7': '#6366f1',
+          '8': '#8b5cf6',
+          '9': '#ec4899',
+          '10': '#06b6d4'
+        };
+        var levelColorsDark = {
+          '0': '#d1d5db',
+          '1': '#f87171',
+          '2': '#fb923c',
+          '3': '#fbbf24',
+          '4': '#4ade80',
+          '5': '#5eead4',
+          '6': '#60a5fa',
+          '7': '#818cf8',
+          '8': '#a78bfa',
+          '9': '#f472b6',
+          '10': '#22d3ee'
+        };
+
+        function setUserNameColor() {
+          var isDark = document.documentElement.classList.contains('theme--dark');
+          var colors = isDark ? levelColorsDark : levelColors;
+          
+          var userNameElements = document.querySelectorAll('.user-profile-name');
+          userNameElements.forEach(function(userName) {
+            var level = '0';
+            var classList = userName.className.split(' ');
+            for (var i = 0; i < classList.length; i++) {
+              if (classList[i].indexOf('uname--lv') === 0) {
+                level = classList[i].replace('uname--lv', '');
+                break;
+              }
+            }
+            userName.style.setProperty('color', colors[level] || colors['0'], 'important');
+          });
+        }
+
+        setTimeout(setUserNameColor, 100);
+        setTimeout(setUserNameColor, 500);
+        setTimeout(setUserNameColor, 1000);
+        
+        var observer = new MutationObserver(setUserNameColor);
+        observer.observe(document.body, { childList: true, subtree: true });
+      })();
+    </script>
+  {% endif %}
+</body>
+</html>
