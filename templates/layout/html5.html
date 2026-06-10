@@ -192,6 +192,140 @@
       box-shadow: none !important;
     }
 
+    /* 登录对话框输入框容器边框修复 - 覆盖 Material Textbox 样式 */
+    html body .dialog--signin__main label.textbox,
+    html body .dialog--signin__main label.textbox.material {
+      border: none !important;
+      border-width: 0 !important;
+      border-style: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+
+    /* 登录对话框输入框样式 - 覆盖 Material Textbox 的底部边框 */
+    html body .dialog--signin__main label.textbox input,
+    html body .dialog--signin__main label.textbox.material input {
+      border: 1px solid #d9d9d9 !important;
+      border-bottom: 1px solid #d9d9d9 !important;
+      border-radius: 4px !important;
+      background: rgba(255,255,255,0.95) !important;
+      padding: 8px 12px !important;
+      margin-top: 4px !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    html body .dialog--signin__main label.textbox input:hover,
+    html body .dialog--signin__main label.textbox.material input:hover {
+      border-bottom: 1px solid #d9d9d9 !important;
+    }
+
+    html body .dialog--signin__main label.textbox input:focus,
+    html body .dialog--signin__main label.textbox.material input:focus {
+      border: 1px solid #40a9ff !important;
+      border-bottom: 1px solid #40a9ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.1) !important;
+      outline: none !important;
+    }
+
+    /* 注册页面输入框容器边框修复 - 覆盖 Material Textbox 样式 */
+    html body .page--register label.inverse.textbox,
+    html body .page--register label.inverse.material.textbox,
+    html body .inverse label.textbox,
+    html body .inverse label.material.textbox {
+      border: none !important;
+      border-width: 0 !important;
+      border-style: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+
+    /* 关键：移除 Material Textbox 的底部边框 */
+    html body .page--register label.inverse.textbox input,
+    html body .page--register label.inverse.material.textbox input,
+    html body .inverse label.textbox input,
+    html body .inverse label.material.textbox input {
+      border: 1px solid #d9d9d9 !important;
+      border-bottom: 1px solid #d9d9d9 !important;
+      border-radius: 4px !important;
+      background: rgba(255,255,255,0.95) !important;
+      padding: 8px 12px !important;
+      margin-top: 4px !important;
+      box-shadow: none !important;
+      outline: none !important;
+      color: #333 !important;
+    }
+
+    /* 确保placeholder文字颜色也可见 */
+    html body .page--register label.inverse.textbox input::placeholder,
+    html body .page--register label.inverse.material.textbox input::placeholder,
+    html body .inverse label.textbox input::placeholder,
+    html body .inverse label.material.textbox input::placeholder {
+      color: #999 !important;
+    }
+
+    html body .page--register label.inverse.textbox input:hover,
+    html body .page--register label.inverse.material.textbox input:hover,
+    html body .inverse label.textbox input:hover,
+    html body .inverse label.material.textbox input:hover {
+      border-bottom: 1px solid #d9d9d9 !important;
+    }
+
+    html body .page--register label.inverse.textbox input:focus,
+    html body .page--register label.inverse.material.textbox input:focus,
+    html body .inverse label.textbox input:focus,
+    html body .inverse label.material.textbox input:focus {
+      border: 1px solid #40a9ff !important;
+      border-bottom: 1px solid #40a9ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.1) !important;
+      outline: none !important;
+    }
+
+    /* ============ 深色主题下的输入框修复 ============ */
+    html.theme--dark .page--register label.inverse.textbox,
+    html.theme--dark .page--register label.inverse.material.textbox,
+    html.theme--dark .inverse label.textbox,
+    html.theme--dark .inverse label.material.textbox {
+      border: none !important;
+      border-width: 0 !important;
+      border-style: none !important;
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+
+    html.theme--dark .page--register label.inverse.textbox input,
+    html.theme--dark .page--register label.inverse.material.textbox input,
+    html.theme--dark .inverse label.textbox input,
+    html.theme--dark .inverse label.material.textbox input {
+      border: 1px solid #d9d9d9 !important;
+      border-bottom: 1px solid #d9d9d9 !important;
+      border-radius: 4px !important;
+      background: rgba(255,255,255,0.95) !important;
+      padding: 8px 12px !important;
+      margin-top: 4px !important;
+      box-shadow: none !important;
+      outline: none !important;
+      color: #333 !important;
+    }
+
+    /* 确保placeholder文字颜色也可见 */
+    html.theme--dark .page--register label.inverse.textbox input::placeholder,
+    html.theme--dark .page--register label.inverse.material.textbox input::placeholder,
+    html.theme--dark .inverse label.textbox input::placeholder,
+    html.theme--dark .inverse label.material.textbox input::placeholder {
+      color: #999 !important;
+    }
+
+    html.theme--dark .page--register label.inverse.textbox input:focus,
+    html.theme--dark .page--register label.inverse.material.textbox input:focus,
+    html.theme--dark .inverse label.textbox input:focus,
+    html.theme--dark .inverse label.material.textbox input:focus {
+      border: 1px solid #40a9ff !important;
+      border-bottom: 1px solid #40a9ff !important;
+      box-shadow: 0 0 0 3px rgba(24,144,255,0.1) !important;
+      outline: none !important;
+    }
+
     /* 移除外部容器边框（红框），保留输入框边框（绿框） */
     html body .inverse *:not(input):not(textarea):not(.textbox):not(button):not(select),
     html body.page--auth *:not(input):not(textarea):not(.textbox):not(button):not(select) {
@@ -3669,17 +3803,50 @@
         });
       }
       
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', fixContestButtons);
-      } else {
-        fixContestButtons();
+      function fixTextboxStyles() {
+        var textboxContainers = document.querySelectorAll('label.textbox, label.material.textbox, label.inverse.textbox, label.inverse.material.textbox');
+        textboxContainers.forEach(function(container) {
+          container.style.border = 'none';
+          container.style.borderWidth = '0';
+          container.style.borderStyle = 'none';
+          container.style.boxShadow = 'none';
+          container.style.background = 'transparent';
+          container.setAttribute('style', 'border: none !important; border-width: 0 !important; box-shadow: none !important; background: transparent !important;');
+        });
+        
+        var inputs = document.querySelectorAll('label.textbox input, label.material.textbox input, label.inverse.textbox input, label.inverse.material.textbox input');
+        inputs.forEach(function(input) {
+          input.style.border = '1px solid #d9d9d9';
+          input.style.borderBottom = '1px solid #d9d9d9';
+          input.style.borderRadius = '4px';
+          input.style.background = 'rgba(255,255,255,0.95)';
+          input.style.padding = '8px 12px';
+          input.style.marginTop = '4px';
+          input.style.boxShadow = 'none';
+          input.style.outline = 'none';
+          input.style.color = '#333';
+          input.setAttribute('style', 'border: 1px solid #d9d9d9 !important; border-bottom: 1px solid #d9d9d9 !important; border-radius: 4px !important; background: rgba(255,255,255,0.95) !important; padding: 8px 12px !important; margin-top: 4px !important; box-shadow: none !important; outline: none !important; color: #333 !important;');
+        });
       }
       
-      setTimeout(fixContestButtons, 100);
-      setTimeout(fixContestButtons, 500);
-      setTimeout(fixContestButtons, 1000);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          fixContestButtons();
+          fixTextboxStyles();
+        });
+      } else {
+        fixContestButtons();
+        fixTextboxStyles();
+      }
       
-      var observer = new MutationObserver(fixContestButtons);
+      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); }, 100);
+      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); }, 500);
+      setTimeout(function() { fixContestButtons(); fixTextboxStyles(); }, 1000);
+      
+      var observer = new MutationObserver(function() {
+        fixContestButtons();
+        fixTextboxStyles();
+      });
       observer.observe(document.body, { childList: true, subtree: true });
     })();
   </script>
