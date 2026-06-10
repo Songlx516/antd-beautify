@@ -565,6 +565,46 @@ html:not(.theme--dark) .problem__tag-link
   background: #CCCCCC /* Concrete */
   &:hover { background: #AAAAAA }
 
+/* === 补充用户提供的标签 === */
+
+/* === 拆数字 === */
+.problem__tag-link[data-tag="拆数字"]
+  background: #13C2C2 /* Cyan */
+  &:hover { background: #08979C }
+
+/* === 基础问题 === */
+.problem__tag-link[data-tag="基础问题"]
+  background: #597EF7 /* Indigo */
+  &:hover { background: #2F54EB }
+
+/* === 年份标签 === */
+.problem__tag-link[data-tag*="2019"],
+.problem__tag-link[data-tag*="2020"],
+.problem__tag-link[data-tag*="2021"],
+.problem__tag-link[data-tag*="2022"],
+.problem__tag-link[data-tag*="2023"],
+.problem__tag-link[data-tag*="2024"]
+  background: #FFFFFF /* White */
+  border: 1.5px solid #D9D9D9 !important
+  color: #5D6C7B !important
+  &:hover { 
+    background: #F5F5F5 
+    border-color: #BFBFBF !important
+  }
+
+/* === 难度等级标签 (A/B/C/D) === */
+.problem__tag-link[data-tag="A"],
+.problem__tag-link[data-tag="B"],
+.problem__tag-link[data-tag="C"],
+.problem__tag-link[data-tag="D"]
+  background: #FFFFFF /* White */
+  border: 1.5px solid #D9D9D9 !important
+  color: #5D6C7B !important
+  &:hover { 
+    background: #F5F5F5 
+    border-color: #BFBFBF !important
+  }
+
 /* === 电子学会等级 === */
 .problem__tag-link[data-tag*="电子学会"]
   background: linear-gradient(135deg, #E6F7FF, #BAE7FF) /* Light Blue Gradient */
