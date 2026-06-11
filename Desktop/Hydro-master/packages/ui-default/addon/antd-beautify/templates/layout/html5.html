@@ -50,439 +50,6 @@
       -webkit-font-smoothing: subpixel-antialiased;
     }
 
-    /* === dtoj.team 风格标签样式 - 圆角矩形按钮风格 === */
-    html body .problem__tags {
-      margin: 0 !important;
-      padding: 0 !important;
-      list-style: none !important;
-      font-size: 0;
-      word-break: keep-all;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-      line-height: 1;
-    }
-
-    html body .problem__tag {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      vertical-align: top !important;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-
-    html body .problem__tag-item,
-    html body .problem__tag-link {
-      padding: 4px 12px !important;
-      margin-left: 0 !important;
-      margin-bottom: 4px !important;
-      margin-right: 4px !important;
-      display: inline-flex !important;
-      flex-direction: row !important;
-      align-items: center !important;
-      border: 1px solid #d9d9d9 !important;
-      border-radius: 6px !important;
-      font-size: 12px !important;
-      font-weight: 500 !important;
-      letter-spacing: 0.2px !important;
-      line-height: 18px !important;
-      max-width: 100% !important;
-      min-height: 24px !important;
-      min-width: auto !important;
-      position: relative !important;
-      background-color: #f5f5f5 !important;
-      color: #5D6C7B !important;
-      transition: all 150ms ease !important;
-      box-shadow: none !important;
-      height: auto !important;
-      overflow: hidden !important;
-      text-overflow: ellipsis !important;
-      white-space: nowrap !important;
-      text-decoration: none !important;
-    }
-
-    html body .problem__tag-item:hover,
-    html body .problem__tag-link:hover {
-      text-decoration: none !important;
-      filter: brightness(0.95) !important;
-    }
-
-    /* 标签配色 - dtoj风格：淡色背景 + 同色系边框 */
-    html body .problem__tag-item[data-tag="CSP-J"],
-    html body .problem__tag-link[data-tag="CSP-J"] {
-      background: #fff1f0 !important;
-      border: 1px solid #ffa39e !important;
-      color: #cf1322 !important;
-    }
-    html body .problem__tag-item[data-tag="CSP-S"],
-    html body .problem__tag-link[data-tag="CSP-S"] {
-      background: #fff7e6 !important;
-      border: 1px solid #ffd591 !important;
-      color: #d48806 !important;
-    }
-    html body .problem__tag-item[data-tag="NOIP"],
-    html body .problem__tag-link[data-tag="NOIP"] {
-      background: #f9f0ff !important;
-      border: 1px solid #d3adf7 !important;
-      color: #531dab !important;
-    }
-    html body .problem__tag-item[data-tag="GESP"],
-    html body .problem__tag-link[data-tag="GESP"] {
-      background: #fffbe6 !important;
-      border: 1px solid #ffe58f !important;
-      color: #d48806 !important;
-    }
-    html body .problem__tag-item[data-tag="贪心"],
-    html body .problem__tag-link[data-tag="贪心"] {
-      background: #f6ffed !important;
-      border: 1px solid #b7eb8f !important;
-      color: #389e0d !important;
-    }
-    html body .problem__tag-item[data-tag="动态规划"],
-    html body .problem__tag-link[data-tag="动态规划"] {
-      background: #e6f7ff !important;
-      border: 1px solid #91d5ff !important;
-      color: #0050b3 !important;
-    }
-    html body .problem__tag-item[data-tag="树结构"],
-    html body .problem__tag-link[data-tag="树结构"] {
-      background: #f6ffed !important;
-      border: 1px solid #95de64 !important;
-      color: #237804 !important;
-    }
-    html body .problem__tag-item[data-tag="图论"],
-    html body .problem__tag-link[data-tag="图论"] {
-      background: #f9f0ff !important;
-      border: 1px solid #b37feb !important;
-      color: #531dab !important;
-    }
-    html body .problem__tag-item[data-tag="数据结构"],
-    html body .problem__tag-link[data-tag="数据结构"] {
-      background: #e6fffb !important;
-      border: 1px solid #87e8de !important;
-      color: #006d75 !important;
-    }
-    html body .problem__tag-item[data-tag="数论"],
-    html body .problem__tag-link[data-tag="数论"] {
-      background: #fff7e6 !important;
-      border: 1px solid #ffd591 !important;
-      color: #d48806 !important;
-    }
-    html body .problem__tag-item[data-tag="搜索算法"],
-    html body .problem__tag-link[data-tag="搜索算法"],
-    html body .problem__tag-item[data-tag="深度优先搜索"],
-    html body .problem__tag-link[data-tag="深度优先搜索"],
-    html body .problem__tag-item[data-tag="广度优先搜索"],
-    html body .problem__tag-link[data-tag="广度优先搜索"],
-    html body .problem__tag-item[data-tag="DFS"],
-    html body .problem__tag-link[data-tag="DFS"],
-    html body .problem__tag-item[data-tag="BFS"],
-    html body .problem__tag-link[data-tag="BFS"] {
-      background: #fff1f0 !important;
-      border: 1px solid #ffbb96 !important;
-      color: #d4380d !important;
-    }
-    html body .problem__tag-item[data-tag="字符串"],
-    html body .problem__tag-link[data-tag="字符串"] {
-      background: #fff0f6 !important;
-      border: 1px solid #ffadd2 !important;
-      color: #c41d7f !important;
-    }
-    html body .problem__tag-item[data-tag="分治"],
-    html body .problem__tag-link[data-tag="分治"],
-    html body .problem__tag-item[data-tag="分治与查询技术"],
-    html body .problem__tag-link[data-tag="分治与查询技术"],
-    html body .problem__tag-item[data-tag="RMQ"],
-    html body .problem__tag-link[data-tag="RMQ"],
-    html body .problem__tag-item[data-tag="分块"],
-    html body .problem__tag-link[data-tag="分块"] {
-      background: #f0f5ff !important;
-      border: 1px solid #adc6ff !important;
-      color: #1d39c4 !important;
-    }
-    html body .problem__tag-item[data-tag="数学"],
-    html body .problem__tag-link[data-tag="数学"],
-    html body .problem__tag-item[data-tag="数学与数论"],
-    html body .problem__tag-link[data-tag="数学与数论"],
-    html body .problem__tag-item[data-tag="快速幂"],
-    html body .problem__tag-link[data-tag="快速幂"],
-    html body .problem__tag-item[data-tag="排列组合"],
-    html body .problem__tag-link[data-tag="排列组合"],
-    html body .problem__tag-item[data-tag="位运算"],
-    html body .problem__tag-link[data-tag="位运算"],
-    html body .problem__tag-item[data-tag="进制转换"],
-    html body .problem__tag-link[data-tag="进制转换"] {
-      background: #e6fffb !important;
-      border: 1px solid #87e8de !important;
-      color: #006d75 !important;
-    }
-    html body .problem__tag-item[data-tag="构造"],
-    html body .problem__tag-link[data-tag="构造"],
-    html body .problem__tag-item[data-tag="打表"],
-    html body .problem__tag-link[data-tag="打表"] {
-      background: #f6ffed !important;
-      border: 1px solid #b7eb8f !important;
-      color: #389e0d !important;
-    }
-    html body .problem__tag-item[data-tag="LCS"],
-    html body .problem__tag-link[data-tag="LCS"],
-    html body .problem__tag-item[data-tag="LIS"],
-    html body .problem__tag-link[data-tag="LIS"],
-    html body .problem__tag-item[data-tag="背包"],
-    html body .problem__tag-link[data-tag="背包"],
-    html body .problem__tag-item[data-tag="DP"],
-    html body .problem__tag-link[data-tag="DP"] {
-      background: #e6f7ff !important;
-      border: 1px solid #91d5ff !important;
-      color: #0050b3 !important;
-    }
-    html body .problem__tag-item[data-tag="最近公共祖先"],
-    html body .problem__tag-link[data-tag="最近公共祖先"],
-    html body .problem__tag-item[data-tag="LCA"],
-    html body .problem__tag-link[data-tag="LCA"],
-    html body .problem__tag-item[data-tag="生成树"],
-    html body .problem__tag-link[data-tag="生成树"],
-    html body .problem__tag-item[data-tag="次小生成树"],
-    html body .problem__tag-link[data-tag="次小生成树"],
-    html body .problem__tag-item[data-tag="DFS序列"],
-    html body .problem__tag-link[data-tag="DFS序列"],
-    html body .problem__tag-item[data-tag="树上倍增"],
-    html body .problem__tag-link[data-tag="树上倍增"],
-    html body .problem__tag-item[data-tag="树的分治"],
-    html body .problem__tag-link[data-tag="树的分治"],
-    html body .problem__tag-item[data-tag="树链剖分"],
-    html body .problem__tag-link[data-tag="树链剖分"],
-    html body .problem__tag-item[data-tag="Link-Cut-Tree"],
-    html body .problem__tag-link[data-tag="Link-Cut-Tree"],
-    html body .problem__tag-item[data-tag="LCT"],
-    html body .problem__tag-link[data-tag="LCT"] {
-      background: #f6ffed !important;
-      border: 1px solid #95de64 !important;
-      color: #237804 !important;
-    }
-    html body .problem__tag-item[data-tag="Floyd"],
-    html body .problem__tag-link[data-tag="Floyd"],
-    html body .problem__tag-item[data-tag="Dijkstra"],
-    html body .problem__tag-link[data-tag="Dijkstra"],
-    html body .problem__tag-item[data-tag="SPFA"],
-    html body .problem__tag-link[data-tag="SPFA"],
-    html body .problem__tag-item[data-tag="负权边"],
-    html body .problem__tag-link[data-tag="负权边"],
-    html body .problem__tag-item[data-tag="平面图"],
-    html body .problem__tag-link[data-tag="平面图"],
-    html body .problem__tag-item[data-tag="二分图"],
-    html body .problem__tag-link[data-tag="二分图"],
-    html body .problem__tag-item[data-tag="二分图匹配"],
-    html body .problem__tag-link[data-tag="二分图匹配"],
-    html body .problem__tag-item[data-tag="最短路"],
-    html body .problem__tag-link[data-tag="最短路"],
-    html body .problem__tag-item[data-tag="差分约束"],
-    html body .problem__tag-link[data-tag="差分约束"],
-    html body .problem__tag-item[data-tag="拓扑排序"],
-    html body .problem__tag-link[data-tag="拓扑排序"] {
-      background: #f9f0ff !important;
-      border: 1px solid #b37feb !important;
-      color: #531dab !important;
-    }
-    html body .problem__tag-item[data-tag="栈"],
-    html body .problem__tag-link[data-tag="栈"],
-    html body .problem__tag-item[data-tag="队列"],
-    html body .problem__tag-link[data-tag="队列"],
-    html body .problem__tag-item[data-tag="链表"],
-    html body .problem__tag-link[data-tag="链表"],
-    html body .problem__tag-item[data-tag="单调队列"],
-    html body .problem__tag-link[data-tag="单调队列"],
-    html body .problem__tag-item[data-tag="并查集"],
-    html body .problem__tag-link[data-tag="并查集"],
-    html body .problem__tag-item[data-tag="堆"],
-    html body .problem__tag-link[data-tag="堆"],
-    html body .problem__tag-item[data-tag="平衡树"],
-    html body .problem__tag-link[data-tag="平衡树"],
-    html body .problem__tag-item[data-tag="线段树"],
-    html body .problem__tag-link[data-tag="线段树"],
-    html body .problem__tag-item[data-tag="树状数组"],
-    html body .problem__tag-link[data-tag="树状数组"],
-    html body .problem__tag-item[data-tag="树套树"],
-    html body .problem__tag-link[data-tag="树套树"],
-    html body .problem__tag-item[data-tag="四分树"],
-    html body .problem__tag-link[data-tag="四分树"],
-    html body .problem__tag-item[data-tag="划分树"],
-    html body .problem__tag-link[data-tag="划分树"],
-    html body .problem__tag-item[data-tag="归并树"],
-    html body .problem__tag-link[data-tag="归并树"],
-    html body .problem__tag-item[data-tag="替罪羊树"],
-    html body .problem__tag-link[data-tag="替罪羊树"],
-    html body .problem__tag-item[data-tag="左偏树"],
-    html body .problem__tag-link[data-tag="左偏树"],
-    html body .problem__tag-item[data-tag="k-d树"],
-    html body .problem__tag-link[data-tag="k-d树"],
-    html body .problem__tag-item[data-tag="块状链表"],
-    html body .problem__tag-link[data-tag="块状链表"],
-    html body .problem__tag-item[data-tag="Hashing"],
-    html body .problem__tag-link[data-tag="Hashing"] {
-      background: #e6fffb !important;
-      border: 1px solid #87e8de !important;
-      color: #006d75 !important;
-    }
-    html body .problem__tag-item[data-tag="容器"],
-    html body .problem__tag-link[data-tag="容器"],
-    html body .problem__tag-item[data-tag="map"],
-    html body .problem__tag-link[data-tag="map"],
-    html body .problem__tag-item[data-tag="stack"],
-    html body .problem__tag-link[data-tag="stack"],
-    html body .problem__tag-item[data-tag="deque"],
-    html body .problem__tag-link[data-tag="deque"],
-    html body .problem__tag-item[data-tag="list"],
-    html body .problem__tag-link[data-tag="list"],
-    html body .problem__tag-item[data-tag="queue"],
-    html body .problem__tag-link[data-tag="queue"],
-    html body .problem__tag-item[data-tag="哈希表"],
-    html body .problem__tag-link[data-tag="哈希表"] {
-      background: #f5f5f5 !important;
-      border: 1px solid #d9d9d9 !important;
-      color: #595959 !important;
-    }
-    html body .problem__tag-item[data-tag="二分查找"],
-    html body .problem__tag-link[data-tag="二分查找"],
-    html body .problem__tag-item[data-tag="三分查找"],
-    html body .problem__tag-link[data-tag="三分查找"],
-    html body .problem__tag-item[data-tag="双指针扫描"],
-    html body .problem__tag-link[data-tag="双指针扫描"],
-    html body .problem__tag-item[data-tag="排序"],
-    html body .problem__tag-link[data-tag="排序"] {
-      background: #f0f5ff !important;
-      border: 1px solid #adc6ff !important;
-      color: #1d39c4 !important;
-    }
-    html body .problem__tag-item[data-tag="递推"],
-    html body .problem__tag-link[data-tag="递推"],
-    html body .problem__tag-item[data-tag="递归"],
-    html body .problem__tag-link[data-tag="递归"] {
-      background: #fff1f0 !important;
-      border: 1px solid #ffa39e !important;
-      color: #cf1322 !important;
-    }
-    html body .problem__tag-item[data-tag="输入输出语句"],
-    html body .problem__tag-link[data-tag="输入输出语句"],
-    html body .problem__tag-item[data-tag="一维数组"],
-    html body .problem__tag-link[data-tag="一维数组"],
-    html body .problem__tag-item[data-tag="二维数组"],
-    html body .problem__tag-link[data-tag="二维数组"],
-    html body .problem__tag-item[data-tag="字符型"],
-    html body .problem__tag-link[data-tag="字符型"],
-    html body .problem__tag-item[data-tag="分支问题"],
-    html body .problem__tag-link[data-tag="分支问题"],
-    html body .problem__tag-item[data-tag="函数问题"],
-    html body .problem__tag-link[data-tag="函数问题"],
-    html body .problem__tag-item[data-tag="结构体"],
-    html body .problem__tag-link[data-tag="结构体"],
-    html body .problem__tag-item[data-tag="简单循环"],
-    html body .problem__tag-link[data-tag="简单循环"],
-    html body .problem__tag-item[data-tag="嵌套循环"],
-    html body .problem__tag-link[data-tag="嵌套循环"],
-    html body .problem__tag-item[data-tag="拆数字"],
-    html body .problem__tag-link[data-tag="拆数字"],
-    html body .problem__tag-item[data-tag="基础问题"],
-    html body .problem__tag-link[data-tag="基础问题"],
-    html body .problem__tag-item[data-tag="客观题"],
-    html body .problem__tag-link[data-tag="客观题"] {
-      background: #f5f5f5 !important;
-      border: 1px solid #d9d9d9 !important;
-      color: #595959 !important;
-    }
-    html body .problem__tag-item[data-tag="模拟"],
-    html body .problem__tag-link[data-tag="模拟"],
-    html body .problem__tag-item[data-tag="枚举"],
-    html body .problem__tag-link[data-tag="枚举"],
-    html body .problem__tag-item[data-tag="暴力"],
-    html body .problem__tag-link[data-tag="暴力"],
-    html body .problem__tag-item[data-tag="杂项"],
-    html body .problem__tag-link[data-tag="杂项"],
-    html body .problem__tag-item[data-tag="月赛"],
-    html body .problem__tag-link[data-tag="月赛"],
-    html body .problem__tag-item[data-tag="语法周赛"],
-    html body .problem__tag-link[data-tag="语法周赛"] {
-      background: #f5f5f5 !important;
-      border: 1px solid #d9d9d9 !important;
-      color: #595959 !important;
-    }
-
-    /* 额外标签配色 - dtoj风格 */
-    html body .problem__tag-item[data-tag="杜教筛"],
-    html body .problem__tag-link[data-tag="杜教筛"] {
-      background: #e6f7ff !important;
-      border: 1px solid #91d5ff !important;
-      color: #0050b3 !important;
-    }
-    html body .problem__tag-item[data-tag="莫比乌斯反演"],
-    html body .problem__tag-link[data-tag="莫比乌斯反演"] {
-      background: #fff0f6 !important;
-      border: 1px solid #ffadd2 !important;
-      color: #c41d7f !important;
-    }
-    html body .problem__tag-item[data-tag="除法分块"],
-    html body .problem__tag-link[data-tag="除法分块"] {
-      background: #f6ffed !important;
-      border: 1px solid #b7eb8f !important;
-      color: #389e0d !important;
-    }
-    html body .problem__tag-item[data-tag="Tarjan"],
-    html body .problem__tag-link[data-tag="Tarjan"] {
-      background: #f9f0ff !important;
-      border: 1px solid #d3adf7 !important;
-      color: #531dab !important;
-    }
-    html body .problem__tag-item[data-tag="树上启发式合并"],
-    html body .problem__tag-link[data-tag="树上启发式合并"] {
-      background: #fff7e6 !important;
-      border: 1px solid #ffd591 !important;
-      color: #d48806 !important;
-    }
-    html body .problem__tag-item[data-tag="笛卡尔树"],
-    html body .problem__tag-link[data-tag="笛卡尔树"] {
-      background: #fffbe6 !important;
-      border: 1px solid #ffe58f !important;
-      color: #d48806 !important;
-    }
-    html body .problem__tag-item[data-tag="后缀数组"],
-    html body .problem__tag-link[data-tag="后缀数组"] {
-      background: #fff0f6 !important;
-      border: 1px solid #ffadd2 !important;
-      color: #c41d7f !important;
-    }
-    html body .problem__tag-item[data-tag="快速数论变换"],
-    html body .problem__tag-link[data-tag="快速数论变换"],
-    html body .problem__tag-item[data-tag="NTT"],
-    html body .problem__tag-link[data-tag="NTT"] {
-      background: #fff7e6 !important;
-      border: 1px solid #ffd591 !important;
-      color: #d48806 !important;
-    }
-
-    /* 年份和难度标签 - 灰色系 */
-    html body .problem__tag-item[data-tag*="2019"],
-    html body .problem__tag-link[data-tag*="2019"],
-    html body .problem__tag-item[data-tag*="2020"],
-    html body .problem__tag-link[data-tag*="2020"],
-    html body .problem__tag-item[data-tag*="2021"],
-    html body .problem__tag-link[data-tag*="2021"],
-    html body .problem__tag-item[data-tag*="2022"],
-    html body .problem__tag-link[data-tag*="2022"],
-    html body .problem__tag-item[data-tag="A"],
-    html body .problem__tag-link[data-tag="A"],
-    html body .problem__tag-item[data-tag="B"],
-    html body .problem__tag-link[data-tag="B"],
-    html body .problem__tag-item[data-tag="C"],
-    html body .problem__tag-link[data-tag="C"],
-    html body .problem__tag-item[data-tag="D"],
-    html body .problem__tag-link[data-tag="D"] {
-      background: #f5f5f5 !important;
-      border: 1px solid #d9d9d9 !important;
-      color: #595959 !important;
-    }
-
     html {
       text-rendering: optimizeLegibility;
     }
@@ -619,16 +186,6 @@
     input[type="reset"]:not(.nav__item) {
       border-radius: 6px !important;
       transition: all 0.2s ease !important;
-    }
-
-    /* 确保标签链接保留边框样式 */
-    .problem__tag-link {
-      border-radius: inherit !important;
-    }
-    
-    /* 浅色模式标签边框 */
-    html:not(.theme--dark) .problem__tag-link {
-      border: 1px solid currentColor !important;
     }
 
     /* 恢复收藏按钮和星星图标的原始样式 */
@@ -1479,350 +1036,731 @@
     }
 
     /* ============================================
-       问题标签样式 - 深色模式与浅色模式一致
+       问题标签样式 - 参考 dtoj.team 风格
        ============================================ */
-    html.theme--dark .problem__tag-link {
-      display: inline-block;
-      padding: 4px 12px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 250px;
-      line-height: 20px;
-      height: 28px;
-      background: #f0f0f0 !important;
-      color: #333 !important;
-      border-radius: 14px !important;
-      font-size: 12px;
-      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-      border: 1px solid currentColor !important;
-    }
 
-    html.theme--dark .problem__tag-link:hover {
-      background: #1890ff !important;
-      color: #fff !important;
-      border-color: #1890ff !important;
-      text-decoration: none;
-    }
-    
-    html.theme--dark .problem__tag-link:active,
-    html.theme--dark .problem__tag-link:focus {
-      background: #096dd9 !important;
-      color: #fff !important;
-      border-color: #096dd9 !important;
-      outline: none;
-    }
-
-    html.theme--dark .problem__tag-link span,
-    html.theme--dark .problem__tag-link a,
-    html.theme--dark .problem__tag-link * {
-      color: inherit !important;
-      text-shadow: none !important;
-      font-weight: inherit !important;
-    }
-
-    /* 深色模式 - 动态规划（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="动态规划"],
-    html.theme--dark .problem__tag-link[data-tag="LCS"],
-    html.theme--dark .problem__tag-link[data-tag="LIS"],
-    html.theme--dark .problem__tag-link[data-tag*="背包"],
-    html.theme--dark .problem__tag-link[data-tag="DP"],
-    html.theme--dark .problem__tag-link[data-tag="单调性DP"],
-    html.theme--dark .problem__tag-link[data-tag="环形DP"],
-    html.theme--dark .problem__tag-link[data-tag="树形DP"],
-    html.theme--dark .problem__tag-link[data-tag="状态压缩DP"] {
-      background: #e6f7ff !important;
-      color: #1890ff !important;
-      border: 1px solid #1890ff !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 贪心（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag="贪心"],
-    html.theme--dark .problem__tag-link[data-tag*="构造"],
-    html.theme--dark .problem__tag-link[data-tag*="打表"] {
-      background: #f6ffed !important;
-      color: #52c41a !important;
-      border: 1px solid #52c41a !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 树结构（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="树结构"],
-    html.theme--dark .problem__tag-link[data-tag*="树"],
-    html.theme--dark .problem__tag-link[data-tag="最近公共祖先"],
-    html.theme--dark .problem__tag-link[data-tag*="生成树"],
-    html.theme--dark .problem__tag-link[data-tag="次小生成树"],
-    html.theme--dark .problem__tag-link[data-tag="DFS序列"],
-    html.theme--dark .problem__tag-link[data-tag*="树上倍增"],
-    html.theme--dark .problem__tag-link[data-tag*="树的分治"],
-    html.theme--dark .problem__tag-link[data-tag*="树链剖分"],
-    html.theme--dark .problem__tag-link[data-tag="Link-Cut-Tree"] {
-      background: #fff2f0 !important;
-      color: #ff4d4f !important;
-      border: 1px solid #ff4d4f !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 图结构（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="图结构"],
-    html.theme--dark .problem__tag-link[data-tag*="图"],
-    html.theme--dark .problem__tag-link[data-tag="Floyd"],
-    html.theme--dark .problem__tag-link[data-tag="Dijkstra"],
-    html.theme--dark .problem__tag-link[data-tag="SPFA"],
-    html.theme--dark .problem__tag-link[data-tag*="负权边"],
-    html.theme--dark .problem__tag-link[data-tag*="平面图"],
-    html.theme--dark .problem__tag-link[data-tag*="二分图"],
-    html.theme--dark .problem__tag-link[data-tag*="二分图匹配"],
-    html.theme--dark .problem__tag-link[data-tag*="最短路"],
-    html.theme--dark .problem__tag-link[data-tag*="差分约束"],
-    html.theme--dark .problem__tag-link[data-tag*="拓扑排序"] {
-      background: #f9f0ff !important;
-      color: #722ed1 !important;
-      border: 1px solid #722ed1 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 数据结构（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="数据结构"],
-    html.theme--dark .problem__tag-link[data-tag="栈"],
-    html.theme--dark .problem__tag-link[data-tag="队列"],
-    html.theme--dark .problem__tag-link[data-tag*="链表"],
-    html.theme--dark .problem__tag-link[data-tag*="单调队列"],
-    html.theme--dark .problem__tag-link[data-tag*="并查集"],
-    html.theme--dark .problem__tag-link[data-tag="堆"],
-    html.theme--dark .problem__tag-link[data-tag*="平衡树"],
-    html.theme--dark .problem__tag-link[data-tag*="线段树"],
-    html.theme--dark .problem__tag-link[data-tag*="树状数组"],
-    html.theme--dark .problem__tag-link[data-tag*="树套树"],
-    html.theme--dark .problem__tag-link[data-tag*="四分树"],
-    html.theme--dark .problem__tag-link[data-tag*="划分树"],
-    html.theme--dark .problem__tag-link[data-tag*="归并树"],
-    html.theme--dark .problem__tag-link[data-tag*="替罪羊树"],
-    html.theme--dark .problem__tag-link[data-tag*="左偏树"],
-    html.theme--dark .problem__tag-link[data-tag*="k-d树"],
-    html.theme--dark .problem__tag-link[data-tag*="块状链表"],
-    html.theme--dark .problem__tag-link[data-tag*="Hashing"] {
-      background: #e6fffb !important;
-      color: #13c2c2 !important;
-      border: 1px solid #13c2c2 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 容器（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="容器"],
-    html.theme--dark .problem__tag-link[data-tag="map"],
-    html.theme--dark .problem__tag-link[data-tag="stack"],
-    html.theme--dark .problem__tag-link[data-tag="deque"],
-    html.theme--dark .problem__tag-link[data-tag="list"],
-    html.theme--dark .problem__tag-link[data-tag="queue"],
-    html.theme--dark .problem__tag-link[data-tag*="哈希表"] {
-      background: #fffbe6 !important;
-      color: #faad14 !important;
-      border: 1px solid #faad14 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 搜索算法（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="深度优先搜索"],
-    html.theme--dark .problem__tag-link[data-tag*="广度优先搜索"],
-    html.theme--dark .problem__tag-link[data-tag*="迭代加深搜索"] {
-      background: #fff7e6 !important;
-      color: #fa8c16 !important;
-      border: 1px solid #fa8c16 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 分治与查询技术（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="分治"],
-    html.theme--dark .problem__tag-link[data-tag="RMQ"],
-    html.theme--dark .problem__tag-link[data-tag*="分块"] {
-      background: #f0f5ff !important;
-      color: #108ee9 !important;
-      border: 1px solid #108ee9 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 数学与数论（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="快速幂"],
-    html.theme--dark .problem__tag-link[data-tag*="排列组合"],
-    html.theme--dark .problem__tag-link[data-tag*="位运算"],
-    html.theme--dark .problem__tag-link[data-tag*="进制转换"],
-    html.theme--dark .problem__tag-link[data-tag*="数学"] {
-      background: #f9f0ff !important;
-      color: #9c27b0 !important;
-      border: 1px solid #9c27b0 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 基础算法技巧（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="二分查找"],
-    html.theme--dark .problem__tag-link[data-tag*="三分查找"],
-    html.theme--dark .problem__tag-link[data-tag*="双指针扫描"],
-    html.theme--dark .problem__tag-link[data-tag*="排序"] {
-      background: #f5f5f5 !important;
-      color: #666 !important;
-      border: 1px solid #666 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 递推（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="递推"] {
-      background: #fff7e6 !important;
-      color: #fa8c16 !important;
-      border: 1px solid #fa8c16 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 递归（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="递归"] {
-      background: #fff1e6 !important;
-      color: #d46b08 !important;
-      border: 1px solid #d46b08 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 数组（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="一维数组"],
-    html.theme--dark .problem__tag-link[data-tag*="二维数组"] {
-      background: #fff0f6 !important;
-      color: #eb2f96 !important;
-      border: 1px solid #eb2f96 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 字符串（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="字符串"],
-    html.theme--dark .problem__tag-link[data-tag*="字符型"] {
-      background: #e6fffb !important;
-      color: #13c2c2 !important;
-      border: 1px solid #13c2c2 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 函数与分支（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="函数问题"],
-    html.theme--dark .problem__tag-link[data-tag*="分支问题"] {
-      background: #f6ffed !important;
-      color: #52c41a !important;
-      border: 1px solid #52c41a !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 结构体（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="结构体"] {
-      background: #f9f0ff !important;
-      color: #722ed1 !important;
-      border: 1px solid #722ed1 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 循环（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="简单循环"],
-    html.theme--dark .problem__tag-link[data-tag*="嵌套循环"] {
-      background: #e6f7ff !important;
-      color: #1890ff !important;
-      border: 1px solid #1890ff !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 输入输出语句（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="输入输出语句"] {
-      background: #e6f7ff !important;
-      color: #1890ff !important;
-      border: 1px solid #1890ff !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 竞赛标签（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag="CSP-J"],
-    html.theme--dark .problem__tag-link[data-tag="CSP-S"],
-    html.theme--dark .problem__tag-link[data-tag="NOIP"] {
-      background: #fff2f0 !important;
-      color: #ff4d4f !important;
-      border: 1px solid #ff4d4f !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - GESP（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag="GESP"] {
-      background: #f6ffed !important;
-      color: #52c41a !important;
-      border: 1px solid #52c41a !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 客观题（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="客观题"] {
-      background: #f5f5f5 !important;
-      color: #666 !important;
-      border: 1px solid #666 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - USACO（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="USACO"] {
-      background: #fff0f6 !important;
-      color: #eb2f96 !important;
-      border: 1px solid #eb2f96 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深色模式 - 蓝桥杯（与浅色模式一致） */
-    html.theme--dark .problem__tag-link[data-tag*="蓝桥杯"] {
-      background: #e6f7ff !important;
-      color: #1890ff !important;
-      border: 1px solid #1890ff !important;
-      border-radius: 14px !important;
-    }
-
-    /* 问题标签样式 - Ant Design 风格 */
     .problem__tags {
-      margin: 0 !important;
-      padding: 0 !important;
-      list-style: none !important;
+      margin: 0;
+      padding: 0;
+      list-style: none;
       font-size: 0;
       word-break: keep-all;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
-    .problem__tag {
+    html body .problem__tag {
       display: inline-block;
       vertical-align: top;
-      margin: 0 4px 4px 0 !important;
-      padding: 0 !important;
+      margin: 0;
+      padding: 0;
     }
 
-    /* 浅色模式 - 标签基础样式 */
-    html:not(.theme--dark) .problem__tag-link {
-      display: inline-block;
-      padding: 4px 12px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 250px;
-      line-height: 20px;
-      height: 28px;
-      background: #f0f0f0;
-      color: #333 !important;
-      border-radius: 14px !important;
-      font-size: 12px;
-      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-      border: 1px solid currentColor !important;
+    html body .problem__tag-item,
+    html body a.problem__tag-item,
+    html body button.problem__tag-item {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0px 6px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      max-width: 220px !important;
+      height: 22px !important;
+      line-height: 22px !important;
+      border-radius: 6px !important;
+      font-size: 11px !important;
+      font-weight: 500 !important;
+      transition: all 0.2s ease !important;
+      text-decoration: none !important;
+      border: 1px solid rgba(148, 163, 184, 0.56) !important;
+      background: rgb(238, 242, 247) !important;
+      box-shadow: rgba(255, 255, 255, 0.72) 0px 1px 0px 0px inset !important;
+      color: rgb(39, 52, 73) !important;
+      cursor: pointer !important;
+      min-height: 22px !important;
+      min-width: auto !important;
+      margin-left: 4px !important;
+      margin-bottom: 4px !important;
+      box-sizing: border-box !important;
+      border-width: 1px !important;
+      border-style: solid !important;
+      flex-direction: row !important;
     }
 
-    html:not(.theme--dark) .problem__tag-link:hover {
-      background: #1890ff !important;
-      color: #fff !important;
-      border-color: #1890ff !important;
-      text-decoration: none;
+    html body .problem__tag-item:hover,
+    html body a.problem__tag-item:hover,
+    html body button.problem__tag-item:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: rgba(255, 255, 255, 0.72) 0px 1px 0px 0px inset, 0 3px 8px rgba(0, 0, 0, 0.12) !important;
     }
-    
-    html:not(.theme--dark) .problem__tag-link:active,
-    html:not(.theme--dark) .problem__tag-link:focus {
-      background: #096dd9 !important;
-      color: #fff !important;
-      border-color: #096dd9 !important;
-      outline: none;
+
+    html body .problem__tag-link,
+    html body a.problem__tag-link,
+    html body button.problem__tag-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0px 6px !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      max-width: 220px !important;
+      height: 22px !important;
+      border-radius: 6px !important;
+      font-size: 11px !important;
+      font-weight: 500 !important;
+      transition: all 0.2s ease !important;
+      text-decoration: none !important;
+      border: 1px solid rgba(148, 163, 184, 0.56) !important;
+      background: rgb(238, 242, 247) !important;
+      box-shadow: rgba(255, 255, 255, 0.72) 0px 1px 0px 0px inset !important;
+      color: rgb(39, 52, 73) !important;
+      cursor: pointer !important;
+    }
+
+    html body .problem__tag-link:hover,
+    html body a.problem__tag-link:hover,
+    html body button.problem__tag-link:hover {
+      transform: translateY(-1px) !important;
+      box-shadow: rgba(255, 255, 255, 0.72) 0px 1px 0px 0px inset, 0 3px 8px rgba(0, 0, 0, 0.12) !important;
+    }
+
+    /* ============ 分类卡片样式 ============ */
+    html body .widget--category-filter__tag {
+      display: inline-block !important;
+      padding: 5px 6px !important;
+      font-size: 13px !important;
+      margin: 2px !important;
+      border-radius: 4px !important;
+      transition: all 0.2s ease !important;
+      cursor: pointer !important;
+      color: #374151 !important;
+      background: #f3f4f6 !important;
+      border: 1px solid #e5e7eb !important;
+      text-decoration: none !important;
+    }
+
+    html body .widget--category-filter__tag:hover {
+      color: #1e40af !important;
+      background: #dbeafe !important;
+      border-color: #93c5fd !important;
+    }
+
+    html body .widget--category-filter__tag.selected {
+      color: #ffffff !important;
+      background: #3b82f6 !important;
+      border-color: #3b82f6 !important;
+      font-weight: 500 !important;
+    }
+
+    html body .search-tag__item {
+      display: inline-block !important;
+      padding: 5px 6px !important;
+      font-size: 13px !important;
+      margin: 2px !important;
+      border-radius: 4px !important;
+      transition: all 0.2s ease !important;
+      cursor: pointer !important;
+      color: #374151 !important;
+      background: #eaeaea !important;
+      text-decoration: none !important;
+    }
+
+    html body .search-tag__item:hover {
+      color: #1e40af !important;
+      background: #dbeafe !important;
+    }
+
+    html body .search-tag__item.selected {
+      color: #ffffff !important;
+      background: #3b82f6 !important;
+      font-weight: 500 !important;
+    }
+
+    /* ============ 复选框样式 ============ */
+    html body .checkbox input[type="checkbox"],
+    html body input[type="checkbox"] {
+      border: 1px solid #D0D0D0 !important;
+      border-radius: 1px !important;
+      background: none !important;
+    }
+
+    html body .checkbox input[type="checkbox"]:enabled:hover,
+    html body input[type="checkbox"]:enabled:hover {
+      border-color: rgba(#3b82f6, 0.7) !important;
+    }
+
+    html body .checkbox input[type="checkbox"]:checked,
+    html body input[type="checkbox"]:checked {
+      background: #3b82f6 !important;
+      border-color: #3b82f6 !important;
+    }
+
+    html body .checkbox input[type="checkbox"]:checked:after,
+    html body input[type="checkbox"]:checked:after {
+      content: '' !important;
+      width: 10px !important;
+      height: 6px !important;
+      position: absolute !important;
+      top: 3px !important;
+      left: 2px !important;
+      border: 2px solid #FFF !important;
+      border-top: none !important;
+      border-right: none !important;
+      background: transparent !important;
+      transform: rotate(-45deg) !important;
+      opacity: 1 !important;
+    }
+
+    /* ============ 比赛页面样式 ============ */
+    html body .section--contest.live {
+      background: #3b82f6 !important;
+      background-image: -webkit-radial-gradient(left top, ellipse farthest-corner, #60a5fa 0%, #3b82f6 100%) !important;
+    }
+
+    html body .section--contest.ready {
+      background: #10b981 !important;
+      background-image: -webkit-radial-gradient(left top, ellipse farthest-corner, #34d399 0%, #10b981 100%) !important;
+    }
+
+    html body .contest__item.live {
+      border-left-color: #3b82f6 !important;
+    }
+
+    html body .contest__item.ready {
+      border-left-color: #10b981 !important;
+    }
+
+    /* ============ 全局链接样式 ============ */
+    html body .typo-a,
+    html body .typo a,
+    html body .typo .link {
+      color: #3b82f6 !important;
+      text-decoration: none !important;
+    }
+
+    html body .typo-a:hover,
+    html body .typo a:hover,
+    html body .typo .link:hover {
+      color: #2563eb !important;
+      text-decoration: underline !important;
+    }
+
+    /* ============ 讨论页面样式 ============ */
+    html body .discussion__item {
+      border-left: 5px solid transparent !important;
+      padding-left: 5px !important;
+    }
+
+    html body .discussion__item.highlight {
+      border-left: 5px solid #3b82f6 !important;
+      background: #f0f7ff !important;
+    }
+
+    html body .discussion-node-tag {
+      font-size: 12px !important;
+      display: inline-block !important;
+      line-height: 22px !important;
+      padding: 0 10px !important;
+      vertical-align: middle !important;
+      border-radius: 12px !important;
+      border: 1px solid #d1d5db !important;
+      background: #f9fafb !important;
+      color: #374151 !important;
+      cursor: pointer !important;
+    }
+
+    html body .discussion-node-tag:hover {
+      background: #3b82f6 !important;
+      color: #FFF !important;
+      text-decoration: none !important;
+      border-color: #3b82f6 !important;
+    }
+
+    /* ============ 训练页面样式 ============ */
+    html body .training-status--icon.progress,
+    html body .training-status--icon.progress:before,
+    html body .training-section-status--icon.progress,
+    html body .training-section-status--icon.progress:before {
+      color: #3b82f6 !important;
+    }
+
+    html body .training-status--icon.done,
+    html body .training-status--icon.done:before,
+    html body .training-section-status--icon.done,
+    html body .training-section-status--icon.done:before {
+      color: #10b981 !important;
+    }
+
+    html body .training-status--icon.outside,
+    html body .training-status--icon.outside:before {
+      color: #9ca3af !important;
+    }
+
+    html body .training__progress-track {
+      background-color: #3b82f6 !important;
+    }
+
+    html body .training__progress-bar {
+      background: #e5e7eb !important;
+    }
+
+    /* 动态规划 - 紫色系 (cat-dp) */
+    html body .problem__tag-link[data-tag*="动态规划"],
+    html body .problem__tag-link[data-tag="LCS"],
+    html body .problem__tag-link[data-tag="LIS"],
+    html body .problem__tag-link[data-tag*="背包"],
+    html body .problem__tag-link[data-tag="DP"],
+    html body .problem__tag-link[data-tag="单调性DP"],
+    html body .problem__tag-link[data-tag="环形DP"],
+    html body .problem__tag-link[data-tag="树形DP"],
+    html body .problem__tag-link[data-tag="状态压缩DP"],
+    html body .problem__tag-link[data-tag="数位DP"],
+    html body .problem__tag-link[data-tag="区间DP"],
+    html body .problem__tag-link[data-tag="概率DP"],
+    html body .problem__tag-link[data-tag="状态压缩"] {
+      border-color: rgba(139, 92, 246, 0.52) !important;
+      background: linear-gradient(rgb(241, 236, 255), rgb(230, 221, 255)) !important;
+      color: rgb(59, 23, 125) !important;
+      font-weight: 600 !important;
+    }
+
+    /* 贪心 - 橙色系 (cat-search) */
+    html body .problem__tag-link[data-tag="贪心"],
+    html body .problem__tag-link[data-tag*="构造"],
+    html body .problem__tag-link[data-tag*="打表"] {
+      border-color: rgba(234, 88, 12, 0.42) !important;
+      background: linear-gradient(rgb(255, 240, 223), rgb(254, 223, 189)) !important;
+      color: rgb(103, 38, 15) !important;
+    }
+
+    /* 树结构 - 红色系 (cat-graph variant) */
+    html body .problem__tag-link[data-tag*="树结构"],
+    html body .problem__tag-link[data-tag*="树"],
+    html body .problem__tag-link[data-tag="最近公共祖先"],
+    html body .problem__tag-link[data-tag*="生成树"],
+    html body .problem__tag-link[data-tag="次小生成树"],
+    html body .problem__tag-link[data-tag="DFS序列"],
+    html body .problem__tag-link[data-tag*="树上倍增"],
+    html body .problem__tag-link[data-tag*="树的分治"],
+    html body .problem__tag-link[data-tag*="树链剖分"],
+    html body .problem__tag-link[data-tag="Link-Cut-Tree"] {
+      border-color: rgba(220, 38, 38, 0.42) !important;
+      background: linear-gradient(rgb(254, 241, 241), rgb(254, 226, 226)) !important;
+      color: rgb(127, 29, 29) !important;
+    }
+
+    /* 图结构 - 蓝色系 (cat-graph) */
+    html body .problem__tag-link[data-tag*="图结构"],
+    html body .problem__tag-link[data-tag*="图"],
+    html body .problem__tag-link[data-tag="Floyd"],
+    html body .problem__tag-link[data-tag="Dijkstra"],
+    html body .problem__tag-link[data-tag="SPFA"],
+    html body .problem__tag-link[data-tag*="负权边"],
+    html body .problem__tag-link[data-tag*="平面图"],
+    html body .problem__tag-link[data-tag*="二分图"],
+    html body .problem__tag-link[data-tag*="二分图匹配"],
+    html body .problem__tag-link[data-tag*="最短路"],
+    html body .problem__tag-link[data-tag*="差分约束"],
+    html body .problem__tag-link[data-tag*="拓扑排序"],
+    html body .problem__tag-link[data-tag*="强连通"],
+    html body .problem__tag-link[data-tag*="缩点"] {
+      border-color: rgba(59, 130, 246, 0.5) !important;
+      background: linear-gradient(rgb(234, 243, 255), rgb(219, 234, 254)) !important;
+      color: rgb(23, 55, 143) !important;
+    }
+
+    /* 数据结构 - 青色系 (cat-ds) */
+    html body .problem__tag-link[data-tag*="数据结构"],
+    html body .problem__tag-link[data-tag="栈"],
+    html body .problem__tag-link[data-tag="队列"],
+    html body .problem__tag-link[data-tag*="链表"],
+    html body .problem__tag-link[data-tag*="单调队列"],
+    html body .problem__tag-link[data-tag*="并查集"],
+    html body .problem__tag-link[data-tag="堆"],
+    html body .problem__tag-link[data-tag*="平衡树"],
+    html body .problem__tag-link[data-tag*="线段树"],
+    html body .problem__tag-link[data-tag*="树状数组"],
+    html body .problem__tag-link[data-tag*="树套树"],
+    html body .problem__tag-link[data-tag*="四分树"],
+    html body .problem__tag-link[data-tag*="划分树"],
+    html body .problem__tag-link[data-tag*="归并树"],
+    html body .problem__tag-link[data-tag*="替罪羊树"],
+    html body .problem__tag-link[data-tag*="左偏树"],
+    html body .problem__tag-link[data-tag*="k-d树"],
+    html body .problem__tag-link[data-tag*="块状链表"],
+    html body .problem__tag-link[data-tag*="Hashing"],
+    html body .problem__tag-link[data-tag*="Treap"],
+    html body .problem__tag-link[data-tag*="Splay"] {
+      border-color: rgba(14, 165, 233, 0.5) !important;
+      background: linear-gradient(rgb(233, 247, 255), rgb(216, 239, 255)) !important;
+      color: rgb(6, 75, 112) !important;
+    }
+
+    /* 容器 - 深灰色系 (cat-other) */
+    html body .problem__tag-link[data-tag*="容器"],
+    html body .problem__tag-link[data-tag="map"],
+    html body .problem__tag-link[data-tag="stack"],
+    html body .problem__tag-link[data-tag="deque"],
+    html body .problem__tag-link[data-tag="list"],
+    html body .problem__tag-link[data-tag="queue"],
+    html body .problem__tag-link[data-tag*="哈希表"] {
+      border-color: rgba(120, 113, 108, 0.5) !important;
+      background: linear-gradient(rgb(248, 248, 246), rgb(239, 239, 237)) !important;
+      color: rgb(68, 64, 60) !important;
+    }
+
+    /* 搜索算法 - 深橙红色系 (cat-search) */
+    html body .problem__tag-link[data-tag*="深度优先搜索"],
+    html body .problem__tag-link[data-tag*="广度优先搜索"],
+    html body .problem__tag-link[data-tag*="迭代加深搜索"],
+    html body .problem__tag-link[data-tag*="A*"],
+    html body .problem__tag-link[data-tag*="IDA*"] {
+      border-color: rgba(234, 88, 12, 0.42) !important;
+      background: linear-gradient(rgb(255, 240, 223), rgb(254, 223, 189)) !important;
+      color: rgb(103, 38, 15) !important;
+    }
+
+    /* 分治与查询技术 - 深蓝色系 (cat-graph variant) */
+    html body .problem__tag-link[data-tag*="分治"],
+    html body .problem__tag-link[data-tag="RMQ"],
+    html body .problem__tag-link[data-tag*="分块"],
+    html body .problem__tag-link[data-tag*="莫队"] {
+      border-color: rgba(29, 78, 216, 0.45) !important;
+      background: linear-gradient(rgb(240, 244, 255), rgb(224, 231, 255)) !important;
+      color: rgb(20, 51, 142) !important;
+    }
+
+    /* 数学与数论 - 黄色系 (cat-math) */
+    html body .problem__tag-link[data-tag*="快速幂"],
+    html body .problem__tag-link[data-tag*="排列组合"],
+    html body .problem__tag-link[data-tag*="位运算"],
+    html body .problem__tag-link[data-tag*="进制转换"],
+    html body .problem__tag-link[data-tag*="数学"],
+    html body .problem__tag-link[data-tag*="数论"],
+    html body .problem__tag-link[data-tag*="素数"],
+    html body .problem__tag-link[data-tag*="质因数"],
+    html body .problem__tag-link[data-tag*="欧拉"],
+    html body .problem__tag-link[data-tag*="费马"],
+    html body .problem__tag-link[data-tag*="贝祖"],
+    html body .problem__tag-link[data-tag*="中国剩余"],
+    html body .problem__tag-link[data-tag*="矩阵"],
+    html body .problem__tag-link[data-tag*="高斯消元"],
+    html body .problem__tag-link[data-tag*="组合数学"],
+    html body .problem__tag-link[data-tag="有序表"],
+    html body .problem__tag-link[data-tag*="容斥"] {
+      border-color: rgba(217, 119, 6, 0.42) !important;
+      background: linear-gradient(rgb(255, 244, 214), rgb(253, 231, 170)) !important;
+      color: rgb(101, 48, 13) !important;
+    }
+
+    /* 基础算法技巧 - 蓝灰色系 (cat-other) */
+    html body .problem__tag-link[data-tag*="二分查找"],
+    html body .problem__tag-link[data-tag*="三分查找"],
+    html body .problem__tag-link[data-tag*="双指针扫描"],
+    html body .problem__tag-link[data-tag*="排序"],
+    html body .problem__tag-link[data-tag*="模拟"] {
+      border-color: rgba(8, 112, 196, 0.42) !important;
+      background: linear-gradient(rgb(245, 248, 255), rgb(236, 242, 255)) !important;
+      color: rgb(12, 74, 130) !important;
+    }
+
+    /* 递推 - 深黄色系 (cat-math) */
+    html body .problem__tag-link[data-tag*="递推"] {
+      border-color: rgba(180, 83, 9, 0.42) !important;
+      background: linear-gradient(rgb(255, 248, 230), rgb(255, 240, 200)) !important;
+      color: rgb(114, 53, 6) !important;
+    }
+
+    /* 递归 - 红棕色系 (cat-other) */
+    html body .problem__tag-link[data-tag*="递归"] {
+      border-color: rgba(185, 28, 28, 0.38) !important;
+      background: linear-gradient(rgb(255, 243, 243), rgb(255, 230, 230)) !important;
+      color: rgb(154, 23, 23) !important;
+    }
+
+    /* 数组 - 粉色系 (cat-meta variant) */
+    html body .problem__tag-link[data-tag*="一维数组"],
+    html body .problem__tag-link[data-tag*="二维数组"],
+    html body .problem__tag-link[data-tag*="多维数组"] {
+      border-color: rgba(219, 39, 119, 0.4) !important;
+      background: linear-gradient(rgb(253, 242, 248), rgb(252, 231, 243)) !important;
+      color: rgb(131, 24, 67) !important;
+    }
+
+    /* 字符串与字符型 - 绿色系 (cat-string) */
+    html body .problem__tag-link[data-tag*="字符串"],
+    html body .problem__tag-link[data-tag*="字符型"],
+    html body .problem__tag-link[data-tag*="KMP"],
+    html body .problem__tag-link[data-tag*="Trie"],
+    html body .problem__tag-link[data-tag*="AC自动机"],
+    html body .problem__tag-link[data-tag*="后缀"],
+    html body .problem__tag-link[data-tag*="Manacher"] {
+      border-color: rgba(34, 197, 94, 0.44) !important;
+      background: linear-gradient(rgb(232, 248, 238), rgb(213, 242, 223)) !important;
+      color: rgb(20, 83, 45) !important;
+    }
+
+    /* 函数与分支 - 深绿色系 (cat-string variant) */
+    html body .problem__tag-link[data-tag*="函数问题"],
+    html body .problem__tag-link[data-tag*="分支问题"],
+    html body .problem__tag-link[data-tag*="条件"] {
+      border-color: rgba(5, 150, 105, 0.42) !important;
+      background: linear-gradient(rgb(236, 253, 245), rgb(220, 252, 231)) !important;
+      color: rgb(6, 78, 59) !important;
+    }
+
+    /* 结构体 - 紫蓝色系 (cat-dp variant) */
+    html body .problem__tag-link[data-tag*="结构体"],
+    html body .problem__tag-link[data-tag*="类"] {
+      border-color: rgba(124, 58, 237, 0.42) !important;
+      background: linear-gradient(rgb(245, 240, 255), rgb(237, 233, 254)) !important;
+      color: rgb(55, 28, 112) !important;
+    }
+
+    /* 循环 - 深青色系 (cat-ds variant) */
+    html body .problem__tag-link[data-tag*="简单循环"],
+    html body .problem__tag-link[data-tag*="嵌套循环"],
+    html body .problem__tag-link[data-tag*="循环优化"] {
+      border-color: rgba(8, 145, 178, 0.42) !important;
+      background: linear-gradient(rgb(240, 253, 255), rgb(225, 250, 254)) !important;
+      color: rgb(16, 87, 107) !important;
+    }
+
+    /* 输入输出语句 - 棕灰色系 (cat-other) */
+    html body .problem__tag-link[data-tag*="输入输出语句"],
+    html body .problem__tag-link[data-tag*="输入"],
+    html body .problem__tag-link[data-tag*="输出"] {
+      border-color: rgba(146, 64, 14, 0.42) !important;
+      background: linear-gradient(rgb(255, 251, 245), rgb(254, 243, 229)) !important;
+      color: rgb(120, 53, 15) !important;
+    }
+
+    /* 拆数字 - 深橙色系 (cat-search variant) */
+    html body .problem__tag-link[data-tag*="拆数字"] {
+      border-color: rgba(194, 65, 12, 0.42) !important;
+      background: linear-gradient(rgb(255, 248, 240), rgb(255, 240, 225)) !important;
+      color: rgb(138, 46, 8) !important;
+    }
+
+    /* 客观题 - 灰蓝色系 (cat-other) */
+    html body .problem__tag-link[data-tag*="客观题"],
+    html body .problem__tag-link[data-tag*="选择题"],
+    html body .problem__tag-link[data-tag*="判断题"],
+    html body .problem__tag-link[data-tag*="填空题"] {
+      border-color: rgba(99, 102, 241, 0.35) !important;
+      background: linear-gradient(rgb(248, 248, 255), rgb(240, 240, 253)) !important;
+      color: rgb(55, 57, 133) !important;
+    }
+
+    /* 基础问题 - 浅绿色系 (cat-string variant) */
+    html body .problem__tag-link[data-tag*="基础问题"],
+    html body .problem__tag-link[data-tag*="入门"] {
+      border-color: rgba(74, 222, 128, 0.4) !important;
+      background: linear-gradient(rgb(240, 253, 244), rgb(220, 252, 231)) !important;
+      color: rgb(22, 101, 52) !important;
+    }
+
+    /* GESP - 紫色系 (cat-meta) */
+    html body .problem__tag-link[data-tag="GESP"] {
+      border-color: rgba(139, 116, 197, 0.42) !important;
+      background: linear-gradient(rgb(243, 240, 250), rgb(233, 228, 243)) !important;
+      color: rgb(70, 59, 88) !important;
+      font-weight: 600 !important;
+    }
+
+    /* CSP-J - 红紫色系 (cat-meta variant) */
+    html body .problem__tag-link[data-tag="CSP-J"] {
+      border-color: rgba(190, 24, 93, 0.42) !important;
+      background: linear-gradient(rgb(255, 241, 245), rgb(255, 228, 235)) !important;
+      color: rgb(131, 24, 67) !important;
+      font-weight: 600 !important;
+    }
+
+    /* CSP-S - 深紫色系 (cat-meta) */
+    html body .problem__tag-link[data-tag="CSP-S"] {
+      border-color: rgba(124, 58, 237, 0.45) !important;
+      background: linear-gradient(rgb(245, 240, 255), rgb(237, 233, 254)) !important;
+      color: rgb(55, 28, 112) !important;
+      font-weight: 600 !important;
+    }
+
+    /* NOIP - 深蓝色系 (cat-graph) */
+    html body .problem__tag-link[data-tag="NOIP"],
+    html body .problem__tag-link[data-tag*="NOI"] {
+      border-color: rgba(37, 99, 235, 0.42) !important;
+      background: linear-gradient(rgb(239, 246, 255), rgb(219, 234, 254)) !important;
+      color: rgb(23, 55, 143) !important;
+      font-weight: 600 !important;
+    }
+
+    /* USACO - 粉色系 (cat-meta variant) */
+    html body .problem__tag-link[data-tag*="USACO"] {
+      border-color: rgba(219, 39, 119, 0.4) !important;
+      background: linear-gradient(rgb(253, 242, 248), rgb(252, 231, 243)) !important;
+      color: rgb(131, 24, 67) !important;
+      font-weight: 600 !important;
+    }
+
+    /* 蓝桥杯 - 蓝灰色系 (cat-other) */
+    html body .problem__tag-link[data-tag*="蓝桥杯"] {
+      border-color: rgba(59, 130, 246, 0.42) !important;
+      background: linear-gradient(rgb(234, 243, 255), rgb(219, 234, 254)) !important;
+      color: rgb(23, 55, 143) !important;
+      font-weight: 600 !important;
+    }
+
+    /* 其他通用标签 - 灰色系 (cat-other) */
+    html body .problem__tag-link[data-tag*="其他"],
+    html body .problem__tag-link[data-tag*="枚举"],
+    html body .problem__tag-link[data-tag*="计算几何"],
+    html body .problem__tag-link[data-tag*="差分"],
+    html body .problem__tag-link[data-tag*="线性代数"],
+    html body .problem__tag-link[data-tag*="高精度"],
+    html body .problem__tag-link[data-tag*="概率论"],
+    html body .problem__tag-link[data-tag*="博弈论"],
+    html body .problem__tag-link[data-tag*="NPC"] {
+      border-color: rgba(148, 163, 184, 0.58) !important;
+      background: rgb(243, 246, 250) !important;
+      color: rgb(39, 52, 73) !important;
+    }
+
+    /* ============ 深色模式标签配色 - 与浅色模式一致 ============ */
+    html.theme--dark body .problem__tag-link[data-tag*="动态规划"],
+    html.theme--dark body .problem__tag-link[data-tag="LCS"],
+    html.theme--dark body .problem__tag-link[data-tag="LIS"],
+    html.theme--dark body .problem__tag-link[data-tag*="背包"],
+    html.theme--dark body .problem__tag-link[data-tag="DP"] {
+      border-color: rgba(139, 92, 246, 0.52) !important;
+      background: linear-gradient(rgb(241, 236, 255), rgb(230, 221, 255)) !important;
+      color: rgb(59, 23, 125) !important;
+      font-weight: 600 !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag="贪心"],
+    html.theme--dark body .problem__tag-link[data-tag*="构造"],
+    html.theme--dark body .problem__tag-link[data-tag*="打表"] {
+      border-color: rgba(234, 88, 12, 0.42) !important;
+      background: linear-gradient(rgb(255, 240, 223), rgb(254, 223, 189)) !important;
+      color: rgb(103, 38, 15) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="树结构"],
+    html.theme--dark body .problem__tag-link[data-tag*="树"] {
+      border-color: rgba(220, 38, 38, 0.42) !important;
+      background: linear-gradient(rgb(254, 241, 241), rgb(254, 226, 226)) !important;
+      color: rgb(127, 29, 29) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="图结构"],
+    html.theme--dark body .problem__tag-link[data-tag*="图"],
+    html.theme--dark body .problem__tag-link[data-tag="Floyd"],
+    html.theme--dark body .problem__tag-link[data-tag="Dijkstra"],
+    html.theme--dark body .problem__tag-link[data-tag="SPFA"],
+    html.theme--dark body .problem__tag-link[data-tag*="二分图"] {
+      border-color: rgba(59, 130, 246, 0.5) !important;
+      background: linear-gradient(rgb(234, 243, 255), rgb(219, 234, 254)) !important;
+      color: rgb(23, 55, 143) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="数据结构"],
+    html.theme--dark body .problem__tag-link[data-tag="栈"],
+    html.theme--dark body .problem__tag-link[data-tag="队列"],
+    html.theme--dark body .problem__tag-link[data-tag*="线段树"],
+    html.theme--dark body .problem__tag-link[data-tag*="树状数组"] {
+      border-color: rgba(14, 165, 233, 0.5) !important;
+      background: linear-gradient(rgb(233, 247, 255), rgb(216, 239, 255)) !important;
+      color: rgb(6, 75, 112) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="数学"],
+    html.theme--dark body .problem__tag-link[data-tag*="数论"],
+    html.theme--dark body .problem__tag-link[data-tag*="快速幂"],
+    html.theme--dark body .problem__tag-link[data-tag*="进制转换"] {
+      border-color: rgba(217, 119, 6, 0.42) !important;
+      background: linear-gradient(rgb(255, 244, 214), rgb(253, 231, 170)) !important;
+      color: rgb(101, 48, 13) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="字符串"],
+    html.theme--dark body .problem__tag-link[data-tag*="字符型"],
+    html.theme--dark body .problem__tag-link[data-tag*="KMP"],
+    html.theme--dark body .problem__tag-link[data-tag*="Trie"] {
+      border-color: rgba(34, 197, 94, 0.44) !important;
+      background: linear-gradient(rgb(232, 248, 238), rgb(213, 242, 223)) !important;
+      color: rgb(20, 83, 45) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="一维数组"],
+    html.theme--dark body .problem__tag-link[data-tag*="二维数组"] {
+      border-color: rgba(219, 39, 119, 0.4) !important;
+      background: linear-gradient(rgb(253, 242, 248), rgb(252, 231, 243)) !important;
+      color: rgb(131, 24, 67) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="二分查找"],
+    html.theme--dark body .problem__tag-link[data-tag*="排序"],
+    html.theme--dark body .problem__tag-link[data-tag*="分治"] {
+      border-color: rgba(8, 112, 196, 0.42) !important;
+      background: linear-gradient(rgb(245, 248, 255), rgb(236, 242, 255)) !important;
+      color: rgb(12, 74, 130) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag="NOIP"],
+    html.theme--dark body .problem__tag-link[data-tag="CSP-J"],
+    html.theme--dark body .problem__tag-link[data-tag="CSP-S"] {
+      border-color: rgba(37, 99, 235, 0.42) !important;
+      background: linear-gradient(rgb(239, 246, 255), rgb(219, 234, 254)) !important;
+      color: rgb(23, 55, 143) !important;
+      font-weight: 600 !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag="GESP"] {
+      border-color: rgba(139, 116, 197, 0.42) !important;
+      background: linear-gradient(rgb(243, 240, 250), rgb(233, 228, 243)) !important;
+      color: rgb(70, 59, 88) !important;
+      font-weight: 600 !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="基础问题"],
+    html.theme--dark body .problem__tag-link[data-tag*="入门"] {
+      border-color: rgba(74, 222, 128, 0.4) !important;
+      background: linear-gradient(rgb(240, 253, 244), rgb(220, 252, 231)) !important;
+      color: rgb(22, 101, 52) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="递推"] {
+      border-color: rgba(180, 83, 9, 0.42) !important;
+      background: linear-gradient(rgb(255, 248, 230), rgb(255, 240, 200)) !important;
+      color: rgb(114, 53, 6) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="递归"] {
+      border-color: rgba(185, 28, 28, 0.38) !important;
+      background: linear-gradient(rgb(255, 243, 243), rgb(255, 230, 230)) !important;
+      color: rgb(154, 23, 23) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="分支问题"] {
+      border-color: rgba(5, 150, 105, 0.42) !important;
+      background: linear-gradient(rgb(236, 253, 245), rgb(220, 252, 231)) !important;
+      color: rgb(6, 78, 59) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="简单循环"],
+    html.theme--dark body .problem__tag-link[data-tag*="嵌套循环"] {
+      border-color: rgba(8, 145, 178, 0.42) !important;
+      background: linear-gradient(rgb(240, 253, 255), rgb(225, 250, 254)) !important;
+      color: rgb(16, 87, 107) !important;
+    }
+
+    html.theme--dark body .problem__tag-link[data-tag*="高精度"] {
+      border-color: rgba(99, 102, 241, 0.35) !important;
+      background: linear-gradient(rgb(248, 248, 255), rgb(240, 240, 253)) !important;
+      color: rgb(55, 57, 133) !important;
     }
 
     .col--problem-name .problem__tags {
@@ -1830,310 +1768,13 @@
     }
 
     .col--problem-name .problem__tag {
-      margin: 0 4px 0 0 !important;
+      margin: 0 3px 0 0;
     }
 
-    /* 浅色模式 - 标签颜色美化 */
-
-    /* 蓝色系 - 动态规划 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="动态规划"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="LCS"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="LIS"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="背包"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="DP"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="单调性DP"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="环形DP"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="树形DP"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="状态压缩DP"] {
-      background: #e6f7ff !important;
-      color: #1890ff !important;
-      border: 1px solid #1890ff !important;
-      border-radius: 14px !important;
-    }
-
-    /* 绿色系 - 贪心 */
-    html:not(.theme--dark) .problem__tag-link[data-tag="贪心"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="构造"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="打表"] {
-      background: #f6ffed !important;
-      color: #52c41a !important;
-      border: 1px solid #52c41a !important;
-      border-radius: 14px !important;
-    }
-
-    /* 红色系 - 树结构 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="树结构"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="最近公共祖先"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="生成树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="次小生成树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="DFS序列"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="树上倍增"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="树的分治"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="树链剖分"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="Link-Cut-Tree"] {
-      background: #fff2f0 !important;
-      color: #ff4d4f !important;
-      border: 1px solid #ff4d4f !important;
-      border-radius: 14px !important;
-    }
-
-    /* 紫色系 - 图结构 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="图结构"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="图"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="Floyd"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="Dijkstra"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="SPFA"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="负权边"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="平面图"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="二分图"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="二分图匹配"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="最短路"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="差分约束"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="拓扑排序"] {
-      background: #f9f0ff !important;
-      color: #722ed1 !important;
-      border: 1px solid #722ed1 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 青色 - 数据结构 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="数据结构"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="栈"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="队列"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="链表"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="单调队列"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="并查集"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="堆"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="平衡树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="线段树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="树状数组"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="树套树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="四分树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="划分树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="归并树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="替罪羊树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="左偏树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="k-d树"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="块状链表"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="Hashing"] {
-      background: #e6fffb !important;
-      color: #13c2c2 !important;
-      border: 1px solid #13c2c2 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 黄色系 - 容器 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="容器"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="map"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="stack"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="deque"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="list"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="queue"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="哈希表"] {
-      background: #fffbe6 !important;
-      color: #faad14 !important;
-      border: 1px solid #faad14 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 橙色系 - 搜索算法 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="深度优先搜索"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="广度优先搜索"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="迭代加深搜索"] {
-      background: #fff7e6 !important;
-      color: #fa8c16 !important;
-      border: 1px solid #fa8c16 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 深蓝色系 - 分治与查询技术 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="分治"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="RMQ"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="分块"] {
-      background: #f0f5ff !important;
-      color: #108ee9 !important;
-      border: 1px solid #108ee9 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 紫色系 - 数学与数论 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="快速幂"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="排列组合"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="位运算"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="进制转换"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="数学"] {
-      background: #f9f0ff !important;
-      color: #9c27b0 !important;
-      border: 1px solid #9c27b0 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 灰色系 - 基础算法技巧 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="二分查找"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="三分查找"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="双指针扫描"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="排序"] {
-      background: #f5f5f5 !important;
-      color: #666 !important;
-      border: 1px solid #666 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 橙色系 - 递推 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="递推"] {
-      background: #fff7e6 !important;
-      color: #fa8c16 !important;
-      border: 1px solid #fa8c16 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 棕色系 - 递归 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="递归"] {
-      background: #fff1e6 !important;
-      color: #d46b08 !important;
-      border: 1px solid #d46b08 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 粉色系 - 数组 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="一维数组"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="二维数组"] {
-      background: #fff0f6 !important;
-      color: #eb2f96 !important;
-      border: 1px solid #eb2f96 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 青色系 - 字符串与字符型 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="字符串"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="字符型"] {
-      background: #e6fffb !important;
-      color: #13c2c2 !important;
-      border: 1px solid #13c2c2 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 绿色系 - 函数与分支 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="函数问题"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="分支问题"] {
-      background: #f6ffed !important;
-      color: #52c41a !important;
-      border: 1px solid #52c41a !important;
-      border-radius: 14px !important;
-    }
-
-    /* 紫色系 - 结构体 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="结构体"] {
-      background: #f9f0ff !important;
-      color: #722ed1 !important;
-      border: 1px solid #722ed1 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 蓝色系 - 循环 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="简单循环"],
-    html:not(.theme--dark) .problem__tag-link[data-tag*="嵌套循环"] {
-      background: #e6f7ff !important;
-      color: #1890ff !important;
-      border: 1px solid #1890ff !important;
-      border-radius: 14px !important;
-    }
-
-    /* 蓝色系 - 输入输出语句 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="输入输出语句"] {
-      background: #e6f7ff !important;
-      color: #1890ff !important;
-      border: 1px solid #1890ff !important;
-      border-radius: 14px !important;
-    }
-
-    /* 红色系 - 竞赛标签 */
-    html:not(.theme--dark) .problem__tag-link[data-tag="CSP-J"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="CSP-S"],
-    html:not(.theme--dark) .problem__tag-link[data-tag="NOIP"] {
-      background: #fff2f0 !important;
-      color: #ff4d4f !important;
-      border: 1px solid #ff4d4f !important;
-      border-radius: 14px !important;
-    }
-
-    /* 绿色系 - GESP */
-    html:not(.theme--dark) .problem__tag-link[data-tag="GESP"] {
-      background: #f6ffed !important;
-      color: #52c41a !important;
-      border: 1px solid #52c41a !important;
-      border-radius: 14px !important;
-    }
-
-    /* 灰色系 - 客观题 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="客观题"] {
-      background: #f5f5f5 !important;
-      color: #666 !important;
-      border: 1px solid #666 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 粉色系 - USACO */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="USACO"] {
-      background: #fff0f6 !important;
-      color: #eb2f96 !important;
-      border: 1px solid #eb2f96 !important;
-      border-radius: 14px !important;
-    }
-
-    /* 蓝色系 - 蓝桥杯 */
-    html:not(.theme--dark) .problem__tag-link[data-tag*="蓝桥杯"] {
-      background: #e6f7ff !important;
-      color: #1890ff !important;
-      border: 1px solid #1890ff !important;
-      border-radius: 14px !important;
-    }
-
-    /* === 题库分类对话框标签样式 === */
-    
-    /* 通用样式 - 浅色和深色模式共享 */
-    .widget--category-filter__tag {
-      display: inline-block !important;
-      padding: 4px 12px !important;
-      margin: 4px !important;
-      border-radius: 14px !important;
-      font-size: 12px !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
-      border: none !important;
-    }
-    
-    /* 浅色模式 - 分类标签 */
-    html:not(.theme--dark) .widget--category-filter__tag {
-      background: #f5f5f5 !important;
-      color: #595959 !important;
-    }
-    
-    html:not(.theme--dark) .widget--category-filter__tag:hover {
-      background: #e6f7ff !important;
-      color: #1890ff !important;
-    }
-    
-    html:not(.theme--dark) .widget--category-filter__tag.selected {
-      background: #1890ff !important;
-      color: #fff !important;
-    }
-    
-    /* 深色模式 - 分类标签 */
-    html.theme--dark .widget--category-filter__tag {
-      background: #353535 !important;
-      color: #bfbfbf !important;
-    }
-    
-    html.theme--dark .widget--category-filter__tag:hover {
-      background: rgba(24,144,255,0.15) !important;
-      color: #1890ff !important;
-    }
-    
-    html.theme--dark .widget--category-filter__tag.selected {
-      background: #1890ff !important;
-      color: #fff !important;
+    .col--problem-name a,
+    .col--problem-name button.link {
+      font-size: 15px !important;
+      font-weight: 500 !important;
     }
 
     {% if not isIE(handler.request.headers['user-agent']) and not handler.session.legacy %}
@@ -3349,9 +2990,9 @@
       background: linear-gradient(135deg, #40a9ff, #1890ff) !important;
     }
 
-    /* 元信息标签 - 亮色模式 */
-    html:not(.theme--dark).page--problem_detail .problem__tag-item,
-    .page--problem_detail html:not(.theme--dark) .problem__tag-item {
+    /* 元信息标签 - 统一配色 */
+    html body .page--problem_detail .problem__tag-item,
+    html body .problem__tag-item {
       display: inline-flex !important;
       align-items: center !important;
       gap: 4px !important;
@@ -3365,42 +3006,15 @@
       margin-bottom: 8px !important;
     }
 
-    html:not(.theme--dark).page--problem_detail .problem__tag-item i,
-    .page--problem_detail html:not(.theme--dark) .problem__tag-item i {
+    html body .page--problem_detail .problem__tag-item i,
+    html body .problem__tag-item i {
       color: #94a3b8 !important;
     }
 
-    html:not(.theme--dark).page--problem_detail .problem__tag-item.author,
-    .page--problem_detail html:not(.theme--dark) .problem__tag-item.author {
+    html body .page--problem_detail .problem__tag-item.author,
+    html body .problem__tag-item.author {
       color: #1890ff !important;
       font-weight: 500 !important;
-    }
-
-    /* 元信息标签 - 暗色模式 */
-    .theme--dark.page--problem_detail .problem__tag-item,
-    .page--problem_detail.theme--dark .problem__tag-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 13px;
-      color: #9ca3af;
-      padding: 4px 10px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 6px;
-      border: 1px solid #374151;
-      margin-right: 8px;
-      margin-bottom: 8px;
-    }
-
-    .theme--dark.page--problem_detail .problem__tag-item i,
-    .page--problem_detail.theme--dark .problem__tag-item i {
-      color: #6b7280;
-    }
-
-    .theme--dark.page--problem_detail .problem__tag-item.author,
-    .page--problem_detail.theme--dark .problem__tag-item.author {
-      color: #8ab4f8;
-      font-weight: 500;
     }
 
     /* 删除标签按钮，直接显示标签 */
@@ -3576,18 +3190,6 @@
     .theme--dark.page--problem_detail .section.side button[name="problem-sidebar__rejudge"]:hover {
       background: linear-gradient(135deg, #92400e, #78350f) !important;
       border-color: #fbbf24 !important;
-    }
-
-    .page--problem_detail .problem__tag-link {
-      padding: 4px 10px;
-      font-size: 12px;
-      border-radius: 4px;
-      transition: all 0.2s ease;
-    }
-
-    .page--problem_detail .problem__tag-link:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     /* === 首页最新题目 - 隐藏时间显示 === */
@@ -4042,27 +3644,27 @@
       color: #e5e7eb !important;
     }
 
-    .theme--dark.page--problem_detail .problem-tags-section {
-      background: rgba(255, 255, 255, 0.05) !important;
+    html body .page--problem_detail .problem-tags-section {
+      background: #f8fafc !important;
     }
 
-    .theme--dark.page--problem_detail .tags-header {
-      color: #d1d5db !important;
+    html body .page--problem_detail .tags-header {
+      color: #1e293b !important;
     }
 
-    .theme--dark.page--problem_detail .tags-header .icon {
-      color: #9ca3af !important;
+    html body .page--problem_detail .tags-header .icon {
+      color: #64748b !important;
     }
 
-    .theme--dark.page--problem_detail .tag-item {
-      background: rgba(255, 255, 255, 0.08) !important;
-      border-color: rgba(255, 255, 255, 0.15) !important;
-      color: #d1d5db !important;
+    html body .page--problem_detail .tag-item {
+      background: #f1f5f9 !important;
+      border-color: #e2e8f0 !important;
+      color: #475569 !important;
     }
 
-    .theme--dark.page--problem_detail .tag-item:hover {
-      background: rgba(255, 255, 255, 0.12) !important;
-      border-color: rgba(255, 255, 255, 0.25) !important;
+    html body .page--problem_detail .tag-item:hover {
+      background: #e2e8f0 !important;
+      border-color: #cbd5e1 !important;
     }
 
     .theme--dark.page--problem_detail .problem-info-item {
@@ -4227,16 +3829,16 @@
       color: #f9fafb !important;
     }
 
-    .theme--dark.page--problem_detail .problem-tags-inline {
-      border-top-color: rgba(255, 255, 255, 0.1) !important;
+    html body .page--problem_detail .problem-tags-inline {
+      border-top-color: #e2e8f0 !important;
     }
 
-    .theme--dark.page--problem_detail .tag-item-inline {
+    html body .page--problem_detail .tag-item-inline {
       background: linear-gradient(135deg, #8b5cf6, #a78bfa) !important;
       box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3) !important;
     }
 
-    .theme--dark.page--problem_detail .tag-item-inline:hover {
+    html body .page--problem_detail .tag-item-inline:hover {
       background: linear-gradient(135deg, #7c3aed, #9333ea) !important;
     }
 
